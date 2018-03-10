@@ -1,0 +1,126 @@
+body{
+  background: #fafafa !important;
+}
+
+.Body {
+  margin-top: 40px;
+}
+
+.AboutBody{
+  margin-top: 40px;
+}
+
+.Menu{
+  display: inline-block !important;
+}
+
+.MenuItemLower:hover{
+  color: #1745a3 !important;
+  border-bottom: solid 2px #1745a3 !important;
+}
+
+.MenuItemLower.active{
+  color: #1745a3 !important;
+  border-bottom: solid 2px #1745a3 !important;
+}
+
+.MenuItemUpper:hover{
+  color: #1745a3 !important;
+  background: none !important;
+}
+
+.MenuContainer{
+  display: inline-block;
+}
+
+.MenuLayout{
+  box-sizing: border-box;
+  background: white;
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
+}
+
+.Definition{
+  white-space: pre-line;
+  color: black !important;
+}
+
+.Entry{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.EntryList{
+  margin-top: 50px;
+}
+
+.ChatBoxOpenButton{
+  -webkit-box-shadow: 0 4px 6px -6px #222;
+  -moz-box-shadow: 0 4px 6px -6px #222;
+  box-shadow: 0 4px 6px -6px #222;
+}
+
+.ChatBotLayout{
+  position: fixed;
+  right: 20px;
+  bottom: 0px;
+}
+
+.ChatBotHeaderContainer{
+  background: #1745a3 !important;
+}
+
+.ChatBotHeader{
+  color: white !important;
+}
+
+.ChatBotMessageContainer{
+  height: 400px;
+  overflow-y: auto;
+}
+
+.UserMessage{
+  float: right;
+  border-radius: 8px !important;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.UserMessageCol{
+  padding: 0 !important;
+}
+
+.BotMessage{
+  float: left;
+  border-radius: 8px !important;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.BotAvatarCol{
+  padding: 0 !important;
+}
+
+.BotMessageCol{
+  padding: 0 !important;
+}
+
+.MessageContainer{
+  padding: 0 !important;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  display: inline-block;
+  width: 100%;
+}
+
+.MessageList{
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+.NewsSegment{
+  padding: 0 !important;
+}
