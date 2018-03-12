@@ -8,7 +8,7 @@ import {
   Icon,
   Image
 } from 'semantic-ui-react';
-import MessageList from './MessageList';
+import MessageList from '../../MessageList';
 
 const steps = [
   {

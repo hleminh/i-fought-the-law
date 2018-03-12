@@ -4,7 +4,7 @@ import {
   Icon,
   Popup,
 } from 'semantic-ui-react';
-import ChatBot from './ChatBot';
+import ChatBot from './Chatbot/ChatBot';
 
 class ChatBotLayout extends Component {
   constructor(props){

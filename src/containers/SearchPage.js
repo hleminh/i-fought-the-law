@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import EntryList from './EntryList';
-import SearchBar from './SearchBar';
+import EntryList from '../components/EntryList/EntryList';
+import SearchBar from '../components/SearchBar';
 import {Container} from 'semantic-ui-react';
 
 class SearchPage extends Component {

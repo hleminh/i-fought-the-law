@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SearchBar from './SearchBar';
+import SearchBar from '../components/SearchBar';
 import {Container, Grid, Segment, Image, Label, Header} from 'semantic-ui-react';
 import MediaParagraphPNG from '../assets/images/media-paragraph.png';
 import ParagraphPNG from '../assets/images/paragraph.png';

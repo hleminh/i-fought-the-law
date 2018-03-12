@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Container, Image, Header} from 'semantic-ui-react';
 import MediaParagraphPNG from '../assets/images/media-paragraph.png';
 import ParagraphPNG from '../assets/images/paragraph.png';
-import FooterLayout from './FooterLayout';
+import FooterLayout from '../components/FooterLayout';
 
 class AboutPage extends Component{
   render(){
