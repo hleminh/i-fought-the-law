@@ -7,7 +7,7 @@ export function* getChapterList(action) {
   yield put(actions.getChapterListStart());
   try {
     const response = yield axios.get('/chapters/getall');
-    yield put(actions.getChapterListSuccess(response));
+    yield put(actions.getChapterListSuccess(response.data));
   } catch (error) {
     yield put(actions.getChapterListFail(error));
   }
@@ -18,7 +18,7 @@ export function* getChapterDetail(action) {
   try {
     const url = yield `/articles/getall?page=${action.pageIndex}&item=${action.itemPerPage}&chapter_id=${action.currentChapter.id}`;
     const response = yield axios.get(url);
-    yield put(actions.getChapterDetailSuccess(response.data));
+    yield put(actions.getChapterDetailSuccess(response.data.data));
   } catch (error) {
     yield put(actions.getChapterDetailFail(error));
   }

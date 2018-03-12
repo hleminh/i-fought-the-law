@@ -55,3 +55,15 @@ export const getChapterDetailFail = (errorMsg) => {
     errorMsg: errorMsg
   };
 };
+
+
+export const search = (keyword, pageIndex, itemPerPage, chapterId) => {
+  return {
+    type: actionTypes.SEARCH,
+    keyword: keyword,
+    pageIndex: pageIndex,
+    itemPerPage: itemPerPage,
+    chapterId: chapterId
+  }
+};
+

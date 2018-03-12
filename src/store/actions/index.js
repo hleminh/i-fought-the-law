@@ -8,3 +8,9 @@ export {
   getChapterDetailSuccess,
   getChapterDetailFail
 }from './law';
+
+export {
+  searchFail,
+  searchStart,
+  searchSuccess
+}from './search';
