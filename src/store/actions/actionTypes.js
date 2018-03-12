@@ -7,7 +7,7 @@ export const AUTH_INITIATE_LOGOUT = 'AUTH_INITIATE_LOGOUT';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_CHECK_TIMEOUT = 'AUTH_CHECK_TIMEOUT';
 
-export const SEARCH_= 'SEARCH';
+export const SEARCH = 'SEARCH';
 export const SEARCH_START = 'SEARCH_START';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAIL = 'SEARCH_FAIL';

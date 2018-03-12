@@ -10,12 +10,14 @@ import registerServiceWorker from './registerServiceWorker';
 import './dist/semantic.min.css';
 import './index.css';
 import lawReducer from './store/reducers/law';
-import {watchGetLaws} from './store/sagas/index';
+import searchReducer from './store/reducers/search';
+import {watchGetLaws, watchSearch} from './store/sagas/index';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
-  laws: lawReducer
+  laws: lawReducer,
+  search: searchReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -25,6 +27,7 @@ const store = createStore(rootReducer, composeEnhancers(
 ));
 
 sagaMiddleware.run(watchGetLaws);
+sagaMiddleware.run(watchSearch);
 
 const app = (
     <Provider store={store}>
