@@ -18,7 +18,7 @@ const steps = [
   },
   {
     'id': '0',
-    'message': 'Xin chào! Tôi là SUGE Bot. Tôi có thể giúp bạn việc gì?\n1. Tìm từ Nhật - Việt\n2. Tìm từ Việt - Nhật',
+    'message': 'Xin chào! Tôi là Chat Bot. Tôi có thể giúp bạn việc gì?\n1. Tìm từ Nhật - Việt\n2. Tìm từ Việt - Nhật',
     'options': [
       {
         'case': '1',
