@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import './App.css';
 import $ from 'jquery';
 import MenuLayout from './components/MenuLayout';
-import ChatBotLayout from './components/ChatBotLayout';
+import ChatBotLayout from './components/ChatbotLayout/ChatBotLayout';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router';
 import RedirectToHome from './components/RedirectToHome';
-import HomePage from './components/HomePage';
-import SearchPage from './components/SearchPage';
-import AboutPage from './components/AboutPage';
-import SavedPage from './components/SavedPage';
+import HomePage from './containers/HomePage';
+import SearchPage from './containers/SearchPage';
+import AboutPage from './containers/AboutPage';
+import SavedPage from './containers/SavedPage';
 import update from 'react-addons-update';
 
 class App extends Component {

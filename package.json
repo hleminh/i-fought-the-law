@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
@@ -23,9 +24,12 @@
     "react-addons-update": "^15.6.2",
     "react-dom": "^16.2.0",
     "react-fontawesome": "^1.6.1",
+    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
     "semantic-ui": "^2.2.14",
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3"

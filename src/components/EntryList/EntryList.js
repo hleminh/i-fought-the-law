@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Entry from './Entry';
+import Entry from './Entry/Entry';
 
 class EntryList extends Component {
   componentDidMount() {

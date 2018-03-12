@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import EntryList from './EntryList';
+import EntryList from '../components/EntryList/EntryList';
 import {Container} from 'semantic-ui-react';
 import {Redirect} from 'react-router';
 
