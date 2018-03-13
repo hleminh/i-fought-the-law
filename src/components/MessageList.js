@@ -19,7 +19,7 @@ class MessageList extends Component {
           <Grid.Row className = "MessageContainer">
             <Grid.Column className = "UserMessageCol" verticalAlign = 'middle' >
               <Popup trigger = {
-                <Label className = "UserMessage" size = 'large' color = 'blue' pointing = 'right'>
+                <Label className = "UserMessage" size = 'large' color = 'brown' pointing = 'right'>
                   {data.message.split('\n').map((item, key) => {
                     return <span>{item}<br/></span>
                   })}
@@ -79,7 +79,7 @@ class MessageList extends Component {
           <Grid.Row className = "MessageContainer">
             <Grid.Column className = "UserMessageCol" verticalAlign = 'middle' >
               <Popup trigger = {
-                <Label className = "UserMessage" size = 'large' color = 'blue' pointing = 'right'>
+                <Label className = "UserMessage" size = 'large' color = 'brown' pointing = 'right'>
                   <Image verticalAlign = 'middle' src = {UserLoadingGIF} size = 'mini' />
                 </Label>
               }

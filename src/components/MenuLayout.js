@@ -212,7 +212,7 @@ class MenuLayout extends Component {
          }}>
            <Grid.Column verticalAlign = 'middle' width={4} style = {{
            }}>
-            <Image fluid src = {BannerIMG} verticalAlign = 'middle' size = 'tiny'/>
+            <Image src = {BannerIMG} verticalAlign = 'middle' size = 'tiny'/>
            </Grid.Column>
            <Grid.Column width={12} style = {{
            }}>

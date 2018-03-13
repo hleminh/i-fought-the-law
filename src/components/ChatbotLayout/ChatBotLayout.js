@@ -39,7 +39,7 @@ class ChatBotLayout extends Component {
         {!this.state.chatBoxOpen &&
           <Popup
             trigger={
-              <Button className = 'ChatBoxOpenButton' attached= 'top' ref = {this.handleChatBotLayoutButtonRef.bind(this)} onClick = {this.handleChatBoxOpenButtonClick.bind(this)} size = 'large' color = 'blue'>
+              <Button className = 'ChatBoxOpenButton' attached= 'top' ref = {this.handleChatBotLayoutButtonRef.bind(this)} onClick = {this.handleChatBoxOpenButtonClick.bind(this)} size = 'large' color = 'brown'>
                 <Button.Content>
                   Trò chuyện với Chat Bot &nbsp;
                   <Icon name = 'comment'/>

@@ -455,12 +455,12 @@
 }
 .ui.brown.message {
   background-color: #F1E2D3;
-  color: #A5673F;
-  -webkit-box-shadow: 0px 0px 0px 1px #A5673F inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
-          box-shadow: 0px 0px 0px 1px #A5673F inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  color: #B27C00;
+  -webkit-box-shadow: 0px 0px 0px 1px #B27C00 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
+          box-shadow: 0px 0px 0px 1px #B27C00 inset, 0px 0px 0px 0px rgba(0, 0, 0, 0);
 }
 .ui.brown.message .header {
-  color: #935b38;
+  color: #996a00;
 }
 
 /*--------------

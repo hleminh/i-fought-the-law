@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Dotdotdot from 'react-clamp'
 
 import SearchBar from '../components/SearchBar';
 import {
@@ -52,11 +53,12 @@ class HomePage extends Component {
 
     const articleList = this.props.articles.map(article => (
         <Table.Row id={article.id}>
-          <Table.Cell>{article.order}</Table.Cell>
-          <Table.Cell>{article.title}</Table.Cell>
-          <Table.Cell>{article.content}</Table.Cell>
+          <Table.Cell><Dotdotdot clamp = {3}>{article.order}</Dotdotdot></Table.Cell>
+          <Table.Cell><Dotdotdot clamp = {3}>{article.title}</Dotdotdot></Table.Cell>
+          <Table.Cell><Dotdotdot clamp = {3}>{article.content}</Dotdotdot></Table.Cell>
         </Table.Row>
     ));
+
     const loader = <Loader/>;
     return (
         <div className="Body">
@@ -161,17 +163,19 @@ class HomePage extends Component {
                       <Label color='blue' size='big'>DANH SÁCH ĐIỀU LUẬT</Label>
                     </Card.Header>
                     <Card.Content className='BlockContent'>
-                      <Table fixed style={{
+                      <Table style={{
                         'border': '0',
-                      }} celled striped>
+                      }} striped>
                         <Table.Header>
                           <Table.Row>
-                            <Table.HeaderCell>STT</Table.HeaderCell>
-                            <Table.HeaderCell>Tên</Table.HeaderCell>
-                            <Table.HeaderCell>Nội dung</Table.HeaderCell>
+                            <Table.HeaderCell width = {2}>STT</Table.HeaderCell>
+                            <Table.HeaderCell width = {5}>Tên</Table.HeaderCell>
+                            <Table.HeaderCell width = {9}>Nội dung</Table.HeaderCell>
                           </Table.Row>
                         </Table.Header>
-                        {this.props.isChapterDetailLoading ? loader : articleList}
+                        <Table.Body>
+                          {this.props.isChapterDetailLoading ? loader : articleList}
+                        </Table.Body>
                       </Table>
                     </Card.Content>
                   </Card>
