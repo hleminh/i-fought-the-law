@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {Container, Image, Header} from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Container, Image, Header } from 'semantic-ui-react';
 import MediaParagraphPNG from '../assets/images/media-paragraph.png';
 import ParagraphPNG from '../assets/images/paragraph.png';
 import FooterLayout from '../components/FooterLayout';
 
-class AboutPage extends Component{
-  render(){
-    return(
+class AboutPage extends Component {
+  render() {
+    return (
       <div className="AboutBody">
         <Container text>
           <Header as='h1'>About Me</Header>

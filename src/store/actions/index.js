@@ -14,3 +14,10 @@ export {
   searchStart,
   searchSuccess
 }from './search';
+
+export {
+  getAllNews,
+  getAllNewsStart,
+  getAllNewsSuccess,
+  getAllNewsFail
+}from './news'

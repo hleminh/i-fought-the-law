@@ -10,11 +10,9 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "hepburn": "^1.0.0",
     "http": "0.0.0",
     "jquery": "^3.3.1",
     "line-input-stream": "^1.0.1",
-    "material-ui": "^0.20.0",
     "mongoose": "^5.0.9",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
@@ -32,7 +30,6 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "semantic-ui": "^2.2.14",
-    "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3"
   },
   "scripts": {
@@ -40,6 +37,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "proxy": "http://localhost:6969"
+  }
 }

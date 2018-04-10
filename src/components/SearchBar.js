@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Dropdown, Icon, Input, Header, Button, Grid, Segment} from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Dropdown, Icon, Input, Header, Button, Grid, Segment } from 'semantic-ui-react';
 
 import $ from 'jquery';
 
@@ -21,7 +21,7 @@ const chapters = [
 
 class SearchBar extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
@@ -30,7 +30,7 @@ class SearchBar extends Component {
     }
   }
 
-  resetComponent = () => this.setState({isLoading: false, results: []});
+  resetComponent = () => this.setState({ isLoading: false, results: [] });
 
   handleSubmitButton(e) {
     e.preventDefault();
@@ -38,16 +38,16 @@ class SearchBar extends Component {
     // this.props.handleSearchSubmit(this.refs.searchInput.value);
   };
 
-  handleOnMouseDown(e){
+  handleOnMouseDown(e) {
     // e.preventDefault();
   }
 
-  handleAdvancedSearchButton(e){
-    if (!this.state.advancedOptions){
+  handleAdvancedSearchButton(e) {
+    if (!this.state.advancedOptions) {
       this.setState({
         advancedOptions: true,
       });
-    } else{
+    } else {
       this.setState({
         advancedOptions: false,
       });
@@ -57,36 +57,36 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="SearchBar">
-        <Header as ='h3' style = {{
-          'color':'#1745a3'
+        <Header as='h3' style={{
+          'color': '#1745a3'
         }}>TÌM VĂN BẢN LUẬT VIỆT NAM</Header>
         <Grid>
-          <Grid.Column width = {12}>
-            <Input fluid size = 'large' className = "SearchInput" ref = 'searchInput'
+          <Grid.Column width={12}>
+            <Input fluid size='large' className="SearchInput" ref='searchInput'
               icon={
-                <Icon color = 'blue' className = 'SearchIcon' name='search' onClick = {this.handleSubmitButton.bind(this)} inverted circular link/>
+                <Icon color='blue' className='SearchIcon' name='search' onClick={this.handleSubmitButton.bind(this)} inverted circular link />
               }
               placeholder='Nhập nội dung văn bản cần tìm...'
             />
           </Grid.Column>
-            <Grid.Column verticalAlign = 'bottom' textAlign = 'left' width = {4}>
-              <Button as = 'a' style = {{
-                'background':'0',
-                'padding':'0'
-              }}
-              onClick = {this.handleAdvancedSearchButton.bind(this)}>
+          <Grid.Column verticalAlign='bottom' textAlign='left' width={4}>
+            <Button as='a' style={{
+              'background': '0',
+              'padding': '0'
+            }}
+              onClick={this.handleAdvancedSearchButton.bind(this)}>
               {!this.state.advancedOptions &&
-                <span>Tìm kiếm nâng cao <Icon name = 'caret down'/></span>
+                <span>Tìm kiếm nâng cao <Icon name='caret down' /></span>
               }
               {this.state.advancedOptions &&
-                <span>Thu gọn <Icon name = 'caret up'/></span>
+                <span>Thu gọn <Icon name='caret up' /></span>
               }
-              </Button>
+            </Button>
           </Grid.Column>
         </Grid>
         {this.state.advancedOptions &&
           <Segment>
-            <Header as = 'h4'><Icon color = 'blue' name = 'magnify'/>Tìm kiếm nâng cao</Header>
+            <Header as='h4'><Icon color='blue' name='magnify' />Tìm kiếm nâng cao</Header>
             <Dropdown placeholder='Chọn chương' search selection options={chapters} />
           </Segment>
         }
