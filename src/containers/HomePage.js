@@ -14,7 +14,8 @@ import {
   Loader,
   Header,
   Menu,
-  Table
+  Table,
+  Icon,
 } from 'semantic-ui-react';
 import MediaParagraphPNG from '../assets/images/media-paragraph.png';
 import ParagraphPNG from '../assets/images/paragraph.png';
@@ -82,33 +83,79 @@ class HomePage extends Component {
                   <Grid.Row columns={2}>
                     <Grid.Column className='NewsColumn'>
                       <Segment className="NewsSegment" basic>
-                        <Header as='h3'>TEST</Header>
+                        <Header as='h3'>TIN TỨC MỚI NHẤT</Header>
                         {this.props.isNewsLoading == false && 
-                          <Image size = 'small' src={this.props.news.data[0].image} />
+                          <div>
+                            <Image verticalAlign = 'top' floated = 'left' size = 'small' src={this.props.news.data[0].image} />
+                            <Header className = 'NewsHeadline' size = 'tiny' as = 'a' href = {this.props.news.data[0].linkToNews}>{this.props.news.data[0].headLines}</Header>
+                            <div>{this.props.news.data[0].brief}</div>
+                         </div>
                         }
                         {this.props.isNewsLoading == true && 
                           <Image src={ParagraphPNG} />
                         }
                       </Segment>
                       <Segment className="NewsSegment" basic>
-                        <Image src={ParagraphPNG} />
+                        {this.props.isNewsLoading == false && 
+                          <div>
+                            <div>
+                              <Icon color = 'blue' name = 'newspaper'/>
+                              <Header className = 'NewsHeadline' size = 'tiny' as = 'a' href = {this.props.news.data[1].linkToNews}>{this.props.news.data[1].headLines}</Header>
+                            </div>
+                            &nbsp;
+                            <div>
+                              <Icon color = 'blue' name = 'newspaper'/>
+                              <Header className = 'NewsHeadline' size = 'tiny' as = 'a' href = {this.props.news.data[2].linkToNews}>{this.props.news.data[2].headLines}</Header>
+                            </div>
+                          </div>
+                        }
+                        {this.props.isNewsLoading == true && 
+                          <Image src={ParagraphPNG} />
+                        }
                       </Segment>
                     </Grid.Column>
                     <Grid.Column className='NewsColumn'>
                       <Grid.Row>
                         <Segment className="NewsSegment" basic>
-                          <Header as='h3'>TEST</Header>
-                          <Image size='medium' src={MediaParagraphPNG} />
+                          <Header as='h3'>TIN PHÁP LUẬT</Header>
+                          {this.props.isNewsLoading == false && 
+                            <div style = {{'display':'table'}}>
+                              <Image as ='a'  verticalAlign = 'middle' floated = 'left' size = 'tiny' src={this.props.news.data[3].image} href = {this.props.news.data[3].linkToNews}/>
+                              <Header as='a' className = 'NewsHeadline' size = 'tiny' href = {this.props.news.data[3].linkToNews}>{this.props.news.data[3].headLines}
+                              </Header>
+                            </div>
+                          }
+                          {this.props.isNewsLoading == true && 
+                            <Image size='medium' src={MediaParagraphPNG} />
+                          }
                         </Segment>
                       </Grid.Row>
                       <Grid.Row>
                         <Segment className="NewsSegment" basic>
-                          <Image size='medium' src={MediaParagraphPNG} />
+                          {this.props.isNewsLoading == false && 
+                            <div style = {{'display':'table'}}>
+                              <Image as ='a' verticalAlign = 'middle' floated = 'left' size = 'tiny' src={this.props.news.data[4].image} href = {this.props.news.data[4].linkToNews}/>
+                              <Header as='a' className = 'NewsHeadline' size = 'tiny' href = {this.props.news.data[4].linkToNews}>{this.props.news.data[4].headLines}
+                              </Header>
+                            </div>
+                          }
+                          {this.props.isNewsLoading == true && 
+                            <Image size='medium' src={MediaParagraphPNG} />
+                          }
                         </Segment>
                       </Grid.Row>
                       <Grid.Row>
                         <Segment className="NewsSegment" basic>
-                          <Image size='medium' src={MediaParagraphPNG} />
+                          {this.props.isNewsLoading == false && 
+                            <div style = {{'display':'table'}}>
+                              <Image as ='a'  verticalAlign = 'middle' floated = 'left' size = 'tiny' src={this.props.news.data[5].image} href = {this.props.news.data[5].linkToNews}/>
+                              <Header as='a' className = 'NewsHeadline' size = 'tiny' href = {this.props.news.data[5].linkToNews}>{this.props.news.data[5].headLines}
+                              </Header>
+                            </div>
+                          }
+                          {this.props.isNewsLoading == true && 
+                            <Image size='medium' src={MediaParagraphPNG} />
+                          }
                         </Segment>
                       </Grid.Row>
                     </Grid.Column>

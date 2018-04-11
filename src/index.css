@@ -132,3 +132,7 @@ body{
 .BlockContent{
   padding: 0 !important;
 }
+
+.NewsHeadline:hover{
+  color: #1745a3 !important;
+}
