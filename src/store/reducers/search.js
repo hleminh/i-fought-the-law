@@ -1,6 +1,5 @@
-import * as actionTypes from '../actions/actionTypes';
-import {updateObject} from '../../shared/utilities';
-
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../../shared/utilities";
 
 const initialState = {
   results: [],
@@ -22,15 +21,15 @@ const reducer = (state = initialState, action) => {
 };
 
 const searchStart = (state, action) => {
-  return updateObject(state, {isLoading: true, error: null});
+  return updateObject(state, { isLoading: true, error: null });
 };
 
 const searchSuccess = (state, action) => {
-  return updateObject(state, {isLoading: false, results: action.results});
+  return updateObject(state, { isLoading: false, results: action.results });
 };
 
 const searchFail = (state, action) => {
-  return updateObject(state, {isLoading: false, error: action.errorMsg});
+  return updateObject(state, { isLoading: false, error: action.errorMsg });
 };
 
 export default reducer;

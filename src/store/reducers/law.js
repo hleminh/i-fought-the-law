@@ -1,5 +1,5 @@
-import * as actionTypes from '../actions/actionTypes';
-import {updateObject} from '../../shared/utilities';
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../../shared/utilities";
 
 const initialState = {
   chapters: [],
@@ -31,28 +31,40 @@ const reducer = (state = initialState, action) => {
 };
 
 const getChapterListStart = (state, action) => {
-  return updateObject(state, {listLoading: true, listError: null});
+  return updateObject(state, { listLoading: true, listError: null });
 };
 
 const getChapterListSuccess = (state, action) => {
-  return updateObject(state, {chapters: action.chapters, listLoading: false});
+  return updateObject(state, { chapters: action.chapters, listLoading: false });
 };
 
 const getChapterListFail = (state, action) => {
-  return updateObject(state, {listError: action.errorMsg, listLoading: false});
+  return updateObject(state, {
+    listError: action.errorMsg,
+    listLoading: false
+  });
 };
 
-
 const getChapterDetailStart = (state, action) => {
-  return updateObject(state, {articlesLoading: true, articlesError: null, currentChapter: action.currentChapter});
+  return updateObject(state, {
+    articlesLoading: true,
+    articlesError: null,
+    currentChapter: action.currentChapter
+  });
 };
 
 const getChapterDetailSuccess = (state, action) => {
-  return updateObject(state, {articlesLoading: false, articles: action.articles});
+  return updateObject(state, {
+    articlesLoading: false,
+    articles: action.articles
+  });
 };
 
 const getChapterDetailFail = (state, action) => {
-  return updateObject(state, {articlesLoading: false, articlesError: action.errorMsg});
+  return updateObject(state, {
+    articlesLoading: false,
+    articlesError: action.errorMsg
+  });
 };
 
 export default reducer;

@@ -1,12 +1,14 @@
-import {put} from 'redux-saga/effects';
+import { put } from "redux-saga/effects";
 
-import axios from '../../axios-law';
-import * as actions from '../actions/index';
+import axios from "../../axios-law";
+import * as actions from "../actions/index";
 
 export function* search(action) {
   yield put(actions.searchStart());
   try {
-    let url = yield `/articles/getall?page=${action.pageIndex}&item=${action.itemPerPage}&keyword=${action.keyword}`;
+    let url = yield `/articles/getall?page=${action.pageIndex}&item=${
+      action.itemPerPage
+    }&keyword=${action.keyword}`;
     if (action.chapterId) {
       url += yield `chapter=${action.chapterId}`;
     }

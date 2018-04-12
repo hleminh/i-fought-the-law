@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 export const getChapterList = () => {
   return {
@@ -12,14 +12,14 @@ export const getChapterListStart = () => {
   };
 };
 
-export const getChapterListSuccess = (chapterList) => {
+export const getChapterListSuccess = chapterList => {
   return {
     type: actionTypes.GET_LIST_CHAPTER_SUCCESS,
     chapters: chapterList
   };
 };
 
-export const getChapterListFail = (errorMsg) => {
+export const getChapterListFail = errorMsg => {
   return {
     type: actionTypes.GET_LIST_CHAPTER_FAIL,
     errorMsg: errorMsg
@@ -35,27 +35,26 @@ export const getChapterDetail = (currentChapter, pageIndex, itemPerPage) => {
   };
 };
 
-export const getChapterDetailStart = (currentChapter) => {
+export const getChapterDetailStart = currentChapter => {
   return {
     type: actionTypes.GET_CHAPTER_DETAIL_START,
     currentChapter: currentChapter
-  }
+  };
 };
 
-export const getChapterDetailSuccess = (articleList) => {
+export const getChapterDetailSuccess = articleList => {
   return {
     type: actionTypes.GET_CHAPTER_DETAIL_SUCCESS,
     articles: articleList
   };
 };
 
-export const getChapterDetailFail = (errorMsg) => {
+export const getChapterDetailFail = errorMsg => {
   return {
     type: actionTypes.GET_CHAPTER_DETAIL_FAIL,
     errorMsg: errorMsg
   };
 };
-
 
 export const search = (keyword, pageIndex, itemPerPage, chapterId) => {
   return {
@@ -64,6 +63,5 @@ export const search = (keyword, pageIndex, itemPerPage, chapterId) => {
     pageIndex: pageIndex,
     itemPerPage: itemPerPage,
     chapterId: chapterId
-  }
+  };
 };
-

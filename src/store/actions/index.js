@@ -7,17 +7,13 @@ export {
   getChapterDetailStart,
   getChapterDetailSuccess,
   getChapterDetailFail
-}from './law';
+} from "./law";
 
-export {
-  searchFail,
-  searchStart,
-  searchSuccess
-}from './search';
+export { searchFail, searchStart, searchSuccess } from "./search";
 
 export {
   getAllNews,
   getAllNewsStart,
   getAllNewsSuccess,
   getAllNewsFail
-}from './news'
+} from "./news";

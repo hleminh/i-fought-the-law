@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class TimeStamp extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        var today = new Date();
-        var date = today.getHours() + ":" + today.getMinutes();
+    var today = new Date();
+    var date = today.getHours() + ":" + today.getMinutes();
 
-        this.state = {
-            date: date
-        };
-    }
+    this.state = {
+      date: date
+    };
+  }
 
-    render() {
-        return (
-            <span className='date'>
-                {this.props.by} {this.state.date}
-            </span>
-        );
-    }
+  render() {
+    return (
+      <span className="date">
+        {this.props.by} {this.state.date}
+      </span>
+    );
+  }
 }
 
 export default TimeStamp;

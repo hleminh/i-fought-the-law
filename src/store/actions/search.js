@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 export const searchStart = () => {
   return {
@@ -6,16 +6,16 @@ export const searchStart = () => {
   };
 };
 
-export const searchSuccess = (results) => {
+export const searchSuccess = results => {
   return {
     type: actionTypes.SEARCH_SUCCESS,
     results: results
   };
 };
 
-export const searchFail = (errorMsg) => {
+export const searchFail = errorMsg => {
   return {
     type: actionTypes.SEARCH_FAIL,
     errorMsg: errorMsg
-  }
+  };
 };

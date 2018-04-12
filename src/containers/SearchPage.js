@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import EntryList from '../components/EntryList/EntryList';
-import SearchBar from '../components/SearchBar';
-import { Container } from 'semantic-ui-react';
+import React, { Component } from "react";
+import EntryList from "../components/EntryList/EntryList";
+import SearchBar from "../components/SearchBar";
+import { Container } from "semantic-ui-react";
 
 class SearchPage extends Component {
-
   render() {
     return (
       <div className="Body">
@@ -21,9 +20,11 @@ class SearchPage extends Component {
             handleEditSubmit={this.props.handleEditSubmit}
             handleSaveSubmit={this.props.handleSaveSubmit}
             handleUnSaveSubmit={this.props.handleUnSaveSubmit}
-            dataList={this.props.dataList} />
+            dataList={this.props.dataList}
+          />
         </Container>
-      </div>);
+      </div>
+    );
   }
 }
 

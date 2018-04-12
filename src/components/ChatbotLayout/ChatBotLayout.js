@@ -1,27 +1,23 @@
-import React, { Component } from 'react';
-import {
-  Button,
-  Icon,
-  Popup,
-} from 'semantic-ui-react';
-import ChatBot from './Chatbot/ChatBot';
+import React, { Component } from "react";
+import { Button, Icon, Popup } from "semantic-ui-react";
+import ChatBot from "./Chatbot/ChatBot";
 
 class ChatBotLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'chatBoxOpen': false,
-    }
+      chatBoxOpen: false
+    };
   }
 
   handleChatBoxOpenButtonClick(e) {
     if (this.state.chatBoxOpen) {
       this.setState({
-        'chatBoxOpen': false,
+        chatBoxOpen: false
       });
     } else {
       this.setState({
-        'chatBoxOpen': true,
+        chatBoxOpen: true
       });
     }
   }
@@ -32,23 +28,32 @@ class ChatBotLayout extends Component {
 
   render() {
     return (
-      <div className='ChatBotLayout'>
-        {this.state.chatBoxOpen &&
-          <ChatBot handleExitButtonClick={this.handleChatBoxOpenButtonClick.bind(this)} />
-        }
-        {!this.state.chatBoxOpen &&
+      <div className="ChatBotLayout">
+        {this.state.chatBoxOpen && (
+          <ChatBot
+            handleExitButtonClick={this.handleChatBoxOpenButtonClick.bind(this)}
+          />
+        )}
+        {!this.state.chatBoxOpen && (
           <Popup
             trigger={
-              <Button className='ChatBoxOpenButton' attached='top' ref={this.handleChatBotLayoutButtonRef.bind(this)} onClick={this.handleChatBoxOpenButtonClick.bind(this)} size='large' color='brown'>
+              <Button
+                className="ChatBoxOpenButton"
+                attached="top"
+                ref={this.handleChatBotLayoutButtonRef.bind(this)}
+                onClick={this.handleChatBoxOpenButtonClick.bind(this)}
+                size="large"
+                color="brown"
+              >
                 <Button.Content>
                   Trò chuyện với Chat Bot &nbsp;
-                  <Icon name='comment' />
+                  <Icon name="comment" />
                 </Button.Content>
               </Button>
             }
-            content='Mở cửa sổ trò chuyện'
+            content="Mở cửa sổ trò chuyện"
           />
-        }
+        )}
       </div>
     );
   }

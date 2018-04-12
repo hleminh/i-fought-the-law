@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import Definition from './Definition';
-import { Card, Icon, Button, Form, Modal } from 'semantic-ui-react';
+import React, { Component } from "react";
+import Definition from "./Definition";
+import { Card, Icon, Button, Form, Modal } from "semantic-ui-react";
 
 class Entry extends Component {
   constructor(props) {
     super(props);
     this.state = {
       editFormOpen: false,
-      modalOpen: false,
-    }
+      modalOpen: false
+    };
   }
 
   componentWillMount() {
@@ -22,11 +22,11 @@ class Entry extends Component {
       // console.log('mount savedEntriesId', savedEntriesId);
       if (savedEntriesId.includes(this.props.data._id)) {
         this.setState({
-          saved: true,
+          saved: true
         });
       } else {
         this.setState({
-          saved: false,
+          saved: false
         });
       }
     }
@@ -44,11 +44,11 @@ class Entry extends Component {
       // console.log('nextprops savedEntriesId', savedEntriesId);
       if (savedEntriesId.includes(this.props.data._id)) {
         this.setState({
-          saved: true,
+          saved: true
         });
       } else {
         this.setState({
-          saved: false,
+          saved: false
         });
       }
     }
@@ -59,52 +59,52 @@ class Entry extends Component {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.voice = voices[10];
-    msg.voiceURI = 'native';
+    msg.voiceURI = "native";
     msg.volume = 1;
     msg.rate = 1;
     msg.pitch = 0;
     msg.text = this.props.data.kana;
-    msg.lang = 'ja';
+    msg.lang = "ja";
     window.speechSynthesis.speak(msg);
-  };
+  }
 
   handleEditButton(e) {
     e.preventDefault();
     this.setState({
-      editFormOpen: true,
+      editFormOpen: true
     });
   }
 
   handleEditCancelButton(e) {
     e.preventDefault();
     this.setState({
-      editFormOpen: false,
+      editFormOpen: false
     });
   }
 
   handleModalOpen(e) {
     e.preventDefault();
     this.setState({
-      modalOpen: true,
-    })
+      modalOpen: true
+    });
   }
 
   handleEditSubmitButton(e) {
     e.preventDefault();
     this.setState({
-      editFormOpen: false,
+      editFormOpen: false
     });
     var editData = {
       _id: this.props.data._id,
       id: this.props.data.id,
       origin: this.refs.origin.value,
       kana: this.refs.kana.value,
-      definition: JSON.parse(this.refs.definition.value),
-    }
-    this.props.handleEditSubmitButton(editData, (success) => {
+      definition: JSON.parse(this.refs.definition.value)
+    };
+    this.props.handleEditSubmitButton(editData, success => {
       if (!success) {
         this.setState({
-          editFormOpen: true,
+          editFormOpen: true
         });
       }
     });
@@ -113,31 +113,32 @@ class Entry extends Component {
   handleDeleteSubmitButton(e) {
     e.preventDefault();
     this.setState({
-      modalOpen: false,
+      modalOpen: false
     });
-    this.props.handleDeleteSubmit(this.props.data._id, (success, oldData) => {
-
-    });
+    this.props.handleDeleteSubmit(
+      this.props.data._id,
+      (success, oldData) => {}
+    );
   }
 
   handleDeleteCancelButton(e) {
     e.preventDefault();
     this.setState({
-      modalOpen: false,
+      modalOpen: false
     });
   }
 
   handleSaveButton(e) {
     e.preventDefault();
     this.setState({
-      saved: true,
+      saved: true
     });
     this.props.handleSaveSubmit(this.props.data, (success, err) => {
       if (!success) {
         // console.log('save failed');
         // console.log(err);
         this.setState({
-          saved: false,
+          saved: false
         });
       }
     });
@@ -146,14 +147,14 @@ class Entry extends Component {
   handleUnSaveButton(e) {
     e.preventDefault();
     this.setState({
-      saved: false,
+      saved: false
     });
     this.props.handleUnSaveSubmit(this.props.data, (success, err) => {
       if (!success) {
         // console.log('unsave failed');
         // console.log(err);
         this.setState({
-          saved: true,
+          saved: true
         });
       }
     });
@@ -167,74 +168,90 @@ class Entry extends Component {
             <Card.Content>
               <Card.Header>
                 {this.props.data.origin}
-                <Button circular={true} floated='right' active={false} icon={
-                  <Icon className=' volume up icon'>
-                  </Icon>
-                }
+                <Button
+                  circular={true}
+                  floated="right"
+                  active={false}
+                  icon={<Icon className=" volume up icon" />}
                   onClick={this.handleTTS.bind(this)}
-                >
-                </Button>
-                {this.props.userAccount && !this.state.saved &&
-                  <Button circular={true} floated='right' active={false} icon={
-                    <Icon className='empty star icon'>
-                    </Icon>
-                  }
-                    onClick={this.handleSaveButton.bind(this)}
-                  >
-                  </Button>
-                }
+                />
+                {this.props.userAccount &&
+                  !this.state.saved && (
+                    <Button
+                      circular={true}
+                      floated="right"
+                      active={false}
+                      icon={<Icon className="empty star icon" />}
+                      onClick={this.handleSaveButton.bind(this)}
+                    />
+                  )}
 
-                {this.props.userAccount && this.state.saved &&
-                  <Button circular={true} floated='right' active={false} icon={
-                    <Icon className='star icon'>
-                    </Icon>
-                  }
-                    onClick={this.handleUnSaveButton.bind(this)}
-                  >
-                  </Button>
-                }
+                {this.props.userAccount &&
+                  this.state.saved && (
+                    <Button
+                      circular={true}
+                      floated="right"
+                      active={false}
+                      icon={<Icon className="star icon" />}
+                      onClick={this.handleUnSaveButton.bind(this)}
+                    />
+                  )}
 
-                {this.props.userAccount && this.props.userAccount.user.admin &&
-                  <Button circular={true} floated='right' active={false} icon={
-                    <Icon className='edit icon'>
-                    </Icon>
-                  }
-                    onClick={this.handleEditButton.bind(this)}
-                  >
-                  </Button>
-                }
-                {this.props.userAccount && this.props.userAccount.user.admin &&
-                  <Modal size='tiny' trigger={
-                    <Button circular={true} floated='right' active={false} icon={
-                      <Icon className='trash icon'>
-                      </Icon>
-                    }
-                      onClick={this.handleModalOpen.bind(this)}
+                {this.props.userAccount &&
+                  this.props.userAccount.user.admin && (
+                    <Button
+                      circular={true}
+                      floated="right"
+                      active={false}
+                      icon={<Icon className="edit icon" />}
+                      onClick={this.handleEditButton.bind(this)}
+                    />
+                  )}
+                {this.props.userAccount &&
+                  this.props.userAccount.user.admin && (
+                    <Modal
+                      size="tiny"
+                      trigger={
+                        <Button
+                          circular={true}
+                          floated="right"
+                          active={false}
+                          icon={<Icon className="trash icon" />}
+                          onClick={this.handleModalOpen.bind(this)}
+                        />
+                      }
+                      open={this.state.modalOpen}
                     >
-                    </Button>
-                  }
-                    open={this.state.modalOpen}
-                  >
-                    <Modal.Header>Xác nhận xóa?</Modal.Header>
-                    <Modal.Content>
-                      <Button.Group fluid>
-                        <Button type='submit' onClick={this.handleDeleteCancelButton.bind(this)}>Cancel</Button>
-                        <Button.Or />
-                        <Button type='submit' color='red' onClick={this.handleDeleteSubmitButton.bind(this)}>Xóa</Button>
-                      </Button.Group>
-                    </Modal.Content>
-                  </Modal>
-                }
+                      <Modal.Header>Xác nhận xóa?</Modal.Header>
+                      <Modal.Content>
+                        <Button.Group fluid>
+                          <Button
+                            type="submit"
+                            onClick={this.handleDeleteCancelButton.bind(this)}
+                          >
+                            Cancel
+                          </Button>
+                          <Button.Or />
+                          <Button
+                            type="submit"
+                            color="red"
+                            onClick={this.handleDeleteSubmitButton.bind(this)}
+                          >
+                            Xóa
+                          </Button>
+                        </Button.Group>
+                      </Modal.Content>
+                    </Modal>
+                  )}
               </Card.Header>
-              <Card.Meta>
-                {this.props.data.kana}
-              </Card.Meta>
+              <Card.Meta>{this.props.data.kana}</Card.Meta>
               <Card.Description>
                 <Definition definition={this.props.data.definition} />
               </Card.Description>
             </Card.Content>
           </Card>
-        </div>);
+        </div>
+      );
     } else {
       return (
         <Card fluid centered>
@@ -242,24 +259,44 @@ class Entry extends Component {
             <Form onSubmit={this.handleEditSubmitButton.bind(this)}>
               <Form.Field required>
                 <label>Origin</label>
-                <input ref="origin" placeholder='Enter origin' defaultValue={this.props.data.origin} />
+                <input
+                  ref="origin"
+                  placeholder="Enter origin"
+                  defaultValue={this.props.data.origin}
+                />
               </Form.Field>
               <Form.Field required>
                 <label>Kana</label>
-                <input ref="kana" placeholder='Enter kana' defaultValue={this.props.data.kana} />
+                <input
+                  ref="kana"
+                  placeholder="Enter kana"
+                  defaultValue={this.props.data.kana}
+                />
               </Form.Field>
               <Form.Field required>
                 <label>Definition</label>
-                <input ref="definition" placeholder='Enter definition' defaultValue={JSON.stringify(this.props.data.definition)} />
+                <input
+                  ref="definition"
+                  placeholder="Enter definition"
+                  defaultValue={JSON.stringify(this.props.data.definition)}
+                />
               </Form.Field>
               <Button.Group fluid>
-                <Button type='submit' onClick={this.handleEditCancelButton.bind(this)}>Cancel</Button>
+                <Button
+                  type="submit"
+                  onClick={this.handleEditCancelButton.bind(this)}
+                >
+                  Cancel
+                </Button>
                 <Button.Or />
-                <Button type='submit' color='blue'>Submit</Button>
+                <Button type="submit" color="blue">
+                  Submit
+                </Button>
               </Button.Group>
             </Form>
           </Card.Content>
-        </Card>);
+        </Card>
+      );
     }
   }
 }

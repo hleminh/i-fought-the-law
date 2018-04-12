@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Definition extends Component {
   render() {
-    return (
-      <span className="Definition">
-        {this.props.definition}
-      </span>
-    );
+    return <span className="Definition">{this.props.definition}</span>;
   }
 }
 

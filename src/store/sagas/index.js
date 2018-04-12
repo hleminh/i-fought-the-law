@@ -1,9 +1,9 @@
-import {all, takeLatest} from 'redux-saga/effects';
+import { all, takeLatest } from "redux-saga/effects";
 
-import * as actionTypes from '../actions/actionTypes';
-import {getChapterDetail, getChapterList} from './law';
-import {search} from './search';
-import { getAllNews } from './news';
+import * as actionTypes from "../actions/actionTypes";
+import { getChapterDetail, getChapterList } from "./law";
+import { search } from "./search";
+import { getAllNews } from "./news";
 
 export function* watchGetLaws() {
   yield all([
@@ -13,13 +13,9 @@ export function* watchGetLaws() {
 }
 
 export function* watchSearch() {
-  yield all([
-    takeLatest(actionTypes.SEARCH, search)
-  ]);
+  yield all([takeLatest(actionTypes.SEARCH, search)]);
 }
 
 export function* watchNews() {
-  yield all([
-    takeLatest(actionTypes.GET_ALL_NEWS, getAllNews)
-  ]);
+  yield all([takeLatest(actionTypes.GET_ALL_NEWS, getAllNews)]);
 }

@@ -1,4 +1,4 @@
-body{
+body {
   background: #fafafa !important;
 }
 
@@ -6,34 +6,34 @@ body{
   margin-top: 40px;
 }
 
-.AboutBody{
+.AboutBody {
   margin-top: 40px;
 }
 
-.Menu{
+.Menu {
   display: inline-block !important;
 }
 
-.MenuItemLower:hover{
+.MenuItemLower:hover {
   color: #1745a3 !important;
   border-bottom: solid 2px #1745a3 !important;
 }
 
-.MenuItemLower.active{
+.MenuItemLower.active {
   color: #1745a3 !important;
   border-bottom: solid 2px #1745a3 !important;
 }
 
-.MenuItemUpper:hover{
+.MenuItemUpper:hover {
   color: #1745a3 !important;
   background: none !important;
 }
 
-.MenuContainer{
+.MenuContainer {
   display: inline-block;
 }
 
-.MenuLayout{
+.MenuLayout {
   box-sizing: border-box;
   background: white;
   -webkit-box-shadow: 0 4px 6px -6px #222;
@@ -41,72 +41,72 @@ body{
   box-shadow: 0 4px 6px -6px #222;
 }
 
-.Definition{
+.Definition {
   white-space: pre-line;
   color: black !important;
 }
 
-.Entry{
+.Entry {
   margin-top: 8px;
   margin-bottom: 8px;
 }
 
-.EntryList{
+.EntryList {
   margin-top: 50px;
 }
 
-.ChatBoxOpenButton{
+.ChatBoxOpenButton {
   -webkit-box-shadow: 0 4px 6px -6px #222;
   -moz-box-shadow: 0 4px 6px -6px #222;
   box-shadow: 0 4px 6px -6px #222;
 }
 
-.ChatBotLayout{
+.ChatBotLayout {
   position: fixed;
   right: 20px;
   bottom: 0px;
 }
 
-.ChatBotHeaderContainer{
-  background: #B27C00 !important;
+.ChatBotHeaderContainer {
+  background: #b27c00 !important;
 }
 
-.ChatBotHeader{
+.ChatBotHeader {
   color: white !important;
 }
 
-.ChatBotMessageContainer{
+.ChatBotMessageContainer {
   height: 400px;
   overflow-y: auto;
 }
 
-.UserMessage{
+.UserMessage {
   float: right;
   border-radius: 8px !important;
   word-wrap: break-word;
   word-break: break-word;
 }
 
-.UserMessageCol{
+.UserMessageCol {
   padding: 0 !important;
 }
 
-.BotMessage{
+.BotMessage {
   float: left;
   border-radius: 8px !important;
   word-wrap: break-word;
   word-break: break-word;
 }
 
-.BotAvatarCol{
+.BotAvatarCol {
   padding: 0 !important;
 }
 
-.BotMessageCol{
+.BotMessageCol {
   padding: 0 !important;
 }
 
-.MessageContainer{
+.MessageContainer {
   padding: 0 !important;
   margin-left: 8px;
   margin-right: 8px;
@@ -116,23 +116,23 @@ body{
   width: 100%;
 }
 
-.MessageList{
+.MessageList {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
 
-.NewsSegment{
+.NewsSegment {
   padding: 0 !important;
 }
 
-.BlockHeader{
+.BlockHeader {
   background: #1745a3 !important;
 }
 
-.BlockContent{
+.BlockContent {
   padding: 0 !important;
 }
 
-.NewsHeadline:hover{
+.NewsHeadline:hover {
   color: #1745a3 !important;
 }

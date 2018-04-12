@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
-import Entry from './Entry/Entry';
+import React, { Component } from "react";
+import Entry from "./Entry/Entry";
 
 class EntryList extends Component {
-  componentDidMount() {
-  };
+  componentDidMount() {}
 
-  componentWillReceiveProps(nextProps) {
-  }
+  componentWillReceiveProps(nextProps) {}
 
   render() {
-    const entries = this.props.dataList.map((data) => (
+    const entries = this.props.dataList.map(data => (
       <Entry
         userAccount={this.props.userAccount}
         handleDeleteSubmit={this.props.handleDeleteSubmit}
@@ -17,14 +15,11 @@ class EntryList extends Component {
         handleSaveSubmit={this.props.handleSaveSubmit}
         handleUnSaveSubmit={this.props.handleUnSaveSubmit}
         key={data._id}
-        data={data} />
+        data={data}
+      />
     ));
 
-    return (
-      <div className="EntryList">
-        {entries}
-      </div>
-    );
+    return <div className="EntryList">{entries}</div>;
   }
 }
 

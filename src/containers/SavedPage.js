@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import EntryList from '../components/EntryList/EntryList';
-import { Container } from 'semantic-ui-react';
-import { Redirect } from 'react-router';
+import React, { Component } from "react";
+import EntryList from "../components/EntryList/EntryList";
+import { Container } from "semantic-ui-react";
+import { Redirect } from "react-router";
 
 class SavedPage extends Component {
   render() {
@@ -15,15 +15,14 @@ class SavedPage extends Component {
               handleEditSubmit={this.props.handleEditSubmit}
               handleSaveSubmit={this.props.handleSaveSubmit}
               handleUnSaveSubmit={this.props.handleUnSaveSubmit}
-              dataList={this.props.dataList} />
+              dataList={this.props.dataList}
+            />
           </Container>
-        </div>);
-    } else {
-      return (
-        <Redirect to='/search' />
+        </div>
       );
+    } else {
+      return <Redirect to="/search" />;
     }
-
   }
 }
 
