@@ -24,3 +24,10 @@ export const getAllNewsFail = () => {
     type: actionTypes.GET_ALL_NEWS_FAIL
   };
 };
+
+export const toNewsDetail = (news) => {
+  return{
+    type: actionTypes.TO_NEWS_DETAIL,
+    news: news,
+  }
+}

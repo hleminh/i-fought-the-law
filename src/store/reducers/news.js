@@ -3,7 +3,8 @@ import { updateObject } from "../../shared/utilities";
 
 const initialState = {
   news: [],
-  newsLoading: true
+  newsLoading: true,
+  currentNews: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,10 +15,16 @@ const reducer = (state = initialState, action) => {
       return getAllNewsSuccess(state, action);
     case actionTypes.GET_ALL_NEWS_FAIL:
       return getAllNewsFail(state, action);
+    case actionTypes.TO_NEWS_DETAIL:
+      return toNewsDetail(state, action);
     default:
       return state;
   }
 };
+
+const toNewsDetail = (state, action) => {
+  return updateObject(state, {currentNews: action.news});
+}
 
 const getAllNewsStart = (state, action) => {
   return updateObject(state, { newsLoading: true });

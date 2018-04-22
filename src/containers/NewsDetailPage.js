@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import Dotdotdot from "react-clamp-lines";
 import * as actions from "../store/actions/index";
 import ParagraphPNG from "../assets/images/paragraph.png";
-import { Redirect } from "react-router";
+import renderHTML from "react-render-html";
 import FooterLayout from "../components/FooterLayout";
 
 
 import {
-  Advertisement,
   Card,
   Container,
   Grid,
@@ -24,69 +23,60 @@ import {
   Breadcrumb
 } from "semantic-ui-react";
 
-class NewsPage extends Component {
+class NewsDetailPage extends Component {
   componentWillMount() {
-    if (this.props.news.data == null)
-      this.props.onGetAllNews();
+    if (this.props.news.data == null) this.props.onGetAllNews();
   }
 
-  onNewsHeadlineClick(news){
+  onNewsHeadlineClick(news) {
     this.props.onNewsHeadlineClicked(news);
   }
 
   render() {
-    var newsList = [];
-    if (this.props.isNewsLoading == false) {
-      newsList = this.props.news.data.map(news => (
-        <Grid.Row key = {news._id}>
-          <Card fluid>
-            <Card.Content
-              style={{
-                paddingTop: "0",
-                paddingBottom: "0",
-                paddingLeft: "0"
-              }}
-            >
-              <Image
-                verticalAlign="top"
-                floated="left"
-                size="medium"
-                src={news.image}
-                style={{ marginBottom: "0" }}
-              />
-              <Container style={{ marginTop: "14px" }} textAlign="right" fluid>
-                <Icon size="small" name="calendar outline" color="blue" />
-                <span style={{ fontSize: "12px" }}>{news.publishedDate}</span>
-              </Container>
-              <Header
-                className="NewsHeadline"
-                size="medium"
-                as='a'
-                onClick = {this.onNewsHeadlineClick.bind(this, news)}
-                style={{
-                  marginTop: "7px",
-                  marginBottom: "7px"
-                }}
-                href = {"/news/" + news._id}
-              >
-                {news.headLines}
-              </Header>
-              <Dotdotdot
-                buttons={false}
-                lines="3"
-                text={news.brief}
-                ellipsis="..."
-              />
-              <Container fluid textAlign="right">
-                <a href = {"/news/" + news._id} onClick = {this.onNewsHeadlineClick.bind(this, news)}>
-                  <Icon name="long arrow right" size="small" />
-                  <i>Xem tiếp</i>
-                </a>
-              </Container>
-            </Card.Content>
-          </Card>
-        </Grid.Row>
-      ));
+    if (this.props.isNewsLoading) {
+      var newsList = <Loader active={this.props.isNewsLoading} />;
+    } else {
+      if (this.props.currentNews == null) {
+        var currentNews = this.props.news.data.filter(
+          news => news._id == this.props.match.params.id
+        );
+        this.props.onNewsHeadlineClicked(currentNews[0]);
+      }
+      var newsList = [];
+      var newsListData = this.props.news.data.filter(
+        news => news._id !== this.props.match.params.id
+      );
+      newsListData = newsListData.slice(0, 4);
+      if (this.props.isNewsLoading == false) {
+        newsList = newsListData.map(news => (
+          <Grid.Column key={news._id} width={4}>
+            <Grid>
+              <Grid.Row>
+                <Image
+                  as="a"
+                  verticalAlign="middle"
+                  floated="left"
+                  size="medium"
+                  src={news.image}
+                  onClick={this.onNewsHeadlineClick.bind(this, news)}
+                  href={"/news/" + news._id}
+                />
+              </Grid.Row>
+              <Grid.Row>
+                <Header
+                  as="a"
+                  className="NewsHeadline"
+                  size="tiny"
+                  onClick={this.onNewsHeadlineClick.bind(this, news)}
+                  href={"/news/" + news._id}
+                >
+                  {news.headLines}
+                </Header>
+              </Grid.Row>
+            </Grid>
+          </Grid.Column>
+        ));
+      }
     }
 
     return (
@@ -102,32 +92,60 @@ class NewsPage extends Component {
                         <Icon name="home" />Trang chủ
                       </Breadcrumb.Section>
                       <Breadcrumb.Divider icon="right angle" />
-                      <Breadcrumb.Section active>
+                      <Breadcrumb.Section link as={Link} to="/news">
                         Tin tức pháp luật
+                      </Breadcrumb.Section>
+                      <Breadcrumb.Divider icon="right angle" />
+                      <Breadcrumb.Section active>
+                        {this.props.currentNews &&
+                          this.props.currentNews.headLines}
+                        {!this.props.currentNews && <p>...</p>}
                       </Breadcrumb.Section>
                     </Breadcrumb>
                   </Grid.Row>
                   <Grid.Row>
-                    <Header as="h3">
-                      TIN TỨC PHÁP LUẬT
-                      <Header.Subheader>
-                        <br />
-                        <i>
-                          Tin pháp luật, giải đáp Thông tin về các vụ án, các
-                          vấn đề an ninh trật tự, phổ biến kiến thức về các vấn
-                          đề thời sự pháp luật và văn bản pháp luật.
-                        </i>
-                      </Header.Subheader>
-                    </Header>
+                    <Card fluid>
+                      <Card.Content style={{ padding: "32px" }}>
+                        <Loader active={this.props.isNewsLoading} />
+                        {this.props.currentNews && (
+                          <div>
+                            <Icon
+                              size="small"
+                              name="calendar outline"
+                              color="blue"
+                            />
+                            {this.props.currentNews.publishedDate}
+                            {renderHTML(this.props.currentNews.newsHtml)}
+                          </div>
+                        )}
+                      </Card.Content>
+                    </Card>
                   </Grid.Row>
-                  {this.props.isNewsLoading ? (
-                    <Grid.Row>
-                      <Loader active={this.props.isNewsLoading} />
-                    </Grid.Row>
-                  ) : (
-                    newsList
-                  )}
                   <Grid.Row />
+                  <Grid.Row>
+                    <Grid.Column style={{ padding: "0" }}>
+                      <Header
+                        as={Link}
+                        to="/news/"
+                        className="NewsHeadline"
+                        block
+                        style={{
+                          display: "block"
+                        }}
+                      >
+                        TIN PHÁP LUẬT KHÁC
+                      </Header>
+                    </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>{newsList}</Grid.Row>
+                  <Grid.Row>
+                    <Container fluid textAlign="right">
+                      <a href="/news/">
+                        <Icon name="long arrow right" size="small" />
+                        <i>Xem tiếp</i>
+                      </a>
+                    </Container>
+                  </Grid.Row>
                 </Grid>
               </Grid.Column>
               <Grid.Column width={1} />
@@ -203,15 +221,16 @@ class NewsPage extends Component {
 const mapStateToProps = state => {
   return {
     news: state.news.news,
-    isNewsLoading: state.news.newsLoading
+    isNewsLoading: state.news.newsLoading,
+    currentNews: state.news.currentNews
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onGetAllNews: () => dispatch(actions.getAllNews()),
-    onNewsHeadlineClicked: (news) => dispatch(actions.toNewsDetail(news))
+    onNewsHeadlineClicked: news => dispatch(actions.toNewsDetail(news))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsDetailPage);

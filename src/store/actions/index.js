@@ -15,5 +15,6 @@ export {
   getAllNews,
   getAllNewsStart,
   getAllNewsSuccess,
-  getAllNewsFail
+  getAllNewsFail,
+  toNewsDetail,
 } from "./news";

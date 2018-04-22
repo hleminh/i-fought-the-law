@@ -26,6 +26,10 @@ class HomePage extends Component {
   pageIndex = 1;
   itemPerPage = 10;
 
+  onNewsHeadlineClick(news) {
+    this.props.onNewsHeadlineClicked(news);
+  }
+
   componentDidMount() {
     this.props.onGetAllNews();
     this.props.onGetChapterList();
@@ -118,13 +122,23 @@ class HomePage extends Component {
                               verticalAlign="top"
                               floated="left"
                               size="small"
+                              as="a"
+                              href={"/news/" + this.props.news.data[0]._id}
                               src={this.props.news.data[0].image}
+                              onClick={this.onNewsHeadlineClick.bind(
+                                this,
+                                this.props.news.data[0]
+                              )}
                             />
                             <Header
                               className="NewsHeadline"
                               size="tiny"
                               as="a"
-                              href={this.props.news.data[0].linkToNews}
+                              href={"/news/" + this.props.news.data[0]._id}
+                              onClick={this.onNewsHeadlineClick.bind(
+                                this,
+                                this.props.news.data[0]
+                              )}
                             >
                               {this.props.news.data[0].headLines}
                             </Header>
@@ -144,7 +158,11 @@ class HomePage extends Component {
                                 className="NewsHeadline"
                                 size="tiny"
                                 as="a"
-                                href={this.props.news.data[1].linkToNews}
+                                href={"/news/" + this.props.news.data[1]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[1]
+                                )}
                               >
                                 {this.props.news.data[1].headLines}
                               </Header>
@@ -156,7 +174,11 @@ class HomePage extends Component {
                                 className="NewsHeadline"
                                 size="tiny"
                                 as="a"
-                                href={this.props.news.data[2].linkToNews}
+                                href={"/news/" + this.props.news.data[2]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[2]
+                                )}
                               >
                                 {this.props.news.data[2].headLines}
                               </Header>
@@ -171,7 +193,7 @@ class HomePage extends Component {
                     <Grid.Column className="NewsColumn">
                       <Grid.Row>
                         <Segment className="NewsSegment" basic>
-                          <Header as="h3">TIN PHÁP LUẬT</Header>
+                          <Header as="h3">&nbsp;</Header>
                           {this.props.isNewsLoading == false && (
                             <div style={{ display: "table" }}>
                               <Image
@@ -180,13 +202,21 @@ class HomePage extends Component {
                                 floated="left"
                                 size="tiny"
                                 src={this.props.news.data[3].image}
-                                href={this.props.news.data[3].linkToNews}
+                                href={"/news/" + this.props.news.data[3]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[3]
+                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
-                                href={this.props.news.data[3].linkToNews}
+                                href={"/news/" + this.props.news.data[3]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[3]
+                                )}
                               >
                                 {this.props.news.data[3].headLines}
                               </Header>
@@ -206,14 +236,22 @@ class HomePage extends Component {
                                 verticalAlign="middle"
                                 floated="left"
                                 size="tiny"
+                                href={"/news/" + this.props.news.data[4]._id}
                                 src={this.props.news.data[4].image}
-                                href={this.props.news.data[4].linkToNews}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[4]
+                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
-                                href={this.props.news.data[4].linkToNews}
+                                href={"/news/" + this.props.news.data[4]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[4]
+                                )}
                               >
                                 {this.props.news.data[4].headLines}
                               </Header>
@@ -234,13 +272,21 @@ class HomePage extends Component {
                                 floated="left"
                                 size="tiny"
                                 src={this.props.news.data[5].image}
-                                href={this.props.news.data[5].linkToNews}
+                                href={"/news/" + this.props.news.data[5]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[5]
+                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
-                                href={this.props.news.data[5].linkToNews}
+                                href={"/news/" + this.props.news.data[5]._id}
+                                onClick={this.onNewsHeadlineClick.bind(
+                                  this,
+                                  this.props.news.data[5]
+                                )}
                               >
                                 {this.props.news.data[5].headLines}
                               </Header>
@@ -250,6 +296,14 @@ class HomePage extends Component {
                             <Image size="medium" src={MediaParagraphPNG} />
                           )}
                         </Segment>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Container fluid textAlign="right">
+                          <a href="/news/">
+                            <Icon name="long arrow right" size="small" />
+                            <i>Xem tiếp</i>
+                          </a>
+                        </Container>
                       </Grid.Row>
                     </Grid.Column>
                   </Grid.Row>
@@ -420,7 +474,8 @@ const mapStateToProps = state => {
     articles: state.laws.articles,
     isChapterDetailLoading: state.laws.detailLoading,
     news: state.news.news,
-    isNewsLoading: state.news.newsLoading
+    isNewsLoading: state.news.newsLoading,
+    currentNews: state.news.currentNews
   };
 };
 
@@ -429,7 +484,10 @@ const mapDispatchToProps = dispatch => {
     onGetAllNews: () => dispatch(actions.getAllNews()),
     onGetChapterList: () => dispatch(actions.getChapterList()),
     onGetChapterDetail: (currentChapter, pageIndex, itemPerPage) =>
-      dispatch(actions.getChapterDetail(currentChapter, pageIndex, itemPerPage))
+      dispatch(
+        actions.getChapterDetail(currentChapter, pageIndex, itemPerPage)
+      ),
+    onNewsHeadlineClicked: news => dispatch(actions.toNewsDetail(news))
   };
 };
 

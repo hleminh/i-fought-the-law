@@ -26,3 +26,4 @@ export const GET_ALL_NEWS = "GET_ALL_NEWS";
 export const GET_ALL_NEWS_START = "GET_ALL_NEWS_START";
 export const GET_ALL_NEWS_SUCCESS = "GET_ALL_NEWS_SUCCESS";
 export const GET_ALL_NEWS_FAIL = "GET_ALL_NEWS_FAIL";
+export const TO_NEWS_DETAIL = "TO_NEWS_DETAIL";
