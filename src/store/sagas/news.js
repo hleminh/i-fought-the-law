@@ -6,10 +6,22 @@ import * as actions from "../actions/index";
 export function* getAllNews(action) {
   yield put(actions.getAllNewsStart());
   try {
-    const response = yield axios.get("/news/all");
+    const url = `/news/all?page=${action.pageIndex}&perPage=${action.itemPerPage}`
+    const response = yield axios.get(url);
     yield put(actions.getAllNewsSuccess(response));
     console.log(response)
   } catch (error) {
     yield put(actions.getAllNewsFail());
+  }
+}
+
+export function* getNewsById(action) {
+  yield put(actions.getNewsByIdStart());
+  try {
+    const response = yield axios.get('/news/' + action.newsId);
+    yield put(actions.getNewsByIdSuccess(response));
+    console.log(response)
+  } catch (error) {
+    yield put(actions.getNewsByIdFail());
   }
 }
