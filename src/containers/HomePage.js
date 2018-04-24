@@ -28,7 +28,6 @@ class HomePage extends Component {
 
   componentDidMount() {
     this.props.onGetAllNews(1, 6);
-    this.props.onGetChapterList();
   }
 
   componentWillUpdate(nextProps) {
@@ -52,44 +51,44 @@ class HomePage extends Component {
   }
 
   render() {
-    const chapterList = this.props.chapters.map(chapter => (
-      <Menu.Item
-        id={chapter.id}
-        chapter={chapter}
-        onClick={this.handleChapterSelect.bind(this)}
-      >
-        Chương {chapter.order} : {chapter.title}
-      </Menu.Item>
-    ));
+    // const chapterList = this.props.chapters.map(chapter => (
+    //   <Menu.Item
+    //     id={chapter.id}
+    //     chapter={chapter}
+    //     onClick={this.handleChapterSelect.bind(this)}
+    //   >
+    //     Chương {chapter.order} : {chapter.title}
+    //   </Menu.Item>
+    // ));
 
-    const articleList = this.props.articles.map(article => (
-      <Table.Row id={article.id}>
-        <Table.Cell>
-          <Dotdotdot
-            buttons={false}
-            lines="3"
-            ellipsis="..."
-            text={article.order}
-          />
-        </Table.Cell>
-        <Table.Cell>
-          <Dotdotdot
-            buttons={false}
-            lines="3"
-            ellipsis="..."
-            text={article.title}
-          />
-        </Table.Cell>
-        <Table.Cell>
-          <Dotdotdot
-            buttons={false}
-            lines="3"
-            ellipsis="..."
-            text={article.content}
-          />
-        </Table.Cell>
-      </Table.Row>
-    ));
+    // const articleList = this.props.articles.map(article => (
+    //   <Table.Row id={article.id}>
+    //     <Table.Cell>
+    //       <Dotdotdot
+    //         buttons={false}
+    //         lines="3"
+    //         ellipsis="..."
+    //         text={article.order}
+    //       />
+    //     </Table.Cell>
+    //     <Table.Cell>
+    //       <Dotdotdot
+    //         buttons={false}
+    //         lines="3"
+    //         ellipsis="..."
+    //         text={article.title}
+    //       />
+    //     </Table.Cell>
+    //     <Table.Cell>
+    //       <Dotdotdot
+    //         buttons={false}
+    //         lines="3"
+    //         ellipsis="..."
+    //         text={article.content}
+    //       />
+    //     </Table.Cell>
+    //   </Table.Row>
+    // ));
 
     return (
       <div className="Body">
@@ -320,11 +319,11 @@ class HomePage extends Component {
                       fluid
                       vertical
                     >
-                      {this.props.isChapterListLoading ? (
+                      {/* {this.props.isChapterListLoading ? (
                         <Loader active={this.props.isChapterListLoading} />
                       ) : (
                         chapterList
-                      )}
+                      )} */}
                     </Menu>
                   </Card.Content>
                 </Card>
@@ -353,11 +352,11 @@ class HomePage extends Component {
                         </Table.Row>
                       </Table.Header>
                       <Table.Body>
-                        {this.props.isChapterDetailLoading ? (
+                        {/* {this.props.isChapterDetailLoading ? (
                           <Loader active={this.props.isChapterDetailLoading} />
                         ) : (
                           articleList
-                        )}
+                        )} */}
                       </Table.Body>
                     </Table>
                   </Card.Content>
@@ -425,10 +424,6 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
-    chapters: state.laws.chapters,
-    isChapterListLoading: state.laws.listLoading,
-    articles: state.laws.articles,
-    isChapterDetailLoading: state.laws.detailLoading,
     news: state.news.news,
     isNewsLoading: state.news.newsLoading,
     currentNews: state.news.currentNews
@@ -439,9 +434,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onGetAllNews: (pageIndex, itemPerPage) =>
       dispatch(actions.getAllNews(pageIndex, itemPerPage)),
-    onGetChapterList: () => dispatch(actions.getChapterList()),
-    onGetChapterDetail: (currentChapter, pageIndex, itemPerPage) =>
-      dispatch(actions.getChapterDetail(currentChapter, pageIndex, itemPerPage))
   };
 };
 

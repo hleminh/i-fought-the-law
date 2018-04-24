@@ -12,12 +12,16 @@ import {
   Form
 } from 'semantic-ui-react';
 
+import * as actions from '../store/actions/index';
+
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'moment/locale/vi';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './SearchBar.css';
+import classes from './SearchBar.css';
+import { connect } from 'react-redux';
 
 class SearchBar extends Component {
   lawClass = [
@@ -35,6 +39,26 @@ class SearchBar extends Component {
       startDate: null,
       endDate: null
     };
+  }
+
+  componentDidMount(){
+    this.props.onGetLawClassList();
+    this.props.onGetAgencyList();
+    this.props.onGetStatusList();
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.lawClassList !== this.props.lawClassList){
+      console.log(nextProps.lawClassList);
+      let lawClassOption = nextProps.lawClassList.map(lawClass => {
+        return {
+          key: lawClass.id,
+          value: lawClass.id,
+          text: lawClass.name
+        }
+      });
+      console.log(lawClassOption);
+    }
   }
 
   resetComponent = () => this.setState({ isLoading: false, results: [] });
@@ -124,38 +148,55 @@ class SearchBar extends Component {
           {this.state.advancedOptions && (
             <div style={{ margin: '10px' }}>
               <Grid>
-                <Grid.Row columns={3} divided>
-                  <Grid.Column>
-                    <DatePicker
-                      style={{width: '100%', display: 'block'}}
-                      customInput={
-                        <Button fluid>
-                          {!this.state.startDate && 'Từ ngày '}
-                          {this.state.startDate &&
-                            this.state.startDate
-                              .format('DD/MM/YYYY')
-                              .toString()}
-                        </Button>
-                      }
-                      selected={this.state.startDate}
-                      onChange={this.onStartDateChange}
-                    />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <DatePicker
-                      
-                      selected={this.state.endDate}
-                      onChange={this.onEndDateChange}
-                    />
-                  </Grid.Column>
+                <Grid.Row columns={4} divided>
+                  
                   <Grid.Column>
                     <Dropdown
                       fluid
                       placeholder="Loại văn bản"
                       search
                       selection
-                      options={this.lawClass}
+                      options={this.props.lawClassList.map(lawClass => {
+                        return {
+                          key: lawClass.id,
+                          value: lawClass.id,
+                          text: lawClass.name
+                        }
+                      })}
                     />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Dropdown
+                      fluid
+                      placeholder="Cơ quan ban hành"
+                      search
+                      selection
+                      options={this.props.agencyList.map(agency => {
+                        return {
+                          key: agency.id,
+                          value: agency.id,
+                          text: agency.name
+                        }
+                      })}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Dropdown
+                      fluid
+                      placeholder="Tình trạng hiệu lực"
+                      search
+                      selection
+                      options={this.props.validityStatusList.map(status => {
+                        return {
+                          key: status.id,
+                          value: status.id,
+                          text: status.name
+                        }
+                      })}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Input fluid placeholder='Người ký'/>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -167,4 +208,24 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+const mapStateToProps = state => {
+  return {
+    lawClassList: state.laws.lawClassList,
+    lawClassLoading: state.laws.lawClassLoading,
+    agencyList: state.laws.agencyList,
+    agencyListLoading: state.laws.agencyListLoading,
+    validityStatusList: state.laws.validityStatusList,
+    statusListLoading: state.laws.statusListLoading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetLawClassList: () => dispatch(actions.getLawClassList()),
+    onGetAgencyList: () => dispatch(actions.getListAgency()),
+    onGetStatusList: () => dispatch(actions.getValidityStatusList())
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
