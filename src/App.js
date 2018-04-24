@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import $ from "jquery";
+import moment from 'moment';
 import MenuLayout from "./components/MenuLayout";
 import ChatBotLayout from "./components/ChatbotLayout/ChatBotLayout";
 import { Route } from "react-router-dom";
@@ -23,6 +24,10 @@ class App extends Component {
       category: "jpn_vie",
       keyword: ""
     };
+  }
+
+  componentDidMount(){
+    moment.locale('vi');
   }
 
   handleNewSubmit(entry, category, callback) {

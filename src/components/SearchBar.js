@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Dropdown,
   Icon,
@@ -6,37 +6,41 @@ import {
   Header,
   Button,
   Grid,
-  Segment
-} from "semantic-ui-react";
+  Radio,
+  Segment,
+  Label,
+  Form
+} from 'semantic-ui-react';
 
-import $ from "jquery";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'moment/locale/vi';
 
-const chapters = [
-  { key: "c1", text: "Chương 1", value: "c1" },
-  { key: "c2", text: "Chương 2", value: "c2" },
-  { key: "c3", text: "Chương 3", value: "c3" },
-  { key: "c4", text: "Chương 4", value: "c4" },
-  { key: "c5", text: "Chương 5", value: "c5" },
-  { key: "c6", text: "Chương 6", value: "c6" },
-  { key: "c7", text: "Chương 7", value: "c7" },
-  { key: "c8", text: "Chương 8", value: "c8" },
-  { key: "c9", text: "Chương 9", value: "c9" },
-  { key: "c10", text: "Chương 10", value: "c10" },
-  { key: "c11", text: "Chương 11", value: "c11" },
-  { key: "c12", text: "Chương 12", value: "c12" }
-];
+import 'react-datepicker/dist/react-datepicker.css';
+import './SearchBar.css';
 
 class SearchBar extends Component {
+  lawClass = [
+    { key: 'TT', value: 'TT', text: 'Thông tư' },
+    { key: 'QD', value: 'TT', text: 'Quyết định' }
+  ];
+
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       results: [],
-      advancedOptions: false
+      advancedOptions: false,
+      searchType: 'title',
+      startDate: null,
+      endDate: null
     };
   }
 
   resetComponent = () => this.setState({ isLoading: false, results: [] });
+
+  onStartDateChange = date => this.setState({ startDate: date });
+  onEndDateChange = date => this.setState({ endDate: date });
 
   handleSubmitButton(e) {
     e.preventDefault();
@@ -47,6 +51,9 @@ class SearchBar extends Component {
   handleOnMouseDown(e) {
     // e.preventDefault();
   }
+
+  handleSearchRadioChange = (e, { value }) =>
+    this.setState({ searchType: value });
 
   handleAdvancedSearchButton(e) {
     if (!this.state.advancedOptions) {
@@ -63,70 +70,98 @@ class SearchBar extends Component {
   render() {
     return (
       <div className="SearchBar">
-        <Header
-          as="h3"
-          style={{
-            color: "#1745a3"
-          }}
-        >
+        <Header as="h3" style={{ color: '#1745a3' }}>
           TÌM VĂN BẢN LUẬT VIỆT NAM
         </Header>
-        <Grid>
-          <Grid.Column width={12}>
-            <Input
-              fluid
-              size="large"
-              className="SearchInput"
-              ref="searchInput"
-              icon={
-                <Icon
-                  color="blue"
-                  className="SearchIcon"
-                  name="search"
-                  onClick={this.handleSubmitButton.bind(this)}
-                  inverted
-                  circular
-                  link
-                />
-              }
-              placeholder="Nhập nội dung văn bản cần tìm..."
-            />
-          </Grid.Column>
-          <Grid.Column verticalAlign="bottom" textAlign="left" width={4}>
-            <Button
-              as="a"
-              style={{
-                background: "0",
-                padding: "0"
-              }}
-              onClick={this.handleAdvancedSearchButton.bind(this)}
-            >
-              {!this.state.advancedOptions && (
+        <Segment>
+          <Grid>
+            <Grid.Column width={16}>
+              <Input
+                fluid
+                size="large"
+                className="SearchInput"
+                ref="searchInput"
+                icon={
+                  <Icon
+                    color="blue"
+                    className="SearchIcon"
+                    name="search"
+                    onClick={this.handleSubmitButton.bind(this)}
+                    inverted
+                    circular
+                    link
+                  />
+                }
+                placeholder="Nhập nội dung văn bản cần tìm..."
+              />
+            </Grid.Column>
+            <div style={{ margin: '10px' }}>
+              <Button
+                as="a"
+                style={{ background: '0', padding: '0' }}
+                onClick={this.handleAdvancedSearchButton.bind(this)}
+              >
                 <span>
                   Tìm kiếm nâng cao <Icon name="caret down" />
                 </span>
-              )}
-              {this.state.advancedOptions && (
-                <span>
-                  Thu gọn <Icon name="caret up" />
-                </span>
-              )}
-            </Button>
-          </Grid.Column>
-        </Grid>
-        {this.state.advancedOptions && (
-          <Segment>
-            <Header as="h4">
-              <Icon color="blue" name="magnify" />Tìm kiếm nâng cao
-            </Header>
-            <Dropdown
-              placeholder="Chọn chương"
-              search
-              selection
-              options={chapters}
-            />
-          </Segment>
-        )}
+              </Button>
+              <Radio
+                style={{ marginLeft: '10px' }}
+                value="title"
+                label="Tiêu đề"
+                checked={this.state.searchType === 'title'}
+                onChange={this.handleSearchRadioChange}
+              />
+              <Radio
+                style={{ marginLeft: '10px' }}
+                value="number"
+                label="Số hiệu văn bản"
+                checked={this.state.searchType === 'number'}
+                onChange={this.handleSearchRadioChange}
+              />
+            </div>
+          </Grid>
+          {this.state.advancedOptions && (
+            <div style={{ margin: '10px' }}>
+              <Grid>
+                <Grid.Row columns={3} divided>
+                  <Grid.Column>
+                    <DatePicker
+                      style={{width: '100%', display: 'block'}}
+                      customInput={
+                        <Button fluid>
+                          {!this.state.startDate && 'Từ ngày '}
+                          {this.state.startDate &&
+                            this.state.startDate
+                              .format('DD/MM/YYYY')
+                              .toString()}
+                        </Button>
+                      }
+                      selected={this.state.startDate}
+                      onChange={this.onStartDateChange}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <DatePicker
+                      
+                      selected={this.state.endDate}
+                      onChange={this.onEndDateChange}
+                    />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Dropdown
+                      fluid
+                      placeholder="Loại văn bản"
+                      search
+                      selection
+                      options={this.lawClass}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </div>
+          )}
+        </Segment>
       </div>
     );
   }

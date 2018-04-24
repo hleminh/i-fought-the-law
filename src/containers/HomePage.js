@@ -112,7 +112,7 @@ class HomePage extends Component {
                       />
                     </Grid.Column>
                   </Grid.Row>
-                  <Grid.Row columns={2}>
+                  <Grid.Row colu  mns={2}>
                     <Grid.Column className="NewsColumn">
                       <Segment className="NewsSegment" basic>
                         <Header as="h3">TIN TỨC MỚI NHẤT</Header>
