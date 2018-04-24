@@ -3,7 +3,7 @@ import { all, takeLatest } from "redux-saga/effects";
 import * as actionTypes from "../actions/actionTypes";
 import { getChapterDetail, getChapterList } from "./law";
 import { search } from "./search";
-import { getAllNews } from "./news";
+import { getAllNews, getNewsById } from "./news";
 
 export function* watchGetLaws() {
   yield all([
@@ -17,5 +17,8 @@ export function* watchSearch() {
 }
 
 export function* watchNews() {
-  yield all([takeLatest(actionTypes.GET_ALL_NEWS, getAllNews)]);
+  yield all([
+    takeLatest(actionTypes.GET_ALL_NEWS, getAllNews),
+    takeLatest(actionTypes.GET_NEWS_BY_ID, getNewsById)
+  ]);
 }

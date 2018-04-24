@@ -26,12 +26,8 @@ class HomePage extends Component {
   pageIndex = 1;
   itemPerPage = 10;
 
-  onNewsHeadlineClick(news) {
-    this.props.onNewsHeadlineClicked(news);
-  }
-
   componentDidMount() {
-    this.props.onGetAllNews();
+    this.props.onGetAllNews(1, 6);
     this.props.onGetChapterList();
   }
 
@@ -125,20 +121,12 @@ class HomePage extends Component {
                               as="a"
                               href={"/news/" + this.props.news.data[0]._id}
                               src={this.props.news.data[0].image}
-                              onClick={this.onNewsHeadlineClick.bind(
-                                this,
-                                this.props.news.data[0]
-                              )}
                             />
                             <Header
                               className="NewsHeadline"
                               size="tiny"
                               as="a"
                               href={"/news/" + this.props.news.data[0]._id}
-                              onClick={this.onNewsHeadlineClick.bind(
-                                this,
-                                this.props.news.data[0]
-                              )}
                             >
                               {this.props.news.data[0].headLines}
                             </Header>
@@ -159,10 +147,6 @@ class HomePage extends Component {
                                 size="tiny"
                                 as="a"
                                 href={"/news/" + this.props.news.data[1]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[1]
-                                )}
                               >
                                 {this.props.news.data[1].headLines}
                               </Header>
@@ -175,10 +159,6 @@ class HomePage extends Component {
                                 size="tiny"
                                 as="a"
                                 href={"/news/" + this.props.news.data[2]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[2]
-                                )}
                               >
                                 {this.props.news.data[2].headLines}
                               </Header>
@@ -203,20 +183,12 @@ class HomePage extends Component {
                                 size="tiny"
                                 src={this.props.news.data[3].image}
                                 href={"/news/" + this.props.news.data[3]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[3]
-                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
                                 href={"/news/" + this.props.news.data[3]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[3]
-                                )}
                               >
                                 {this.props.news.data[3].headLines}
                               </Header>
@@ -238,20 +210,12 @@ class HomePage extends Component {
                                 size="tiny"
                                 href={"/news/" + this.props.news.data[4]._id}
                                 src={this.props.news.data[4].image}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[4]
-                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
                                 href={"/news/" + this.props.news.data[4]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[4]
-                                )}
                               >
                                 {this.props.news.data[4].headLines}
                               </Header>
@@ -273,20 +237,12 @@ class HomePage extends Component {
                                 size="tiny"
                                 src={this.props.news.data[5].image}
                                 href={"/news/" + this.props.news.data[5]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[5]
-                                )}
                               />
                               <Header
                                 as="a"
                                 className="NewsHeadline"
                                 size="tiny"
                                 href={"/news/" + this.props.news.data[5]._id}
-                                onClick={this.onNewsHeadlineClick.bind(
-                                  this,
-                                  this.props.news.data[5]
-                                )}
                               >
                                 {this.props.news.data[5].headLines}
                               </Header>
@@ -481,13 +437,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAllNews: () => dispatch(actions.getAllNews()),
+    onGetAllNews: (pageIndex, itemPerPage) =>
+      dispatch(actions.getAllNews(pageIndex, itemPerPage)),
     onGetChapterList: () => dispatch(actions.getChapterList()),
     onGetChapterDetail: (currentChapter, pageIndex, itemPerPage) =>
-      dispatch(
-        actions.getChapterDetail(currentChapter, pageIndex, itemPerPage)
-      ),
-    onNewsHeadlineClicked: news => dispatch(actions.toNewsDetail(news))
+      dispatch(actions.getChapterDetail(currentChapter, pageIndex, itemPerPage))
   };
 };
 

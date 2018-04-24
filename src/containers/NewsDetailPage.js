@@ -7,7 +7,6 @@ import ParagraphPNG from "../assets/images/paragraph.png";
 import renderHTML from "react-render-html";
 import FooterLayout from "../components/FooterLayout";
 
-
 import {
   Card,
   Container,
@@ -25,23 +24,14 @@ import {
 
 class NewsDetailPage extends Component {
   componentWillMount() {
-    if (this.props.news.data == null) this.props.onGetAllNews();
-  }
-
-  onNewsHeadlineClick(news) {
-    this.props.onNewsHeadlineClicked(news);
+    this.props.onGetAllNews();
+    this.props.onGetNewsById(this.props.match.params.id);
   }
 
   render() {
     if (this.props.isNewsLoading) {
       var newsList = <Loader active={this.props.isNewsLoading} />;
     } else {
-      if (this.props.currentNews == null) {
-        var currentNews = this.props.news.data.filter(
-          news => news._id == this.props.match.params.id
-        );
-        this.props.onNewsHeadlineClicked(currentNews[0]);
-      }
       var newsList = [];
       var newsListData = this.props.news.data.filter(
         news => news._id !== this.props.match.params.id
@@ -58,7 +48,6 @@ class NewsDetailPage extends Component {
                   floated="left"
                   size="medium"
                   src={news.image}
-                  onClick={this.onNewsHeadlineClick.bind(this, news)}
                   href={"/news/" + news._id}
                 />
               </Grid.Row>
@@ -67,7 +56,6 @@ class NewsDetailPage extends Component {
                   as="a"
                   className="NewsHeadline"
                   size="tiny"
-                  onClick={this.onNewsHeadlineClick.bind(this, news)}
                   href={"/news/" + news._id}
                 >
                   {news.headLines}
@@ -97,25 +85,25 @@ class NewsDetailPage extends Component {
                       </Breadcrumb.Section>
                       <Breadcrumb.Divider icon="right angle" />
                       <Breadcrumb.Section active>
-                        {this.props.currentNews &&
-                          this.props.currentNews.headLines}
-                        {!this.props.currentNews && <p>...</p>}
+                        {!this.props.currentNewsLoading &&
+                          this.props.currentNews.data[0].headLines}
+                        {this.props.currentNewsLoading && <p>...</p>}
                       </Breadcrumb.Section>
                     </Breadcrumb>
                   </Grid.Row>
                   <Grid.Row>
                     <Card fluid>
                       <Card.Content style={{ padding: "32px" }}>
-                        <Loader active={this.props.isNewsLoading} />
-                        {this.props.currentNews && (
+                        <Loader active={this.props.currentNewsLoading} />
+                        {!this.props.currentNewsLoading && (
                           <div>
                             <Icon
                               size="small"
                               name="calendar outline"
                               color="blue"
                             />
-                            {this.props.currentNews.publishedDate}
-                            {renderHTML(this.props.currentNews.newsHtml)}
+                            {this.props.currentNews.data[0].publishedDate}
+                            {renderHTML(this.props.currentNews.data[0].newsHtml)}
                           </div>
                         )}
                       </Card.Content>
@@ -222,14 +210,16 @@ const mapStateToProps = state => {
   return {
     news: state.news.news,
     isNewsLoading: state.news.newsLoading,
-    currentNews: state.news.currentNews
+    currentNews: state.news.currentNews,
+    currentNewsLoading: state.news.currentNewsLoading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAllNews: () => dispatch(actions.getAllNews()),
-    onNewsHeadlineClicked: news => dispatch(actions.toNewsDetail(news))
+    onGetAllNews: (pageIndex, itemPerPage) =>
+      dispatch(actions.getAllNews(pageIndex, itemPerPage)),
+    onGetNewsById: (newsId) => dispatch(actions.getNewsById(newsId))
   };
 };
 

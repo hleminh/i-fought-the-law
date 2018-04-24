@@ -1,8 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
-export const getAllNews = () => {
+export const getAllNews = (pageIndex, itemPerPage) => {
   return {
-    type: actionTypes.GET_ALL_NEWS
+    type: actionTypes.GET_ALL_NEWS,
+    pageIndex: pageIndex,
+    itemPerPage: itemPerPage
   };
 };
 
@@ -25,9 +27,28 @@ export const getAllNewsFail = () => {
   };
 };
 
-export const toNewsDetail = (news) => {
+export const getNewsById = (newsId) => {
+  return {
+    type: actionTypes.GET_NEWS_BY_ID,
+    newsId: newsId
+  };
+};
+
+export const getNewsByIdStart = () => {
   return{
-    type: actionTypes.TO_NEWS_DETAIL,
-    news: news,
+    type: actionTypes.GET_NEWS_BY_ID_START,
   }
 }
+
+export const getNewsByIdSuccess = results => {
+  return {
+    type: actionTypes.GET_NEWS_BY_ID_SUCCESS,
+    results: results
+  };
+};
+
+export const getNewsByIdFail = () => {
+  return {
+    type: actionTypes.GET_NEWS_BY_ID_FAIL
+  };
+};

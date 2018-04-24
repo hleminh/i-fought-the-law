@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Dotdotdot from "react-clamp-lines";
@@ -6,7 +7,6 @@ import * as actions from "../store/actions/index";
 import ParagraphPNG from "../assets/images/paragraph.png";
 import { Redirect } from "react-router";
 import FooterLayout from "../components/FooterLayout";
-
 
 import {
   Advertisement,
@@ -18,27 +18,59 @@ import {
   Label,
   Loader,
   Header,
-  Menu,
+  Pagination,
   Table,
   Icon,
-  Breadcrumb
+  Breadcrumb,
+  Dropdown
 } from "semantic-ui-react";
 
 class NewsPage extends Component {
-  componentWillMount() {
-    if (this.props.news.data == null)
-      this.props.onGetAllNews();
+  constructor(props) {
+    super(props);
+    this.state = {
+      itemPerPage: 10,
+      pageIndex: 1
+    };
   }
 
-  onNewsHeadlineClick(news){
-    this.props.onNewsHeadlineClicked(news);
+  componentDidMount() {
+    ReactDOM.findDOMNode(this).scrollTop = 0;
+  }
+
+  componentDidUpdate() {
+    ReactDOM.findDOMNode(this).scrollTop = 0;
+  }
+
+  onPageIndexClick(e, { activePage }) {
+    this.setState({ pageIndex: activePage }, () => {
+      this.props.onGetAllNews(this.state.pageIndex, this.state.itemPerPage);
+    });
+  }
+
+  onPerPageChange(e, { value }) {
+    this.setState({ itemPerPage: value, pageIndex: 1 }, () => {
+      this.props.onGetAllNews(this.state.pageIndex, this.state.itemPerPage);
+    });
+  }
+
+  componentWillMount() {
+    this.props.onGetAllNews(this.state.pageIndex, this.state.itemPerPage);
   }
 
   render() {
+    var options = [
+      { text: "5 văn bản", value: 5 },
+      { text: "10 văn bản", value: 10 },
+      { text: "15 văn bản", value: 15 },
+      { text: "20 văn bản", value: 20 },
+      { text: "25 văn bản", value: 25 }
+    ];
+
     var newsList = [];
     if (this.props.isNewsLoading == false) {
       newsList = this.props.news.data.map(news => (
-        <Grid.Row key = {news._id}>
+        <Grid.Row key={news._id}>
           <Card fluid>
             <Card.Content
               style={{
@@ -61,13 +93,12 @@ class NewsPage extends Component {
               <Header
                 className="NewsHeadline"
                 size="medium"
-                as='a'
-                onClick = {this.onNewsHeadlineClick.bind(this, news)}
+                as="a"
                 style={{
                   marginTop: "7px",
                   marginBottom: "7px"
                 }}
-                href = {"/news/" + news._id}
+                href={"/news/" + news._id}
               >
                 {news.headLines}
               </Header>
@@ -78,7 +109,7 @@ class NewsPage extends Component {
                 ellipsis="..."
               />
               <Container fluid textAlign="right">
-                <a href = {"/news/" + news._id} onClick = {this.onNewsHeadlineClick.bind(this, news)}>
+                <a href={"/news/" + news._id}>
                   <Icon name="long arrow right" size="small" />
                   <i>Xem tiếp</i>
                 </a>
@@ -127,6 +158,47 @@ class NewsPage extends Component {
                   ) : (
                     newsList
                   )}
+                  <Grid.Row>
+                    <Container fluid>
+                      <span>
+                        Hiển thị:{" "}
+                        <Dropdown
+                          value={this.state.itemPerPage}
+                          selection
+                          options={options}
+                          onChange={this.onPerPageChange.bind(this)}
+                        />
+                      </span>
+                      <Pagination
+                        floated="right"
+                        activePage={this.state.pageIndex}
+                        totalPages={
+                          this.props.newsCount / this.state.itemPerPage - 1
+                        }
+                        onPageChange={this.onPageIndexClick.bind(this)}
+                        ellipsisItem={{
+                          content: <Icon name="ellipsis horizontal" />,
+                          icon: true
+                        }}
+                        firstItem={{
+                          content: <Icon name="angle double left" />,
+                          icon: true
+                        }}
+                        lastItem={{
+                          content: <Icon name="angle double right" />,
+                          icon: true
+                        }}
+                        prevItem={{
+                          content: <Icon name="angle left" />,
+                          icon: true
+                        }}
+                        nextItem={{
+                          content: <Icon name="angle right" />,
+                          icon: true
+                        }}
+                      />
+                    </Container>
+                  </Grid.Row>
                   <Grid.Row />
                 </Grid>
               </Grid.Column>
@@ -203,14 +275,15 @@ class NewsPage extends Component {
 const mapStateToProps = state => {
   return {
     news: state.news.news,
-    isNewsLoading: state.news.newsLoading
+    isNewsLoading: state.news.newsLoading,
+    newsCount: state.news.newsCount
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetAllNews: () => dispatch(actions.getAllNews()),
-    onNewsHeadlineClicked: (news) => dispatch(actions.toNewsDetail(news))
+    onGetAllNews: (pageIndex, itemPerPage) =>
+      dispatch(actions.getAllNews(pageIndex, itemPerPage))
   };
 };
 
