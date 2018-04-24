@@ -12,14 +12,39 @@ import AboutPage from "./containers/AboutPage";
 import SavedPage from "./containers/SavedPage";
 import NewsPage from "./containers/NewsPage";
 import NewsDetailPage from "./containers/NewsDetailPage";
+import NotFoundPage from "./containers/NotFoundPage";
 import update from "react-addons-update";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAccount: null
+      userAccount: null,
+      activeMenuItem: "",
+      isMenuVisible: true
     };
+  }
+
+  componentWillMount() {
+    console.log(window.location.href);
+    var currentURL = window.location.href.split("/");
+    console.log(currentURL);
+    this.setState({
+      activeMenuItem: currentURL[3]
+    });
+  }
+
+  handleMenuVisibility(isMenuVisible) {
+    this.setState({
+      isMenuVisible: isMenuVisible,
+      activeMenuItem: "",
+    });
+  }
+
+  handleMenuItemClick(menuItemName) {
+    this.setState({
+      activeMenuItem: menuItemName
+    });
   }
 
   handleSignUpSubmit(credentials, callback) {
@@ -143,15 +168,19 @@ class App extends Component {
     return (
       <div className="App">
         <MenuLayout
+          handleMenuItemClick={this.handleMenuItemClick.bind(this)}
+          activeMenuItem={this.state.activeMenuItem}
+          isMenuVisible = {this.state.isMenuVisible}
           userAccount={this.state.userAccount}
           handleSignOutSubmit={this.handleSignOutSubmit.bind(this)}
           handleSignInSubmit={this.handleSignInSubmit.bind(this)}
           handleSignUpSubmit={this.handleSignUpSubmit.bind(this)}
         />
         <Switch>
+          <Route exact path="/" component={RedirectToHome} />
           <Route
             exact
-            path="/"
+            path="/home"
             render={() => <HomePage userAccount={this.state.userAccount} />}
           />
           <Route
@@ -176,6 +205,13 @@ class App extends Component {
                 handleSaveSubmit={this.handleSaveSubmit.bind(this)}
                 handleUnSaveSubmit={this.handleUnSaveSubmit.bind(this)}
                 userAccount={this.state.userAccount}
+              />
+            )}
+          />
+          <Route
+            render={() => (
+              <NotFoundPage
+                handleMenuVisibility={this.handleMenuVisibility.bind(this)}
               />
             )}
           />

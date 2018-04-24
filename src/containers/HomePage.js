@@ -255,7 +255,7 @@ class HomePage extends Component {
                       </Grid.Row>
                       <Grid.Row>
                         <Container fluid textAlign="right">
-                          <a href="/news/">
+                          <a href="/news">
                             <Icon name="long arrow right" size="small" />
                             <i>Xem tiếp</i>
                           </a>

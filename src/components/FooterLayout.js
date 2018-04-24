@@ -15,7 +15,6 @@ class FooterLayout extends Component {
     return (
       <div className="FooterLayout">
         <Segment
-          color="blue"
           inverted={true}
           vertical={true}
           style={{
