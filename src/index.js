@@ -12,7 +12,7 @@ import "./index.css";
 import lawReducer from "./store/reducers/law";
 import searchReducer from "./store/reducers/search";
 import newsReducer from "./store/reducers/news";
-import { watchGetLaws, watchSearch, watchNews } from "./store/sagas/index";
+import { watchGetLaws, watchNews } from "./store/sagas/index";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -33,7 +33,6 @@ const store = createStore(
 );
 
 sagaMiddleware.run(watchGetLaws);
-sagaMiddleware.run(watchSearch);
 sagaMiddleware.run(watchNews);
 
 const app = (

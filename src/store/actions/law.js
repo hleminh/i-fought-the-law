@@ -1,67 +1,123 @@
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from '../actions/actionTypes';
+import { GET_LAW_CLASS_LIST, GET_VALIDITY_STATUS_LIST } from './actionTypes';
 
-export const getChapterList = () => {
+export const getListAgency = () => {
   return {
-    type: actionTypes.GET_LIST_CHAPTER
+    type: actionTypes.GET_LIST_AGENCY
   };
 };
 
-export const getChapterListStart = () => {
+export const getListAgencyStart = () => {
   return {
-    type: actionTypes.GET_LIST_CHAPTER_START
+    type: actionTypes.GET_LIST_AGENCY_START
   };
 };
 
-export const getChapterListSuccess = chapterList => {
+export const getListAgencySuccess = agencyList => {
   return {
-    type: actionTypes.GET_LIST_CHAPTER_SUCCESS,
-    chapters: chapterList
+    type: actionTypes.GET_LIST_AGENCY_SUCCESS,
+    data: agencyList
   };
 };
 
-export const getChapterListFail = errorMsg => {
+export const getListAgencyFail = errorMsg => {
   return {
-    type: actionTypes.GET_LIST_CHAPTER_FAIL,
+    type: actionTypes.GET_LIST_AGENCY_FAIL,
     errorMsg: errorMsg
   };
 };
 
-export const getChapterDetail = (currentChapter, pageIndex, itemPerPage) => {
+export const getLawClassList = () => {
   return {
-    type: actionTypes.GET_CHAPTER_DETAIL,
-    currentChapter: currentChapter,
-    pageIndex: pageIndex,
-    itemPerPage: itemPerPage
+    type: actionTypes.GET_LAW_CLASS_LIST
   };
 };
 
-export const getChapterDetailStart = currentChapter => {
+export const getLawClassListStart = () => {
   return {
-    type: actionTypes.GET_CHAPTER_DETAIL_START,
-    currentChapter: currentChapter
+    type: actionTypes.GET_LAW_CLASS_LIST_START
   };
 };
 
-export const getChapterDetailSuccess = articleList => {
+export const getLawClassListSucess = lawClassList => {
   return {
-    type: actionTypes.GET_CHAPTER_DETAIL_SUCCESS,
-    articles: articleList
+    type: actionTypes.GET_LAW_CLASS_LIST_SUCCESS,
+    data: lawClassList
   };
 };
 
-export const getChapterDetailFail = errorMsg => {
+export const getLawClassListFail = errorMsg => {
   return {
-    type: actionTypes.GET_CHAPTER_DETAIL_FAIL,
+    type: actionTypes.GET_LAW_CLASS_LIST_FAIL,
     errorMsg: errorMsg
   };
 };
 
-export const search = (keyword, pageIndex, itemPerPage, chapterId) => {
+export const getValidityStatusList = () => {
+  return {
+    type: actionTypes.GET_VALIDITY_STATUS_LIST
+  };
+};
+
+export const getValidityStatusListStart = () => {
+  return {
+    type: actionTypes.GET_VALIDITY_STATUS_LIST_START
+  };
+};
+
+export const getValidityStatusSuccess = validityStatusList => {
+  return {
+    type: actionTypes.GET_VALIDITY_STATUS_LIST_SUCESS,
+    data: validityStatusList
+  };
+};
+
+export const getValidityStatusFail = errorMsg => {
+  return {
+    type: actionTypes.GET_VALIDITY_STATUS_LIST_FAIL,
+    errorMsg: errorMsg
+  };
+};
+
+export const search = (
+  keyword,
+  searchType,
+  pageIndex,
+  itemPerPage,
+  lawClass,
+  agency,
+  validityStatus,
+  signer
+) => {
   return {
     type: actionTypes.SEARCH,
     keyword: keyword,
-    pageIndex: pageIndex,
-    itemPerPage: itemPerPage,
-    chapterId: chapterId
+    searchType: searchType,
+    page: pageIndex,
+    perPage: itemPerPage,
+    lawClass: lawClass,
+    agency: agency,
+    validityStatus: validityStatus,
+    signer: signer
+  };
+};
+
+export const searchStart = () => {
+  return {
+    type: actionTypes.SEARCH_START
+  };
+};
+
+export const searchSuccess = data => {
+  return {
+    type: actionTypes.SEARCH_SUCCESS,
+    data: data
+  };
+};
+
+export const searchFail = errorMsg => {
+  return {
+    type: actionTypes.SEARCH_FAIL,
+    errorMsg: errorMsg
   };
 };

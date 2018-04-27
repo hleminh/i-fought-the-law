@@ -1,15 +1,22 @@
 export {
-  getChapterList,
-  getChapterListStart,
-  getChapterListSuccess,
-  getChapterListFail,
-  getChapterDetail,
-  getChapterDetailStart,
-  getChapterDetailSuccess,
-  getChapterDetailFail
+  getLawClassList,
+  getLawClassListStart,
+  getLawClassListSucess,
+  getLawClassListFail,
+  getListAgency,
+  getListAgencyStart,
+  getListAgencySuccess,
+  getListAgencyFail,
+  getValidityStatusList,
+  getValidityStatusListStart,
+  getValidityStatusSuccess,
+  getValidityStatusFail,
+  search,
+  searchStart,
+  searchSuccess,
+  searchFail
 } from "./law";
 
-export { searchFail, searchStart, searchSuccess } from "./search";
 
 export {
   getAllNews,
