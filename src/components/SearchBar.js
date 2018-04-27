@@ -52,7 +52,7 @@ class SearchBar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.lawClassList !== this.props.lawClassList) {
+    if (nextProps.lawClassList != this.props.lawClassList) {
       let lawClassOptionNew = nextProps.lawClassList.map(lawClass => {
         return {
           key: lawClass._id,
@@ -60,16 +60,35 @@ class SearchBar extends Component {
           text: lawClass.name
         };
       });
-      this.lawClassOption = [{key: 'first', value: 'first', text: 'Loại văn bản'}].concat(lawClassOptionNew);
-      this.forceUpdate();
-    }
-    
-    if(nextProps.agencyList !== this.props.agencyList){
-
+      this.lawClassOption = [
+        { key: 'first', value: 'first', text: 'Loại văn bản' }
+      ].concat(lawClassOptionNew);
     }
 
-    if(nextProps.validityStatusList !== this.props.validityStatusList){
+    if (nextProps.agencyList != this.props.agencyList) {
+      let agencyListNew = nextProps.agencyList.map(agency => {
+        return {
+          key: agency._id,
+          value: agency._id,
+          text: agency.name
+        };
+      });
+      this.agencyOptions = [
+        { key: 'first', value: 'first', text: 'Cơ quan ban hành' }
+      ].concat(agencyListNew);
+    }
 
+    if (nextProps.validityStatusList != this.props.validityStatusList) {
+      let statusOptionNew = nextProps.validityStatusList.map(status => {
+        return {
+          key: status._id,
+          value: status._id,
+          text: status.name
+        };
+      });
+      this.statusOptions = [
+        { key: 'first', value: 'first', text: 'Tình trạng hiệu lực' }
+      ].concat(statusOptionNew);
     }
   }
 
@@ -185,13 +204,8 @@ class SearchBar extends Component {
                       onChange={this.onLawClassChange}
                       search
                       selection
-                      options={this.props.lawClassList.map(law => {
-                        return {
-                          key: law._id,
-                          value: law._id,
-                          text: law.name
-                        };
-                      })}
+                      defaultValue='first'
+                      options={this.lawClassOption}
                     />
                   </Grid.Column>
                   <Grid.Column>
@@ -203,13 +217,7 @@ class SearchBar extends Component {
                       onChange={this.onAgencyChange}
                       value={this.state.agency}
                       selection
-                      options={this.props.agencyList.map(agency => {
-                        return {
-                          key: agency._id,
-                          value: agency._id,
-                          text: agency.name
-                        };
-                      })}
+                      options={this.agencyOptions}
                     />
                   </Grid.Column>
                   <Grid.Column>
@@ -221,13 +229,7 @@ class SearchBar extends Component {
                       onChange={this.onStatusChange}
                       value={this.state.status}
                       selection
-                      options={this.props.validityStatusList.map(status => {
-                        return {
-                          key: status._id,
-                          value: status._id,
-                          text: status.name
-                        };
-                      })}
+                      options={this.statusOptions}
                     />
                   </Grid.Column>
                   <Grid.Column>

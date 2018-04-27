@@ -31,12 +31,13 @@ class MenuLayout extends Component {
       origin: "",
       kana: "",
       definition: "",
-      tab: "0",
-      activeItem: "home"
+      tab: "0"
     };
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => {
+    this.props.handleMenuItemClick(name);
+  };
 
   handleNewCancelButton(e) {
     e.preventDefault();
@@ -250,57 +251,126 @@ class MenuLayout extends Component {
 
     return (
       <div className="MenuLayout">
-        <Container className="MenuContainer">
-          <Grid>
-            <Grid.Row
-              style={{
-                paddingBottom: "0"
-              }}
-            >
-              <Grid.Column verticalAlign="middle" width={4} style={{}}>
-                <Image src={BannerIMG} verticalAlign="middle" size="tiny" />
-              </Grid.Column>
-              <Grid.Column width={12} style={{}}>
-                <Grid.Row>
-                  <Menu secondary>
-                    <Container>
-                      {this.props.userAccount &&
-                        this.props.userAccount.user.admin && (
+        {this.props.isMenuVisible && (
+          <Container className="MenuContainer">
+            <Grid>
+              <Grid.Row
+                style={{
+                  paddingBottom: "0"
+                }}
+              >
+                <Grid.Column verticalAlign="middle" width={4} style={{}}>
+                  <Image src={BannerIMG} verticalAlign="middle" size="tiny" />
+                </Grid.Column>
+                <Grid.Column width={12} style={{}}>
+                  <Grid.Row>
+                    <Menu secondary>
+                      <Container>
+                        {this.props.userAccount &&
+                          this.props.userAccount.user.admin && (
+                            <Modal
+                              size="mini"
+                              trigger={
+                                <Menu.Item
+                                  className="MenuItemUpper"
+                                  as="a"
+                                  name="sign_up"
+                                  onClick={this.handleNewModalOpen.bind(this)}
+                                >
+                                  Tạo bản ghi mới
+                                </Menu.Item>
+                              }
+                              open={this.state.newModalOpen}
+                            >
+                              <Modal.Header>Tạo bản ghi mới</Modal.Header>
+                              <Modal.Content>
+                                <Form
+                                  onSubmit={this.handleNewSubmitButton.bind(
+                                    this
+                                  )}
+                                >
+                                  <Message
+                                    error
+                                    header="Không thể tạo bản ghi"
+                                    content="Đã xảy ra lỗi khi gửi yêu cầu đến server. Xin hãy thử lại."
+                                  />
+                                  <Tab
+                                    defaultActiveIndex={this.state.tab}
+                                    menu={{ secondary: true, pointing: true }}
+                                    panes={panes}
+                                    onTabChange={this.handleTabChange.bind(
+                                      this
+                                    )}
+                                  />
+                                  <br />
+                                  <Button.Group fluid>
+                                    <Button
+                                      type="submit"
+                                      onClick={this.handleNewCancelButton.bind(
+                                        this
+                                      )}
+                                    >
+                                      Cancel
+                                    </Button>
+                                    <Button.Or />
+                                    <Button type="submit" color="blue">
+                                      Submit
+                                    </Button>
+                                  </Button.Group>
+                                </Form>
+                              </Modal.Content>
+                            </Modal>
+                          )}
+                        {!this.props.userAccount && (
                           <Modal
-                            size="mini"
                             trigger={
                               <Menu.Item
                                 className="MenuItemUpper"
                                 as="a"
-                                name="sign_up"
-                                onClick={this.handleNewModalOpen.bind(this)}
+                                position="right"
+                                name="sign_in"
+                                onClick={this.handleSignInModalOpen.bind(this)}
                               >
-                                Tạo bản ghi mới
+                                <Icon name="sign in" />
+                                <strong>Đăng nhập</strong>
                               </Menu.Item>
                             }
-                            open={this.state.newModalOpen}
+                            size="mini"
+                            open={this.state.signInModalOpen}
                           >
-                            <Modal.Header>Tạo bản ghi mới</Modal.Header>
+                            <Modal.Header>Đăng nhập</Modal.Header>
                             <Modal.Content>
                               <Form
-                                onSubmit={this.handleNewSubmitButton.bind(this)}
+                                onSubmit={this.handleSignInSubmitButton.bind(
+                                  this
+                                )}
                               >
                                 <Message
                                   error
-                                  header="Không thể tạo bản ghi"
-                                  content="Đã xảy ra lỗi khi gửi yêu cầu đến server. Xin hãy thử lại."
+                                  header="Không thể đăng nhập"
+                                  content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
                                 />
-                                <Tab
-                                  defaultActiveIndex={this.state.tab}
-                                  menu={{ secondary: true, pointing: true }}
-                                  panes={panes}
-                                  onTabChange={this.handleTabChange.bind(this)}
-                                />
-                                <br />
+                                <Form.Field required>
+                                  <label>Username</label>
+                                  <input
+                                    required
+                                    ref="signInUsername"
+                                    placeholder="Nhập username"
+                                  />
+                                </Form.Field>
+                                <Form.Field required>
+                                  <label>Password</label>
+                                  <input
+                                    required
+                                    ref="signInPassword"
+                                    type="password"
+                                    placeholder="Nhập password"
+                                  />
+                                </Form.Field>
                                 <Button.Group fluid>
                                   <Button
                                     type="submit"
-                                    onClick={this.handleNewCancelButton.bind(
+                                    onClick={this.handleSignInCancelButton.bind(
                                       this
                                     )}
                                   >
@@ -315,232 +385,172 @@ class MenuLayout extends Component {
                             </Modal.Content>
                           </Modal>
                         )}
-                      {!this.props.userAccount && (
-                        <Modal
-                          trigger={
-                            <Menu.Item
-                              className="MenuItemUpper"
-                              as="a"
-                              position="right"
-                              name="sign_in"
-                              onClick={this.handleSignInModalOpen.bind(this)}
-                            >
-                              <Icon name="sign in" />
-                              <strong>Đăng nhập</strong>
-                            </Menu.Item>
-                          }
-                          size="mini"
-                          open={this.state.signInModalOpen}
-                        >
-                          <Modal.Header>Đăng nhập</Modal.Header>
-                          <Modal.Content>
-                            <Form
-                              onSubmit={this.handleSignInSubmitButton.bind(
-                                this
-                              )}
-                            >
-                              <Message
-                                error
-                                header="Không thể đăng nhập"
-                                content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
-                              />
-                              <Form.Field required>
-                                <label>Username</label>
-                                <input
-                                  required
-                                  ref="signInUsername"
-                                  placeholder="Nhập username"
+                        {!this.props.userAccount && (
+                          <Modal
+                            trigger={
+                              <Menu.Item
+                                className="MenuItemUpper"
+                                as="a"
+                                name="sign_up"
+                                onClick={this.handleSignUpModalOpen.bind(this)}
+                              >
+                                <Icon name="signup" />
+                                <strong>Đăng ký</strong>
+                              </Menu.Item>
+                            }
+                            size="mini"
+                            open={this.state.signUpModalOpen}
+                          >
+                            <Modal.Header>Tạo tài khoản mới</Modal.Header>
+                            <Modal.Content>
+                              <Form
+                                onSubmit={this.handleSignUpSubmitButton.bind(
+                                  this
+                                )}
+                              >
+                                <Message
+                                  error
+                                  header="Không thể tạo tài khoản"
+                                  content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
                                 />
-                              </Form.Field>
-                              <Form.Field required>
-                                <label>Password</label>
-                                <input
-                                  required
-                                  ref="signInPassword"
-                                  type="password"
-                                  placeholder="Nhập password"
-                                />
-                              </Form.Field>
-                              <Button.Group fluid>
-                                <Button
-                                  type="submit"
-                                  onClick={this.handleSignInCancelButton.bind(
-                                    this
-                                  )}
-                                >
-                                  Cancel
-                                </Button>
-                                <Button.Or />
-                                <Button type="submit" color="blue">
-                                  Submit
-                                </Button>
-                              </Button.Group>
-                            </Form>
-                          </Modal.Content>
-                        </Modal>
-                      )}
-                      {!this.props.userAccount && (
-                        <Modal
-                          trigger={
-                            <Menu.Item
-                              className="MenuItemUpper"
-                              as="a"
-                              name="sign_up"
-                              onClick={this.handleSignUpModalOpen.bind(this)}
-                            >
-                              <Icon name="signup" />
-                              <strong>Đăng ký</strong>
-                            </Menu.Item>
-                          }
-                          size="mini"
-                          open={this.state.signUpModalOpen}
-                        >
-                          <Modal.Header>Tạo tài khoản mới</Modal.Header>
-                          <Modal.Content>
-                            <Form
-                              onSubmit={this.handleSignUpSubmitButton.bind(
-                                this
-                              )}
-                            >
-                              <Message
-                                error
-                                header="Không thể tạo tài khoản"
-                                content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
-                              />
-                              <Form.Field required>
-                                <label>Username</label>
-                                <input
-                                  required
-                                  ref="signUpUsername"
-                                  defaultValue={this.state.signUpUsername}
-                                  placeholder="Nhập username"
-                                />
-                              </Form.Field>
-                              <Form.Field required>
-                                <label>Password</label>
-                                <input
-                                  required
-                                  ref="signUpPassword"
-                                  defaultValue={this.state.signUpPassword}
-                                  type="password"
-                                  placeholder="Nhập password"
-                                />
-                              </Form.Field>
-                              <Button.Group fluid>
-                                <Button
-                                  type="submit"
-                                  onClick={this.handleSignUpCancelButton.bind(
-                                    this
-                                  )}
-                                >
-                                  Cancel
-                                </Button>
-                                <Button.Or />
-                                <Button type="submit" color="blue">
-                                  Submit
-                                </Button>
-                              </Button.Group>
-                            </Form>
-                          </Modal.Content>
-                        </Modal>
-                      )}
-                      {this.props.userAccount && (
-                        <Dropdown
-                          item
-                          simple
-                          trigger={
-                            <span>
-                              Xin chào, {this.props.userAccount.user.username}
-                            </span>
-                          }
-                        >
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              as="a"
-                              onClick={this.props.handleSignOutSubmit}
-                            >
-                              <Icon name="signout" />Đăng xuất
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      )}
-                    </Container>
-                  </Menu>
-                </Grid.Row>
-                <Grid.Row>
-                  <Menu
-                    pointing
-                    secondary
-                    style={{
-                      borderBottom: "2px solid white"
-                    }}
-                  >
-                    <Container>
-                      <Menu.Item
-                        fitted="horizontally"
-                        className="MenuItemLower"
-                        active={activeItem === "home"}
-                        position="right"
-                        as={Link}
-                        onClick={this.handleItemClick.bind(this)}
-                        to="/"
-                        name="home"
-                      >
-                        <strong>TRANG CHỦ</strong>
-                      </Menu.Item>
-                      <Menu.Item
-                        fitted="horizontally"
-                        className="MenuItemLower"
-                        active={activeItem === "search"}
-                        as={Link}
-                        onClick={this.handleItemClick.bind(this)}
-                        to="/search"
-                        name="search"
-                      >
-                        <strong>TÌM KIẾM LUẬT</strong>
-                      </Menu.Item>
-                      <Menu.Item
-                        fitted="horizontally"
-                        className="MenuItemLower"
-                        active={activeItem === "news"}
-                        as={Link}
-                        onClick={this.handleItemClick.bind(this)}
-                        to="/news"
-                        name="news"
-                      >
-                        <strong>TIN TỨC LUẬT</strong>
-                      </Menu.Item>
-                      <Menu.Item
-                        fitted="horizontally"
-                        className="MenuItemLower"
-                        active={activeItem === "about"}
-                        as={Link}
-                        onClick={this.handleItemClick.bind(this)}
-                        to="/about"
-                        name="about"
-                      >
-                        <strong>LIÊN HỆ</strong>
-                      </Menu.Item>
-                      {this.props.userAccount && (
+                                <Form.Field required>
+                                  <label>Username</label>
+                                  <input
+                                    required
+                                    ref="signUpUsername"
+                                    defaultValue={this.state.signUpUsername}
+                                    placeholder="Nhập username"
+                                  />
+                                </Form.Field>
+                                <Form.Field required>
+                                  <label>Password</label>
+                                  <input
+                                    required
+                                    ref="signUpPassword"
+                                    defaultValue={this.state.signUpPassword}
+                                    type="password"
+                                    placeholder="Nhập password"
+                                  />
+                                </Form.Field>
+                                <Button.Group fluid>
+                                  <Button
+                                    type="submit"
+                                    onClick={this.handleSignUpCancelButton.bind(
+                                      this
+                                    )}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button.Or />
+                                  <Button type="submit" color="blue">
+                                    Submit
+                                  </Button>
+                                </Button.Group>
+                              </Form>
+                            </Modal.Content>
+                          </Modal>
+                        )}
+                        {this.props.userAccount && (
+                          <Dropdown
+                            item
+                            simple
+                            trigger={
+                              <span>
+                                Xin chào, {this.props.userAccount.user.username}
+                              </span>
+                            }
+                          >
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                as="a"
+                                onClick={this.props.handleSignOutSubmit}
+                              >
+                                <Icon name="signout" />Đăng xuất
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )}
+                      </Container>
+                    </Menu>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Menu
+                      pointing
+                      secondary
+                      style={{
+                        borderBottom: "2px solid white"
+                      }}
+                    >
+                      <Container>
                         <Menu.Item
                           fitted="horizontally"
                           className="MenuItemLower"
-                          active={activeItem === "saved"}
+                          active={
+                            this.props.activeMenuItem === "home" ||
+                            this.props.activeMenuItem === ""
+                          }
+                          position="right"
                           as={Link}
                           onClick={this.handleItemClick.bind(this)}
-                          to="/saved"
-                          name="saved"
+                          to="/"
+                          name="home"
                         >
-                          <strong>ĐIỀU LUẬT ĐÃ LƯU</strong>
+                          <strong>TRANG CHỦ</strong>
                         </Menu.Item>
-                      )}
-                    </Container>
-                  </Menu>
-                </Grid.Row>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
+                        <Menu.Item
+                          fitted="horizontally"
+                          className="MenuItemLower"
+                          active={this.props.activeMenuItem === "search"}
+                          as={Link}
+                          onClick={this.handleItemClick.bind(this)}
+                          to="/search"
+                          name="search"
+                        >
+                          <strong>TÌM KIẾM LUẬT</strong>
+                        </Menu.Item>
+                        <Menu.Item
+                          fitted="horizontally"
+                          className="MenuItemLower"
+                          active={this.props.activeMenuItem === "news"}
+                          as={Link}
+                          onClick={this.handleItemClick.bind(this)}
+                          to="/news"
+                          name="news"
+                        >
+                          <strong>TIN TỨC LUẬT</strong>
+                        </Menu.Item>
+                        <Menu.Item
+                          fitted="horizontally"
+                          className="MenuItemLower"
+                          active={this.props.activeMenuItem === "about"}
+                          as={Link}
+                          onClick={this.handleItemClick.bind(this)}
+                          to="/about"
+                          name="about"
+                        >
+                          <strong>LIÊN HỆ</strong>
+                        </Menu.Item>
+                        {this.props.userAccount && (
+                          <Menu.Item
+                            fitted="horizontally"
+                            className="MenuItemLower"
+                            active={this.props.activeMenuItem === "saved"}
+                            as={Link}
+                            onClick={this.handleItemClick.bind(this)}
+                            to="/saved"
+                            name="saved"
+                          >
+                            <strong>ĐIỀU LUẬT ĐÃ LƯU</strong>
+                          </Menu.Item>
+                        )}
+                      </Container>
+                    </Menu>
+                  </Grid.Row>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        )}
       </div>
     );
   }
