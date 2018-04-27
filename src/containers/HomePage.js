@@ -26,7 +26,7 @@ class HomePage extends Component {
   pageIndex = 1;
   itemPerPage = 10;
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.onGetAllNews(1, 6);
   }
 

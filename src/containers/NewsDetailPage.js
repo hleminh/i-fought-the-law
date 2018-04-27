@@ -24,7 +24,7 @@ import {
 
 class NewsDetailPage extends Component {
   componentWillMount() {
-    this.props.onGetAllNews();
+    this.props.onGetAllNews(1, 6);
     this.props.onGetNewsById(this.props.match.params.id);
   }
 
