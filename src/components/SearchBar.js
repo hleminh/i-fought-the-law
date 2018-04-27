@@ -104,12 +104,15 @@ class SearchBar extends Component {
 
   handleSubmitForm = e => {
     e.preventDefault();
+    let lawClass = this.state.lawClass == 'first' ? null : this.state.lawClass;
+    let agency = this.state.agency == 'first' ? null : this.state.agency;
+    let status = this.state.status == 'first' ? null : this.state.status;
     this.props.handleSearchSubmit(
       this.state.keyword,
       this.state.searchType,
-      this.state.lawClass,
-      this.state.agency,
-      this.state.status,
+      lawClass,
+      agency,
+      status,
       this.state.signer
     );
   };
@@ -204,7 +207,7 @@ class SearchBar extends Component {
                       onChange={this.onLawClassChange}
                       search
                       selection
-                      defaultValue='first'
+                      defaultValue="first"
                       options={this.lawClassOption}
                     />
                   </Grid.Column>
