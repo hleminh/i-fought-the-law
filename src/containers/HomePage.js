@@ -107,7 +107,7 @@ class HomePage extends Component {
                       />
                     </Grid.Column>
                   </Grid.Row>
-                  <Grid.Row colu  mns={2}>
+                  <Grid.Row columns={2}>
                     <Grid.Column className="NewsColumn">
                       <Segment className="NewsSegment" basic>
                         <Header as="h3">TIN TỨC MỚI NHẤT</Header>
@@ -300,7 +300,7 @@ class HomePage extends Component {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Advertisement centered unit="top banner" test="Top Banner" />
+                {/* <Advertisement centered unit="top banner" test="Top Banner" /> */}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>

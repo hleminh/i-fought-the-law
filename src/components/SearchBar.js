@@ -24,40 +24,52 @@ import classes from './SearchBar.css';
 import { connect } from 'react-redux';
 
 class SearchBar extends Component {
-  lawClass = [
-    { key: 'TT', value: 'TT', text: 'Thông tư' },
-    { key: 'QD', value: 'TT', text: 'Quyết định' }
-  ];
+  lawClassOptions = [];
+  agencyOptions = [];
+  statusOptions = [];
 
   constructor(props) {
     super(props);
     this.state = {
+      keyword: '',
+      searchType: 'title',
       isLoading: false,
       results: [],
       advancedOptions: false,
-      searchType: 'title',
       startDate: null,
-      endDate: null
+      endDate: null,
+      lawClass: null,
+      agency: null,
+      status: null,
+      signer: ''
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onGetLawClassList();
     this.props.onGetAgencyList();
     this.props.onGetStatusList();
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.lawClassList !== this.props.lawClassList){
-      console.log(nextProps.lawClassList);
-      let lawClassOption = nextProps.lawClassList.map(lawClass => {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.lawClassList !== this.props.lawClassList) {
+      let lawClassOptionNew = nextProps.lawClassList.map(lawClass => {
         return {
-          key: lawClass.id,
-          value: lawClass.id,
+          key: lawClass._id,
+          value: lawClass._id,
           text: lawClass.name
-        }
+        };
       });
-      console.log(lawClassOption);
+      this.lawClassOption = [{key: 'first', value: 'first', text: 'Loại văn bản'}].concat(lawClassOptionNew);
+      this.forceUpdate();
+    }
+    
+    if(nextProps.agencyList !== this.props.agencyList){
+
+    }
+
+    if(nextProps.validityStatusList !== this.props.validityStatusList){
+
     }
   }
 
@@ -66,15 +78,27 @@ class SearchBar extends Component {
   onStartDateChange = date => this.setState({ startDate: date });
   onEndDateChange = date => this.setState({ endDate: date });
 
-  handleSubmitButton(e) {
-    e.preventDefault();
-    console.log(this.refs.searchInput);
-    // this.props.handleSearchSubmit(this.refs.searchInput.value);
-  }
+  onLawClassChange = (e, data) => this.setState({ lawClass: data.value });
+  onAgencyChange = (e, data) => this.setState({ agency: data.value });
+  onStatusChange = (e, data) => this.setState({ status: data.value });
+  onSignerInputChange = (e, data) => this.setState({ signer: data.value });
 
-  handleOnMouseDown(e) {
-    // e.preventDefault();
-  }
+  handleSubmitForm = e => {
+    e.preventDefault();
+    this.props.handleSearchSubmit(
+      this.state.keyword,
+      this.state.searchType,
+      this.state.lawClass,
+      this.state.agency,
+      this.state.status,
+      this.state.signer
+    );
+  };
+
+  inputSearchChange = (e, ref) => {
+    e.preventDefault();
+    this.setState({ keyword: ref.value });
+  };
 
   handleSearchRadioChange = (e, { value }) =>
     this.setState({ searchType: value });
@@ -100,24 +124,27 @@ class SearchBar extends Component {
         <Segment>
           <Grid>
             <Grid.Column width={16}>
-              <Input
-                fluid
-                size="large"
-                className="SearchInput"
-                ref="searchInput"
-                icon={
-                  <Icon
-                    color="blue"
-                    className="SearchIcon"
-                    name="search"
-                    onClick={this.handleSubmitButton.bind(this)}
-                    inverted
-                    circular
-                    link
-                  />
-                }
-                placeholder="Nhập nội dung văn bản cần tìm..."
-              />
+              <form onSubmit={this.handleSubmitForm}>
+                <Input
+                  fluid
+                  size="large"
+                  className="SearchInput"
+                  ref="searchInput"
+                  onChange={this.inputSearchChange}
+                  icon={
+                    <Icon
+                      color="blue"
+                      className="SearchIcon"
+                      name="search"
+                      onClick={this.handleSubmitForm}
+                      inverted
+                      circular
+                      link
+                    />
+                  }
+                  placeholder="Nhập nội dung văn bản cần tìm..."
+                />
+              </form>
             </Grid.Column>
             <div style={{ margin: '10px' }}>
               <Button
@@ -149,19 +176,21 @@ class SearchBar extends Component {
             <div style={{ margin: '10px' }}>
               <Grid>
                 <Grid.Row columns={4} divided>
-                  
                   <Grid.Column>
                     <Dropdown
                       fluid
                       placeholder="Loại văn bản"
+                      noResultsMessage="Không có kết quả"
+                      value={this.state.lawClass}
+                      onChange={this.onLawClassChange}
                       search
                       selection
-                      options={this.props.lawClassList.map(lawClass => {
+                      options={this.props.lawClassList.map(law => {
                         return {
-                          key: lawClass.id,
-                          value: lawClass.id,
-                          text: lawClass.name
-                        }
+                          key: law._id,
+                          value: law._id,
+                          text: law.name
+                        };
                       })}
                     />
                   </Grid.Column>
@@ -169,14 +198,17 @@ class SearchBar extends Component {
                     <Dropdown
                       fluid
                       placeholder="Cơ quan ban hành"
+                      noResultsMessage="Không có kết quả"
                       search
+                      onChange={this.onAgencyChange}
+                      value={this.state.agency}
                       selection
                       options={this.props.agencyList.map(agency => {
                         return {
-                          key: agency.id,
-                          value: agency.id,
+                          key: agency._id,
+                          value: agency._id,
                           text: agency.name
-                        }
+                        };
                       })}
                     />
                   </Grid.Column>
@@ -184,19 +216,26 @@ class SearchBar extends Component {
                     <Dropdown
                       fluid
                       placeholder="Tình trạng hiệu lực"
+                      noResultsMessage="Không có kết quả"
                       search
+                      onChange={this.onStatusChange}
+                      value={this.state.status}
                       selection
                       options={this.props.validityStatusList.map(status => {
                         return {
-                          key: status.id,
-                          value: status.id,
+                          key: status._id,
+                          value: status._id,
                           text: status.name
-                        }
+                        };
                       })}
                     />
                   </Grid.Column>
                   <Grid.Column>
-                    <Input fluid placeholder='Người ký'/>
+                    <Input
+                      onChange={this.onSignerInputChange}
+                      fluid
+                      placeholder="Người ký"
+                    />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -216,16 +255,15 @@ const mapStateToProps = state => {
     agencyListLoading: state.laws.agencyListLoading,
     validityStatusList: state.laws.validityStatusList,
     statusListLoading: state.laws.statusListLoading
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     onGetLawClassList: () => dispatch(actions.getLawClassList()),
     onGetAgencyList: () => dispatch(actions.getListAgency()),
     onGetStatusList: () => dispatch(actions.getValidityStatusList())
-  }
-}
-
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

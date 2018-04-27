@@ -10,7 +10,11 @@ const initialState = {
   agencyListErrorMsg: null,
   validityStatusList: [],
   statusListLoading: false,
-  statusListErrorMsg: null
+  statusListErrorMsg: null,
+  searchResult: [],
+  totalResult: 0,
+  searchLoading: false,
+  searchError: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -33,9 +37,34 @@ const reducer = (state = initialState, action) => {
       return getStatusListSuccess(state, action);
     case actionTypes.GET_VALIDITY_STATUS_LIST_FAIL:
       return getStatusListFail(state, action);
+    case actionTypes.SEARCH_START:
+      return searchLawStart(state, action);
+    case actionTypes.SEARCH_SUCCESS:
+      return searchLawSuccess(state, action);
+    case actionTypes.SEARCH_FAIL:
+      return searchLawFail(state, action);
     default:
       return state;
   }
+};
+
+const searchLawStart = (state, action) => {
+  return updateObject(state, { searchLoading: true });
+};
+
+const searchLawSuccess = (state, action) => {
+  return updateObject(state, {
+    searchLoading: false,
+    searchResult: action.data.data,
+    totalResult: action.data.total
+  });
+};
+
+const searchLawFail = (state, action) => {
+  return updateObject(state, {
+    searchLoading: false,
+    searchError: action.errorMsg
+  });
 };
 
 const getLawClassStart = (state, action) => {

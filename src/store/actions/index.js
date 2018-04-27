@@ -10,10 +10,13 @@ export {
   getValidityStatusList,
   getValidityStatusListStart,
   getValidityStatusSuccess,
-  getValidityStatusFail
+  getValidityStatusFail,
+  search,
+  searchStart,
+  searchSuccess,
+  searchFail
 } from "./law";
 
-export { searchFail, searchStart, searchSuccess } from "./search";
 
 export {
   getAllNews,

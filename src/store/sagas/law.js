@@ -3,7 +3,6 @@ import { put } from 'redux-saga/effects';
 import axios from '../../axios-law';
 import * as actions from '../actions/index';
 
-
 export function* getLawClassList(action) {
   yield put(actions.getLawClassListStart());
   try {
@@ -31,5 +30,30 @@ export function* getValidityStatus(action) {
     yield put(actions.getValidityStatusSuccess(response.data));
   } catch (error) {
     yield put(actions.getValidityStatusFail(error));
+  }
+}
+
+export function* searchLaw(action) {
+  yield put(actions.searchStart());
+  try {
+    let url = `/lawDocument/search?page=${action.page}&perPage=${
+      action.perPage
+    }&keyword=${encodeURI(action.keyword)}&searchType=${action.searchType}`;
+    if (action.lawClass) {
+      url += `&classId=${action.lawClass}`;
+    }
+    if (action.agency) {
+      url += `&agencyId=${action.agency}`;
+    }
+    if (action.validityStatus) {
+      url += `&status=${action.validityStatus}`;
+    }
+    if (action.signer) {
+      url += `&signer=${encodeURI(action.signer)}`;
+    }
+    const response = yield axios.get(url);
+    yield put(actions.searchSuccess(response.data));
+  } catch (error) {
+    yield put(actions.searchFail(error));
   }
 }

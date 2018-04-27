@@ -79,12 +79,45 @@ export const getValidityStatusFail = errorMsg => {
   };
 };
 
-export const search = (keyword, pageIndex, itemPerPage, chapterId) => {
+export const search = (
+  keyword,
+  searchType,
+  pageIndex,
+  itemPerPage,
+  lawClass,
+  agency,
+  validityStatus,
+  signer
+) => {
   return {
     type: actionTypes.SEARCH,
     keyword: keyword,
-    pageIndex: pageIndex,
-    itemPerPage: itemPerPage,
-    chapterId: chapterId
+    searchType: searchType,
+    page: pageIndex,
+    perPage: itemPerPage,
+    lawClass: lawClass,
+    agency: agency,
+    validityStatus: validityStatus,
+    signer: signer
+  };
+};
+
+export const searchStart = () => {
+  return {
+    type: actionTypes.SEARCH_START
+  };
+};
+
+export const searchSuccess = data => {
+  return {
+    type: actionTypes.SEARCH_SUCCESS,
+    data: data
+  };
+};
+
+export const searchFail = errorMsg => {
+  return {
+    type: actionTypes.SEARCH_FAIL,
+    errorMsg: errorMsg
   };
 };
