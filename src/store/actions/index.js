@@ -14,9 +14,20 @@ export {
   search,
   searchStart,
   searchSuccess,
-  searchFail
-} from "./law";
-
+  searchFail,
+  getLawDetail,
+  getLawDetailStart,
+  getLawDetailSuccess,
+  getLawDetailFail,
+  getNewestLaw,
+  getNewestLawStart,
+  getNewestLawSuccess,
+  getNewestLawFail,
+  getMostViewedLaw,
+  getMostViewedLawStart,
+  getMostViewedLawSuccess,
+  getMostViewedLawFail
+} from './law';
 
 export {
   getAllNews,
@@ -27,4 +38,4 @@ export {
   getNewsByIdStart,
   getNewsByIdSuccess,
   getNewsByIdFail
-} from "./news";
+} from './news';

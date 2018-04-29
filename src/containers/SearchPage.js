@@ -7,8 +7,6 @@ import {
   Table,
   Grid,
   Divider,
-  Loader,
-  Dimmer,
   Icon,
   Dropdown,
   Pagination,
@@ -130,7 +128,7 @@ class SearchPage extends Component {
       </Grid.Row>
     );
     let resultTable = this.state.firsTime ? null : (
-      <Segment>
+      <Segment loading={this.props.searchLoading}>
         {this.props.totalResult > 0 ? (
           <div>
             <b>Tìm thấy </b>
@@ -140,9 +138,6 @@ class SearchPage extends Component {
         ) : (
           <b>Không có kết quả</b>
         )}
-        <Dimmer active={this.props.searchLoading}>
-          <Loader content="Đang tải" />
-        </Dimmer>
         <Table
           style={{
             border: '0'
@@ -159,7 +154,7 @@ class SearchPage extends Component {
                 <Table.Cell width={13} textAlign="left">
                   <b style={{ paddingBottom: '20px' }}>{law.description}</b>
                   <p>
-                    <a href="#">
+                    <a href={`/laws/${law._id}`}>
                       <Popup
                         trigger={<Icon name="file text outline" />}
                         content="Xem chi tiết"
