@@ -121,3 +121,85 @@ export const searchFail = errorMsg => {
     errorMsg: errorMsg
   };
 };
+
+export const getLawDetail = lawId => {
+  return {
+    type: actionTypes.GET_LAW_DETAIL,
+    lawId: lawId
+  };
+};
+
+export const getLawDetailStart = () => {
+  return {
+    type: actionTypes.GET_LAW_DETAIL_START
+  };
+};
+
+export const getLawDetailSuccess = data => {
+  console.log(data);
+  return {
+    type: actionTypes.GET_LAW_DETAIL_SUCCESS,
+    data: data
+  };
+};
+
+export const getLawDetailFail = errorMsg => {
+  return {
+    type: actionTypes.GET_LAW_DETAIL_FAIL,
+    errorMsg: errorMsg
+  };
+};
+
+export const getNewestLaw = itemNumber => {
+  return {
+    type: actionTypes.GET_NEWEST_LAW,
+    itemNumber: itemNumber
+  };
+};
+
+export const getNewestLawStart = () => {
+  return {
+    type: actionTypes.GET_NEWEST_LAW_START
+  };
+};
+
+export const getNewestLawSuccess = result => {
+  return {
+    type: actionTypes.GET_NEWEST_LAW_SUCCESS,
+    data: result
+  };
+};
+
+export const getNewestLawFail = errorMsg => {
+  return {
+    type: actionTypes.GET_NEWEST_LAW_FAIL,
+    errorMsg: errorMsg
+  };
+};
+
+export const getMostViewedLaw = itemNumber => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_LAW,
+    itemNumber: itemNumber
+  };
+};
+
+export const getMostViewedLawStart = () => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_LAW_START
+  };
+};
+
+export const getMostViewedLawSuccess = result => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_LAW_SUCCESS,
+    data: result
+  };
+};
+
+export const getMostViewedLawFail = errorMsg => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_LAW_FAIL,
+    errorMsg: errorMsg
+  };
+};

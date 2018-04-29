@@ -57,3 +57,37 @@ export function* searchLaw(action) {
     yield put(actions.searchFail(error));
   }
 }
+
+export function* getLawDetail(action) {
+  yield put(actions.getLawDetailStart());
+  try {
+    const response = yield axios.get(`/lawDocument/detail/${action.lawId}`);
+    yield put(actions.getLawDetailSuccess(response.data));
+  } catch (err) {
+    yield put(actions.getLawDetailFail(err));
+  }
+}
+
+export function* getNewestLaw(action) {
+  yield put(actions.getNewestLawStart());
+  try {
+    const response = yield axios.get(
+      `/lawDocument/newest?itemNumber=${action.itemNumber}`
+    );
+    yield put(actions.getNewestLawSuccess(response.data));
+  } catch (err) {
+    yield put(actions.getNewestLawFail(err));
+  }
+}
+
+export function* getMostViewedLaw(action) {
+  yield put(actions.getMostViewedLawStart());
+  try {
+    const response = yield axios.get(
+      `/lawDocument/mostviewed?itemNumber=${action.itemNumber}`
+    );
+    yield put(actions.getMostViewedLawSuccess(response.data));
+  } catch (err) {
+    yield put(actions.getMostViewedLawFail(err));
+  }
+}

@@ -12,6 +12,7 @@ import AboutPage from './containers/AboutPage';
 import SavedPage from './containers/SavedPage';
 import NewsPage from './containers/NewsPage';
 import NewsDetailPage from './containers/NewsDetailPage';
+import LawDetailPage from './containers/LawDetailPage';
 import NotFoundPage from './containers/NotFoundPage';
 import update from 'react-addons-update';
 
@@ -62,6 +63,7 @@ class App extends Component {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/news" component={NewsPage} />
           <Route exact path="/news/:id" component={NewsDetailPage} />
+          <Route exact path="/laws/:id" component={LawDetailPage}/>
           <Route exact path="/saved" render={() => <SavedPage />} />
           <Route
             render={() => (
