@@ -47,7 +47,8 @@ class SearchPage extends Component {
         lawClass: lawClass,
         agency: agency,
         validityStatus: validityStatus,
-        signer: signer
+        signer: signer,
+        pageIndex: 1
       },
       () => this.searchLaw()
     );
@@ -99,8 +100,8 @@ class SearchPage extends Component {
           <Pagination
             floated="right"
             activePage={this.state.pageIndex}
-            totalPages={Math.round(
-              this.props.totalResult.toFixed(2) / this.state.itemPerPage
+            totalPages={Math.ceil(
+              this.props.totalResult / this.state.itemPerPage
             )}
             onPageChange={this.onPageIndexClick}
             ellipsisItem={{
@@ -144,6 +145,7 @@ class SearchPage extends Component {
           }}
           celled
           column={2}
+          striped
         >
           <Table.Header>
             {this.props.totalResult > 0 ? <b>KẾT QUẢ TÌM KIẾM</b> : null}

@@ -52,14 +52,16 @@ class LawDetailPage extends Component {
             <Icon name="triangle right" />THUỘC TÍNH VĂN BẢN
           </Grid.Row>
           <Grid.Row>
-            <b>
-              {lawDetail.class.name} năm{' '}
-              {moment(lawDetail.promulgateDate).format('YYYY')}
-            </b>
+            <Grid.Column>
+              <b>
+                {lawDetail.class.name} năm{' '}
+                {moment(lawDetail.promulgateDate).format('YYYY')}
+              </b>
+            </Grid.Column>
           </Grid.Row>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <Table celled>
+              <Table celled definition>
                 <Table.Body>
                   <Table.Row>
                     <Table.Cell>
@@ -91,7 +93,7 @@ class LawDetailPage extends Component {
               </Table>
             </Grid.Column>
             <Grid.Column>
-              <Table celled>
+              <Table celled definition>
                 <Table.Body>
                   <Table.Row>
                     <Table.Cell>
@@ -183,7 +185,7 @@ class LawDetailPage extends Component {
                     <Icon name="home" />Trang chủ
                   </Breadcrumb.Section>
                   <Breadcrumb.Divider icon="right angle" />
-                  <Breadcrumb.Section link as={Link} to="/news">
+                  <Breadcrumb.Section link as={Link} to="/search">
                     Văn bản pháp luật
                   </Breadcrumb.Section>
                 </Breadcrumb>
@@ -241,7 +243,7 @@ class LawDetailPage extends Component {
                       newestLaw.map(lawDoc => (
                         <Grid.Row style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
-                            <Icon name="file text outline" />
+                            <Icon color = 'blue' name="file text outline" />
                           </Grid.Column>
                           <Grid.Column width={14}>
                             <Popup
@@ -275,7 +277,7 @@ class LawDetailPage extends Component {
                       mostViewedLaw.map(lawDoc => (
                         <Grid.Row style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
-                            <Icon name="file text outline" />
+                            <Icon color='blue' name="file text outline" />
                           </Grid.Column>
                           <Grid.Column width={14}>
                             <Popup
