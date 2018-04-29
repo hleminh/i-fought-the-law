@@ -72,48 +72,68 @@ class NewsPage extends Component {
       newsList = this.props.news.data.map(news => (
         <Grid.Row key={news._id}>
           <Card fluid>
-            <Card.Content
-              style={{
-                paddingTop: "0",
-                paddingBottom: "0",
-                paddingLeft: "0"
-              }}
-            >
-              <Image
-                verticalAlign="top"
-                floated="left"
-                size="medium"
-                src={news.image}
-                style={{ marginBottom: "0" }}
-              />
-              <Container style={{ marginTop: "14px" }} textAlign="right" fluid>
-                <Icon size="small" name="calendar outline" color="blue" />
-                <span style={{ fontSize: "12px" }}>{news.publishedDate}</span>
-              </Container>
-              <Header
-                className="NewsHeadline"
-                size="medium"
-                as="a"
-                style={{
-                  marginTop: "7px",
-                  marginBottom: "7px"
-                }}
-                href={"/news/" + news._id}
-              >
-                {news.headLines}
-              </Header>
-              <Dotdotdot
-                buttons={false}
-                lines="3"
-                text={news.brief}
-                ellipsis="..."
-              />
-              <Container fluid textAlign="right">
-                <a href={"/news/" + news._id}>
-                  <Icon name="long arrow right" size="small" />
-                  <i>Xem tiếp</i>
-                </a>
-              </Container>
+            <Card.Content>
+              <Grid>
+                <Grid.Row columns={2}>
+                  <Grid.Column
+                    stretched={true}
+                    verticalAlign="middle"
+                    width={6}
+                  >
+                    <Image as = 'a' href={"/news/" + news._id} src={news.image} bordered />
+                  </Grid.Column>
+                  <Grid.Column width={10} verticalAlign="middle">
+                    <Grid>
+                      <Grid.Row>
+                        <Grid.Column textAlign="right">
+                          <Icon
+                            size="small"
+                            name="calendar outline"
+                            color="blue"
+                          />
+                          <span style={{ fontSize: "12px" }}>
+                            {news.publishedDate}
+                          </span>
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row style={{ paddingTop: "0" }}>
+                        <Grid.Column>
+                          <Header
+                            className="NewsHeadline"
+                            size="medium"
+                            as="a"
+                            style={{
+                              marginTop: "7px",
+                              marginBottom: "7px"
+                            }}
+                            href={"/news/" + news._id}
+                          >
+                            {news.headLines}
+                          </Header>
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row style={{ padding: "0" }}>
+                        <Grid.Column>
+                          <Dotdotdot
+                            buttons={false}
+                            lines="3"
+                            text={news.brief}
+                            ellipsis="..."
+                          />
+                        </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row>
+                        <Grid.Column textAlign="right">
+                          <a href={"/news/" + news._id}>
+                            <Icon name="long arrow right" size="small" />
+                            <i>Xem tiếp</i>
+                          </a>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Card.Content>
           </Card>
         </Grid.Row>
@@ -172,9 +192,9 @@ class NewsPage extends Component {
                       <Pagination
                         floated="right"
                         activePage={this.state.pageIndex}
-                        totalPages={
-                          this.props.newsCount / this.state.itemPerPage - 1
-                        }
+                        totalPages={Math.ceil(
+                          this.props.newsCount / this.state.itemPerPage
+                        )}
                         onPageChange={this.onPageIndexClick.bind(this)}
                         ellipsisItem={{
                           content: <Icon name="ellipsis horizontal" />,

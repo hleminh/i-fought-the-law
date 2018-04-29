@@ -26,9 +26,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log(window.location.href);
+    // console.log(window.location.href);
     var currentURL = window.location.href.split('/');
-    console.log(currentURL);
+    // console.log(currentURL);
     this.setState({
       activeMenuItem: currentURL[3]
     });
