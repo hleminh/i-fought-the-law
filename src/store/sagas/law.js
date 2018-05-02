@@ -91,3 +91,28 @@ export function* getMostViewedLaw(action) {
     yield put(actions.getMostViewedLawFail(err));
   }
 }
+
+export function* getAllLaw(action) {
+  yield put(actions.getAllLawStart());
+  try {
+    let url = `/lawDocument/getAll?page=${action.page}&perPage=${
+      action.perPage
+    }`;
+    if (action.lawClass) {
+      url += `&classId=${action.lawClass}`;
+    }
+    if (action.agency) {
+      url += `&agencyId=${action.agency}`;
+    }
+    if (action.status) {
+      url += `&status=${action.validityStatus}`;
+    }
+    if (action.promulgateYear) {
+      url += `&year=${action.promulgateYear}`;
+    }
+    const response = yield axios.get(url);
+    yield put(actions.getAllLawSuccess(response.data));
+  } catch (error) {
+    yield put(actions.getAllLawFail(error));
+  }
+}

@@ -1,37 +1,35 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
+  Button,
   Container,
+  Dropdown,
+  Form,
+  Grid,
+  Icon,
   Image,
   Menu,
-  Modal,
-  Button,
-  Form,
-  Tab,
   Message,
-  Dropdown,
-  Grid,
-  Icon
-} from "semantic-ui-react";
-
-import BannerIMG from "../assets/images/banner.png";
+  Modal,
+  Tab
+} from 'semantic-ui-react';
+import BannerIMG from '../assets/images/banner.png';
 
 class MenuLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      signUpPassword: "",
-      signUpUsername: "",
-      signInPassword: "",
-      SignInUsername: "",
+      signUpPassword: '',
+      signUpUsername: '',
+      signInPassword: '',
+      SignInUsername: '',
       newModalOpen: false,
       signUpModalOpen: false,
       signInModalOpen: false,
-      origin: "",
-      kana: "",
-      definition: "",
-      tab: "0"
+      origin: '',
+      kana: '',
+      definition: '',
+      tab: '0'
     };
   }
 
@@ -64,14 +62,14 @@ class MenuLayout extends Component {
       kana: this.state.kana,
       definition: JSON.parse(this.state.definition)
     };
-    var category = this.state.tab === "0" ? "jpn_vie" : "vie_jpn";
+    var category = this.state.tab === '0' ? 'jpn_vie' : 'vie_jpn';
     this.props.handleNewSubmit(newData, category, (success, oldData) => {
       if (success) {
         this.setState({
-          origin: "",
-          kana: "",
-          definition: "",
-          tab: "0"
+          origin: '',
+          kana: '',
+          definition: '',
+          tab: '0'
         });
       } else {
         this.setState({
@@ -96,8 +94,8 @@ class MenuLayout extends Component {
     this.props.handleSignUpSubmit(newData, (success, oldData) => {
       if (success) {
         this.setState({
-          signUpPassword: "",
-          signUpUsername: ""
+          signUpPassword: '',
+          signUpUsername: ''
         });
       } else {
         this.setState({
@@ -121,8 +119,8 @@ class MenuLayout extends Component {
     this.props.handleSignInSubmit(newData, (success, oldData) => {
       if (success) {
         this.setState({
-          signInPassword: "",
-          signInUsername: ""
+          signInPassword: '',
+          signInUsername: ''
         });
       } else {
         this.setState({
@@ -174,7 +172,7 @@ class MenuLayout extends Component {
 
     const panes = [
       {
-        menuItem: "Nhật - Việt",
+        menuItem: 'Nhật - Việt',
         render: () => (
           <Tab.Pane attached={false}>
             <Form.Field required>
@@ -211,7 +209,7 @@ class MenuLayout extends Component {
         )
       },
       {
-        menuItem: "Việt - Nhật",
+        menuItem: 'Việt - Nhật',
         render: () => (
           <Tab.Pane attached={false}>
             <Form.Field required>
@@ -256,7 +254,7 @@ class MenuLayout extends Component {
             <Grid>
               <Grid.Row
                 style={{
-                  paddingBottom: "0"
+                  paddingBottom: '0'
                 }}
               >
                 <Grid.Column verticalAlign="middle" width={4} style={{}}>
@@ -478,7 +476,7 @@ class MenuLayout extends Component {
                       pointing
                       secondary
                       style={{
-                        borderBottom: "2px solid white"
+                        borderBottom: '2px solid white'
                       }}
                     >
                       <Container>
@@ -486,8 +484,8 @@ class MenuLayout extends Component {
                           fitted="horizontally"
                           className="MenuItemLower"
                           active={
-                            this.props.activeMenuItem === "home" ||
-                            this.props.activeMenuItem === ""
+                            this.props.activeMenuItem === 'home' ||
+                            this.props.activeMenuItem === ''
                           }
                           position="right"
                           as={Link}
@@ -500,7 +498,7 @@ class MenuLayout extends Component {
                         <Menu.Item
                           fitted="horizontally"
                           className="MenuItemLower"
-                          active={this.props.activeMenuItem === "search"}
+                          active={this.props.activeMenuItem === 'search'}
                           as={Link}
                           onClick={this.handleItemClick.bind(this)}
                           to="/search"
@@ -511,7 +509,7 @@ class MenuLayout extends Component {
                         <Menu.Item
                           fitted="horizontally"
                           className="MenuItemLower"
-                          active={this.props.activeMenuItem === "news"}
+                          active={this.props.activeMenuItem === 'news'}
                           as={Link}
                           onClick={this.handleItemClick.bind(this)}
                           to="/news"
@@ -522,7 +520,7 @@ class MenuLayout extends Component {
                         <Menu.Item
                           fitted="horizontally"
                           className="MenuItemLower"
-                          active={this.props.activeMenuItem === "about"}
+                          active={this.props.activeMenuItem === 'about'}
                           as={Link}
                           onClick={this.handleItemClick.bind(this)}
                           to="/about"
@@ -534,7 +532,7 @@ class MenuLayout extends Component {
                           <Menu.Item
                             fitted="horizontally"
                             className="MenuItemLower"
-                            active={this.props.activeMenuItem === "saved"}
+                            active={this.props.activeMenuItem === 'saved'}
                             as={Link}
                             onClick={this.handleItemClick.bind(this)}
                             to="/saved"

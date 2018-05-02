@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import EntryList from "../components/EntryList/EntryList";
-import { Container } from "semantic-ui-react";
 import { Redirect } from "react-router";
+import { Container } from "semantic-ui-react";
+import EntryList from "../components/EntryList/EntryList";
 
 class SavedPage extends Component {
   render() {
