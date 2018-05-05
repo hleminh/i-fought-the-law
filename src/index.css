@@ -68,7 +68,7 @@ body {
 }
 
 .ChatBotHeaderContainer {
-  background: #b27c00 !important;
+  background: #d01919 !important;
 }
 
 .ChatBotHeader {
@@ -135,4 +135,17 @@ body {
 
 .NewsHeadline:hover {
   color: #1745a3 !important;
+}
+
+.ChatBotDropDown,
+.ChatBotDropDownSearch {
+  width: 223px;
+}
+
+.ChatBotDropDownSearch > .text {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 95%;
+  vertical-align: top;
 }

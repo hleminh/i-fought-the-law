@@ -33,6 +33,7 @@ class App extends Component {
     this.setState({
       activeMenuItem: currentURL[3]
     });
+    // this.props.onGetAllSteps();
   }
 
   handleMenuVisibility(isMenuVisible) {

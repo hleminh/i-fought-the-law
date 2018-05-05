@@ -39,3 +39,15 @@ export {
   getNewsByIdSuccess,
   getNewsByIdFail
 } from './news';
+
+export{
+  getStepSetByInput,
+  getStepSetByInputStart,
+  getStepSetByInputSuccess,
+  getStepSetByInputFail,
+  updateSetFeatureByIdAndInput,
+  updateSetFeatureByIdAndInputStart,
+  updateSetFeatureByIdAndInputSuccess,
+  updateSetFeatureByIdAndInputFail,
+  resetChatBot
+} from './chatbot'

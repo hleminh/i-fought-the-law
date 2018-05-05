@@ -1,6 +1,6 @@
-import { all, takeLatest } from 'redux-saga/effects';
+import { all, takeLatest } from "redux-saga/effects";
 
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 import {
   getAgencyList,
   getLawClassList,
@@ -9,8 +9,9 @@ import {
   getLawDetail,
   getNewestLaw,
   getMostViewedLaw
-} from './law';
-import { getAllNews, getNewsById } from './news';
+} from "./law";
+import { getAllNews, getNewsById } from "./news";
+import { getStepSetByInput, updateSetFeatureByIdAndInput } from "./chatbot";
 
 export function* watchGetLaws() {
   yield all([
@@ -28,5 +29,15 @@ export function* watchNews() {
   yield all([
     takeLatest(actionTypes.GET_ALL_NEWS, getAllNews),
     takeLatest(actionTypes.GET_NEWS_BY_ID, getNewsById)
+  ]);
+}
+
+export function* watchChatBot() {
+  yield all([
+    takeLatest(actionTypes.GET_STEP_SET_BY_INPUT, getStepSetByInput),
+    takeLatest(
+      actionTypes.UPDATE_SET_FEATURE_BY_ID_AND_INPUT,
+      updateSetFeatureByIdAndInput
+    )
   ]);
 }

@@ -12,7 +12,8 @@ import "./index.css";
 import lawReducer from "./store/reducers/law";
 import searchReducer from "./store/reducers/search";
 import newsReducer from "./store/reducers/news";
-import { watchGetLaws, watchNews } from "./store/sagas/index";
+import chatbotReducer from "./store/reducers/chatbot";
+import { watchGetLaws, watchNews, watchChatBot } from "./store/sagas/index";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -22,7 +23,8 @@ const composeEnhancers =
 const rootReducer = combineReducers({
   laws: lawReducer,
   search: searchReducer,
-  news: newsReducer
+  news: newsReducer,
+  chatbot: chatbotReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -34,6 +36,8 @@ const store = createStore(
 
 sagaMiddleware.run(watchGetLaws);
 sagaMiddleware.run(watchNews);
+sagaMiddleware.run(watchChatBot);
+
 
 const app = (
   <Provider store={store}>
