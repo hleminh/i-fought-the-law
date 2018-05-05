@@ -1,27 +1,18 @@
+import 'moment/locale/vi';
 import React, { Component } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+import { connect } from 'react-redux';
 import {
+  Button,
   Dropdown,
+  Grid,
+  Header,
   Icon,
   Input,
-  Header,
-  Button,
-  Grid,
   Radio,
-  Segment,
-  Label,
-  Form
+  Segment
 } from 'semantic-ui-react';
-
 import * as actions from '../store/actions/index';
-
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import 'moment/locale/vi';
-
-import 'react-datepicker/dist/react-datepicker.css';
-import './SearchBar.css';
-import classes from './SearchBar.css';
-import { connect } from 'react-redux';
 
 class SearchBar extends Component {
   lawClassOptions = [];

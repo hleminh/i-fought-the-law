@@ -2,6 +2,10 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utilities';
 
 const initialState = {
+  lawDocumentList: [],
+  allLawLoading: false,
+  allLawError: null,
+  totalLaw: 0,
   lawClassList: [],
   lawClassLoading: false,
   lawClassErrorMsg: null,
@@ -28,6 +32,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.GET_ALL_LAW_START:
+      return getAllLawStart(state, action);
+    case actionTypes.GET_ALL_LAW_SUCCESS:
+      return getAllLawSuccess(state, action);
+    case actionTypes.GET_ALL_LAW_FAIL:
+      return getAllLawFail(state, action);
     case actionTypes.GET_LAW_CLASS_LIST_START:
       return getLawClassStart(state, action);
     case actionTypes.GET_LAW_CLASS_LIST_SUCCESS:
@@ -73,6 +83,25 @@ const reducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+const getAllLawStart = (state, action) => {
+  return updateObject(state, { allLawLoading: true });
+};
+
+const getAllLawSuccess = (state, action) => {
+  return updateObject(state, {
+    allLawLoading: false,
+    lawDocumentList: action.data.data,
+    totalLaw: action.data.total
+  });
+};
+
+const getAllLawFail = (state, action) => {
+  return updateObject(state, {
+    allLawLoading: false,
+    allLawError: action.errorMsg
+  });
 };
 
 const getNewestLawStart = (state, action) => {

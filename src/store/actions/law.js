@@ -1,6 +1,45 @@
 import * as actionTypes from '../actions/actionTypes';
 import { GET_LAW_CLASS_LIST, GET_VALIDITY_STATUS_LIST } from './actionTypes';
 
+export const getAllLaw = (
+  pageIndex,
+  itemPerPage,
+  agency,
+  lawClass,
+  promulgateYear,
+  validityStatus
+) => {
+  return {
+    type: actionTypes.GET_ALL_LAW,
+    page: pageIndex,
+    perPage: itemPerPage,
+    agency: agency,
+    lawClass: lawClass,
+    promulgateYear: promulgateYear,
+    status: validityStatus
+  };
+};
+
+export const getAllLawStart = () => {
+  return {
+    type: actionTypes.GET_ALL_LAW_START
+  };
+};
+
+export const getAllLawSuccess = results => {
+  return {
+    type: actionTypes.GET_ALL_LAW_SUCCESS,
+    data: results
+  };
+};
+
+export const getAllLawFail = errorMsg => {
+  return {
+    type: actionTypes.GET_ALL_LAW_FAIL,
+    errorMsg: errorMsg
+  };
+};
+
 export const getListAgency = () => {
   return {
     type: actionTypes.GET_LIST_AGENCY

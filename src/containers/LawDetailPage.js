@@ -1,24 +1,23 @@
+import moment from 'moment';
 import React, { Component } from 'react';
+import Dotdotdot from 'react-clamp-lines';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as actions from '../store/actions/index';
+import ReactToPrint from 'react-to-print';
 import {
+  Breadcrumb,
+  Card,
   Container,
   Grid,
-  Table,
-  Segment,
-  Breadcrumb,
   Icon,
-  Tab,
   Label,
-  Card,
-  Popup
+  Popup,
+  Segment,
+  Tab,
+  Table
 } from 'semantic-ui-react';
-import ReactToPrint from 'react-to-print';
-import moment from 'moment';
 import FooterLayout from '../components/FooterLayout';
-import Aux from '../hoc/Aux';
-import Dotdotdot from 'react-clamp-lines';
+import * as actions from '../store/actions/index';
 
 class LawDetailPage extends Component {
   state = {
@@ -243,7 +242,7 @@ class LawDetailPage extends Component {
                       newestLaw.map(lawDoc => (
                         <Grid.Row style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
-                            <Icon color = 'blue' name="file text outline" />
+                            <Icon color="blue" name="file text outline" />
                           </Grid.Column>
                           <Grid.Column width={14}>
                             <Popup
@@ -277,7 +276,7 @@ class LawDetailPage extends Component {
                       mostViewedLaw.map(lawDoc => (
                         <Grid.Row style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
-                            <Icon color='blue' name="file text outline" />
+                            <Icon color="blue" name="file text outline" />
                           </Grid.Column>
                           <Grid.Column width={14}>
                             <Popup

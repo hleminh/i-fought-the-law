@@ -1,26 +1,21 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import Dotdotdot from "react-clamp-lines";
-import * as actions from "../store/actions/index";
-import ParagraphPNG from "../assets/images/paragraph.png";
-import renderHTML from "react-render-html";
-import FooterLayout from "../components/FooterLayout";
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import renderHTML from 'react-render-html';
+import { Link } from 'react-router-dom';
 import {
+  Breadcrumb,
   Card,
   Container,
   Grid,
-  Segment,
+  Header,
+  Icon,
   Image,
   Label,
-  Loader,
-  Header,
-  Menu,
-  Table,
-  Icon,
-  Breadcrumb
-} from "semantic-ui-react";
+  Loader
+} from 'semantic-ui-react';
+import ParagraphPNG from '../assets/images/paragraph.png';
+import FooterLayout from '../components/FooterLayout';
+import * as actions from '../store/actions/index';
 
 class NewsDetailPage extends Component {
   componentWillMount() {
@@ -37,7 +32,7 @@ class NewsDetailPage extends Component {
         news => news._id !== this.props.match.params.id
       );
       newsListData = newsListData.slice(0, 4);
-      if (this.props.isNewsLoading == false) {
+      if (this.props.isNewsLoading === false) {
         newsList = newsListData.map(news => (
           <Grid.Column key={news._id} width={4}>
             <Grid>
@@ -48,7 +43,7 @@ class NewsDetailPage extends Component {
                   floated="left"
                   size="medium"
                   src={news.image}
-                  href={"/news/" + news._id}
+                  href={'/news/' + news._id}
                 />
               </Grid.Row>
               <Grid.Row>
@@ -56,7 +51,7 @@ class NewsDetailPage extends Component {
                   as="a"
                   className="NewsHeadline"
                   size="tiny"
-                  href={"/news/" + news._id}
+                  href={'/news/' + news._id}
                 >
                   {news.headLines}
                 </Header>
@@ -93,7 +88,7 @@ class NewsDetailPage extends Component {
                   </Grid.Row>
                   <Grid.Row>
                     <Card fluid>
-                      <Card.Content style={{ padding: "32px" }}>
+                      <Card.Content style={{ padding: '32px' }}>
                         <Loader active={this.props.currentNewsLoading} />
                         {!this.props.currentNewsLoading && (
                           <div>
@@ -103,7 +98,9 @@ class NewsDetailPage extends Component {
                               color="blue"
                             />
                             {this.props.currentNews.data[0].publishedDate}
-                            {renderHTML(this.props.currentNews.data[0].newsHtml)}
+                            {renderHTML(
+                              this.props.currentNews.data[0].newsHtml
+                            )}
                           </div>
                         )}
                       </Card.Content>
@@ -111,14 +108,14 @@ class NewsDetailPage extends Component {
                   </Grid.Row>
                   <Grid.Row />
                   <Grid.Row>
-                    <Grid.Column style={{ padding: "0" }}>
+                    <Grid.Column style={{ padding: '0' }}>
                       <Header
                         as={Link}
                         to="/news/"
                         className="NewsHeadline"
                         block
                         style={{
-                          display: "block"
+                          display: 'block'
                         }}
                       >
                         TIN PHÁP LUẬT KHÁC
@@ -219,7 +216,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onGetAllNews: (pageIndex, itemPerPage) =>
       dispatch(actions.getAllNews(pageIndex, itemPerPage)),
-    onGetNewsById: (newsId) => dispatch(actions.getNewsById(newsId))
+    onGetNewsById: newsId => dispatch(actions.getNewsById(newsId))
   };
 };
 

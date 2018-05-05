@@ -1,29 +1,24 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import Dotdotdot from "react-clamp-lines";
-import * as actions from "../store/actions/index";
-import ParagraphPNG from "../assets/images/paragraph.png";
-import { Redirect } from "react-router";
-import FooterLayout from "../components/FooterLayout";
-
+import React, { Component } from 'react';
+import Dotdotdot from 'react-clamp-lines';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
-  Advertisement,
+  Breadcrumb,
   Card,
   Container,
+  Dropdown,
   Grid,
-  Segment,
+  Header,
+  Icon,
   Image,
   Label,
   Loader,
-  Header,
-  Pagination,
-  Table,
-  Icon,
-  Breadcrumb,
-  Dropdown
-} from "semantic-ui-react";
+  Pagination
+} from 'semantic-ui-react';
+import ParagraphPNG from '../assets/images/paragraph.png';
+import FooterLayout from '../components/FooterLayout';
+import * as actions from '../store/actions/index';
 
 class NewsPage extends Component {
   constructor(props) {
@@ -60,11 +55,11 @@ class NewsPage extends Component {
 
   render() {
     var options = [
-      { text: "5 văn bản", value: 5 },
-      { text: "10 văn bản", value: 10 },
-      { text: "15 văn bản", value: 15 },
-      { text: "20 văn bản", value: 20 },
-      { text: "25 văn bản", value: 25 }
+      { text: '5 văn bản', value: 5 },
+      { text: '10 văn bản', value: 10 },
+      { text: '15 văn bản', value: 15 },
+      { text: '20 văn bản', value: 20 },
+      { text: '25 văn bản', value: 25 }
     ];
 
     var newsList = [];
@@ -80,7 +75,12 @@ class NewsPage extends Component {
                     verticalAlign="middle"
                     width={6}
                   >
-                    <Image as = 'a' href={"/news/" + news._id} src={news.image} bordered />
+                    <Image
+                      as="a"
+                      href={'/news/' + news._id}
+                      src={news.image}
+                      bordered
+                    />
                   </Grid.Column>
                   <Grid.Column width={10} verticalAlign="middle">
                     <Grid>
@@ -91,28 +91,28 @@ class NewsPage extends Component {
                             name="calendar outline"
                             color="blue"
                           />
-                          <span style={{ fontSize: "12px" }}>
+                          <span style={{ fontSize: '12px' }}>
                             {news.publishedDate}
                           </span>
                         </Grid.Column>
                       </Grid.Row>
-                      <Grid.Row style={{ paddingTop: "0" }}>
+                      <Grid.Row style={{ paddingTop: '0' }}>
                         <Grid.Column>
                           <Header
                             className="NewsHeadline"
                             size="medium"
                             as="a"
                             style={{
-                              marginTop: "7px",
-                              marginBottom: "7px"
+                              marginTop: '7px',
+                              marginBottom: '7px'
                             }}
-                            href={"/news/" + news._id}
+                            href={'/news/' + news._id}
                           >
                             {news.headLines}
                           </Header>
                         </Grid.Column>
                       </Grid.Row>
-                      <Grid.Row style={{ padding: "0" }}>
+                      <Grid.Row style={{ padding: '0' }}>
                         <Grid.Column>
                           <Dotdotdot
                             buttons={false}
@@ -124,7 +124,7 @@ class NewsPage extends Component {
                       </Grid.Row>
                       <Grid.Row>
                         <Grid.Column textAlign="right">
-                          <a href={"/news/" + news._id}>
+                          <a href={'/news/' + news._id}>
                             <Icon name="long arrow right" size="small" />
                             <i>Xem tiếp</i>
                           </a>
@@ -181,7 +181,7 @@ class NewsPage extends Component {
                   <Grid.Row>
                     <Container fluid>
                       <span>
-                        Hiển thị:{" "}
+                        Hiển thị:{' '}
                         <Dropdown
                           value={this.state.itemPerPage}
                           selection

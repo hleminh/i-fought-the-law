@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import './App.css';
-import $ from 'jquery';
-import MenuLayout from './components/MenuLayout';
-import ChatBotLayout from './components/ChatbotLayout/ChatBotLayout';
-import { Route } from 'react-router-dom';
 import { Switch } from 'react-router';
+import { Route } from 'react-router-dom';
+import './App.css';
+import ChatBotLayout from './components/ChatbotLayout/ChatBotLayout';
+import MenuLayout from './components/MenuLayout';
 import RedirectToHome from './components/RedirectToHome';
-import HomePage from './containers/HomePage';
-import SearchPage from './containers/SearchPage';
 import AboutPage from './containers/AboutPage';
-import SavedPage from './containers/SavedPage';
-import NewsPage from './containers/NewsPage';
-import NewsDetailPage from './containers/NewsDetailPage';
+import HomePage from './containers/HomePage';
 import LawDetailPage from './containers/LawDetailPage';
+import NewsDetailPage from './containers/NewsDetailPage';
+import NewsPage from './containers/NewsPage';
 import NotFoundPage from './containers/NotFoundPage';
-import update from 'react-addons-update';
+import SavedPage from './containers/SavedPage';
+import SearchPage from './containers/SearchPage';
 
 class App extends Component {
   constructor(props) {
@@ -63,7 +61,7 @@ class App extends Component {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/news" component={NewsPage} />
           <Route exact path="/news/:id" component={NewsDetailPage} />
-          <Route exact path="/laws/:id" component={LawDetailPage}/>
+          <Route exact path="/laws/:id" component={LawDetailPage} />
           <Route exact path="/saved" render={() => <SavedPage />} />
           <Route
             render={() => (

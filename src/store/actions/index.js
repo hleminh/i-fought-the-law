@@ -1,4 +1,8 @@
 export {
+  getAllLaw,
+  getAllLawStart,
+  getAllLawSuccess,
+  getAllLawFail,
   getLawClassList,
   getLawClassListStart,
   getLawClassListSucess,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import {Link} from 'react-router-dom';
-import { Container, Image, Header } from "semantic-ui-react";
+import { Link } from 'react-router-dom';
+import { Container, Header } from "semantic-ui-react";
 
 class NotFoundPage extends Component {
   componentWillMount() {
