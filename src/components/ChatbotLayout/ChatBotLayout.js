@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Icon, Popup } from "semantic-ui-react";
 import ChatBot from "./Chatbot/ChatBot";
+import * as actions from "../../store/actions/index";
+import { connect } from "react-redux";
 
 class ChatBotLayout extends Component {
   constructor(props) {
@@ -9,6 +11,8 @@ class ChatBotLayout extends Component {
       chatBoxOpen: false
     };
   }
+
+  componentWillMount() {}
 
   handleChatBoxOpenButtonClick(e) {
     if (this.state.chatBoxOpen) {
@@ -43,7 +47,7 @@ class ChatBotLayout extends Component {
                 ref={this.handleChatBotLayoutButtonRef.bind(this)}
                 onClick={this.handleChatBoxOpenButtonClick.bind(this)}
                 size="large"
-                color="brown"
+                color="red"
               >
                 <Button.Content>
                   Trò chuyện với Chat Bot &nbsp;
@@ -59,4 +63,15 @@ class ChatBotLayout extends Component {
   }
 }
 
-export default ChatBotLayout;
+const mapStateToProps = state => {
+  return {
+    steps: state.chatbot.steps,
+    isStepsLoading: state.chatbot.isStepsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatBotLayout);

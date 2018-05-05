@@ -1,134 +1,61 @@
 import React, { Component } from "react";
-import $ from "jquery";
-import { Card, Input, Ref, Popup, Icon, Image } from "semantic-ui-react";
+import {
+  Card,
+  Input,
+  Ref,
+  Popup,
+  Icon,
+  Image,
+  Loader,
+  Dropdown,
+  Button
+} from "semantic-ui-react";
 import MessageList from "../../MessageList";
-
-const steps = [
-  {
-    id: "-1",
-    message: "Xin lỗi, tôi không hiểu ý của bạn. Xin hãy thử lại.",
-    next: "0"
-  },
-  {
-    id: "0",
-    message:
-      "Xin chào! Tôi là Chat Bot. Tôi có thể giúp bạn việc gì?\n1. Tìm từ Nhật - Việt\n2. Tìm từ Việt - Nhật",
-    options: [
-      {
-        case: "1",
-        next: "0-1i"
-      },
-      {
-        case: "2",
-        next: "0-2i"
-      }
-    ]
-  },
-  {
-    id: "0-1i",
-    message: "Xin hãy nhập từ tiếng Nhật",
-    next: "0-1p"
-  },
-  {
-    id: "0-2i",
-    message: "Xin hãy nhập từ tiếng Việt",
-    next: "0-2p"
-  },
-  {
-    id: "0-1p",
-    action: function(callback, keyword) {
-      $.ajax({
-        url: "/entry/jpn_vie?filter=" + keyword,
-        type: "GET",
-        context: this,
-        success: function(result) {
-          var processedResult = "";
-          console.log(result);
-          for (var eachResult in result) {
-            processedResult += `${result[eachResult].origin} ${
-              result[eachResult].kana
-            } ${result[eachResult].definition}\n`;
-          }
-          callback(processedResult);
-        }
-      });
-    },
-    next: "result"
-  },
-  {
-    id: "0-2p",
-    action: function(callback, keyword) {
-      $.ajax({
-        url: "/entry/vie_jpn?filter=" + keyword,
-        type: "GET",
-        context: this,
-        success: function(result) {
-          var processedResult = "";
-          console.log(result);
-          for (var eachResult in result) {
-            processedResult += `${result[eachResult].origin} ${
-              result[eachResult].kana
-            } ${result[eachResult].definition}\n`;
-          }
-          callback(processedResult);
-        }
-      });
-    },
-    next: "result"
-  },
-  {
-    id: "result",
-    message: "",
-    next: "0"
-  }
-];
+import * as actions from "../../../store/actions/index";
+import { connect } from "react-redux";
 
 class ChatBot extends Component {
+  lawClassOptions = [];
+  agencyOptions = [];
+  statusOptions = [];
+
   constructor(props) {
     super(props);
     this.state = {
       userInput: "",
+      currentStep: this.props.steps[0],
       dataList: [
         {
-          message: steps[1].message,
+          message: this.props.steps[0].message,
           type: "botMessage"
         }
       ],
       disableInput: false,
+      userSetInput: null,
+      surveyClickedOnce: false,
       userLoadingExist: false,
-      currentStep: steps[1]
+      searchData: {
+        keyword: null,
+        pageIndex: 1,
+        itemPerPage: 10,
+        lawClass: null,
+        agency: null,
+        status: null,
+        signer: null
+      }
     };
   }
 
   nextStep(currentStep, data) {
     switch (currentStep) {
-      case "options":
-        console.log("options");
-        for (let step in steps) {
-          if (data.next === steps[step].id) {
-            this.setState(
-              {
-                currentStep: steps[step]
-              },
-              () => {
-                this.botReply();
-                if (this.state.currentStep.action) {
-                  console.log("next step is action");
-                  this.botProcess();
-                }
-              }
-            );
-          }
-        }
-        break;
       case "action":
         console.log("action");
-        for (let step in steps) {
-          if (this.state.currentStep.next === steps[step].id) {
-            steps[step].message = data;
+        for (var i = 0; i < this.props.steps.length; i++) {
+          if (this.state.currentStep === this.props.steps[i]) {
+            this.props.steps[i + 1].message = data;
             this.setState(
               {
-                currentStep: steps[step]
+                currentStep: this.props.steps[i + 1]
               },
               () => {
                 this.botReply();
@@ -143,11 +70,11 @@ class ChatBot extends Component {
         break;
       case "message":
         console.log("message");
-        for (let step in steps) {
-          if (this.state.currentStep.next === steps[step].id) {
+        for (var i = 0; i < this.props.steps.length; i++) {
+          if (this.state.currentStep === this.props.steps[i]) {
             this.setState(
               {
-                currentStep: steps[step]
+                currentStep: this.props.steps[i + 1]
               },
               () => {
                 if (!this.state.currentStep.action) {
@@ -161,55 +88,248 @@ class ChatBot extends Component {
           }
         }
         break;
-      default:
-        console.log("err");
-        for (let step in steps) {
-          if ("-1" === steps[step].id) {
-            this.setState(
-              {
-                currentStep: steps[step]
-              },
-              () => {
-                if (!this.state.currentStep.action) {
-                  this.botReply();
-                } else {
-                  console.log("next step is action");
-                  this.botProcess();
-                }
-              }
-            );
-          }
-        }
     }
   }
 
-  botProcess() {
-    console.log(this.state.currentStep.id);
-    if (this.state.currentStep.options) {
-      console.log("process options");
-      for (let option in this.state.currentStep.options) {
-        if (
-          this.state.userInput === this.state.currentStep.options[option].case
-        ) {
-          console.log("User picked option: " + this.state.userInput);
-          this.nextStep("options", this.state.currentStep.options[option]);
-          return;
+  componentWillMount() {
+    this.props.onGetLawClassList();
+    this.props.onGetAgencyList();
+    this.props.onGetStatusList();
+  }
+
+  componentDidMount() {
+    this.userInput.focus();
+  }
+
+  getDropDownItemNameFromId = (dataType = this.state.currentStep.dataType) => {
+    switch (dataType) {
+      case "lawClass":
+        for (var item in this.lawClassOptions) {
+          if (this.state.userInput == this.lawClassOptions[item].value)
+            return this.lawClassOptions[item].text;
         }
+        break;
+      case "status":
+        for (var item in this.statusOptions) {
+          if (this.state.userInput == this.statusOptions[item].value)
+            return this.statusOptions[item].text;
+        }
+        break;
+      case "agency":
+        for (var item in this.agencyOptions) {
+          if (this.state.userInput == this.agencyOptions[item].value)
+            return this.agencyOptions[item].text;
+        }
+        break;
+      default:
+        return this.state.userInput.trim();
+    }
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.steps !== this.props.steps) {
+      this.changeSet(nextProps);
+    }
+    if (nextProps.lawClassList != this.props.lawClassList) {
+      let lawClassOptionNew = nextProps.lawClassList.map(lawClass => {
+        return {
+          key: lawClass._id,
+          value: lawClass._id,
+          text: lawClass.name
+        };
+      });
+      this.lawClassOptions = lawClassOptionNew;
+    }
+
+    if (nextProps.agencyList != this.props.agencyList) {
+      let agencyListNew = nextProps.agencyList.map(agency => {
+        return {
+          key: agency._id,
+          value: agency._id,
+          text: agency.name
+        };
+      });
+      this.agencyOptions = agencyListNew;
+    }
+
+    if (nextProps.validityStatusList != this.props.validityStatusList) {
+      let statusOptionNew = nextProps.validityStatusList.map(status => {
+        return {
+          key: status._id,
+          value: status._id,
+          text: status.name
+        };
+      });
+      this.statusOptions = statusOptionNew;
+    }
+
+    if (nextProps.searchResult !== this.props.searchResult) {
+      this.showSearchResult(nextProps);
+    }
+  }
+
+  componentWillUnmount() {
+    this.onChatBotClose();
+  }
+
+  showSearchResult(nextProps) {
+    this.setState(
+      {
+        dataList: this.state.dataList.map(data => {
+          if (data.type === "botLoading") {
+            return Object.assign({}, data, {
+              message:
+                nextProps.searchResult[0] == null
+                  ? "Không tìm thấy kết quả nào"
+                  : "Đã tìm thấy kết quả",
+              type: "botMessage"
+            });
+          } else {
+            return data;
+          }
+        }),
+        disableInput: false
+      },
+      () => {
+        this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+        if (
+          !this.state.currentStep.dataType ||
+          this.state.currentStep.dataType === "keyword" ||
+          this.state.currentStep.dataType === "signer"
+        ) {
+          this.userInput.focus();
+        }
+        this.onChatBotFinishedSet();
       }
-      this.nextStep("err");
-    } else if (this.state.currentStep.action) {
-      console.log("process action");
-      this.state.currentStep.action(result => {
-        this.nextStep("action", result);
-      }, this.state.userInput);
+    );
+  }
+
+  onChatBotClose = () => {
+    this.props.onResetChatBot();
+  };
+
+  changeSet(nextProps) {
+    console.log("changeSet");
+    this.setState(
+      {
+        currentStep: nextProps.steps[0]
+      },
+      () => {
+        this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+        this.setState(
+          {
+            dataList: this.state.dataList.map(data => {
+              if (data.type === "botLoading") {
+                if (this.props.survey == null) {
+                  return Object.assign({}, data, {
+                    message: this.state.currentStep.message,
+                    type: "botMessage"
+                  });
+                } else {
+                  if (!this.state.surveyClickedOnce) {
+                    return Object.assign({}, data, {
+                      message: this.state.currentStep.message,
+                      type: "botMessageWithSurvey"
+                    });
+                  } else {
+                    return Object.assign({}, data, {
+                      message: this.state.currentStep.message,
+                      type: "botMessage"
+                    });
+                  }
+                }
+              } else {
+                return data;
+              }
+            }),
+            disableInput: false
+          },
+          () => {
+            this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            if (
+              !this.state.currentStep.dataType ||
+              this.state.currentStep.dataType === "keyword" ||
+              this.state.currentStep.dataType === "signer"
+            )
+              this.userInput.focus();
+          },
+          () => {
+            this.botReply();
+          }
+        );
+      }
+    );
+  }
+
+  botProcess() {
+    console.log(this.state.currentStep);
+    if (this.state.currentStep.action) {
+      this.botProcessAction();
     } else {
-      console.log("process message");
+      this.botProcessMessage();
+    }
+  }
+
+  botProcessAction() {
+    console.log("process action");
+    console.log(this.state.currentStep.action);
+    var input = this.state.userInput;
+    var callback = () => {
+      this.setState(
+        {
+          dataList: this.state.dataList.concat([
+            {
+              type: "botLoading"
+            }
+          ]),
+          userInput: "",
+          disableInput: true,
+          userLoadingExist: false
+        },
+        () => {
+          this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+        }
+      );
+    };
+    var func = eval(this.state.currentStep.action);
+    console.log(func);
+    if (this.props.setName == null) {
+      this.setState(
+        {
+          userSetInput: this.state.userInput
+        },
+        () => {
+          console.log("userSetInput: ", this.state.userSetInput);
+          func(callback, this.state.userInput);
+        }
+      );
+    } else {
+      func(callback, this.state.searchData);
+    }
+  }
+
+  botProcessMessage() {
+    console.log("process message");
+    if (this.state.currentStep.dataType) {
+      console.log(this.state.currentStep.dataType);
+      this.setState(
+        prevState => ({
+          searchData: {
+            ...prevState.searchData,
+            [this.state.currentStep.dataType]: this.state.userInput
+          }
+        }),
+        () => {
+          console.log(this.state.searchData);
+          this.nextStep("message");
+        }
+      );
+    } else {
       this.nextStep("message");
     }
   }
 
   botReply() {
-    console.log("reply " + this.state.currentStep.id);
     this.setState(
       {
         dataList: this.state.dataList.concat([
@@ -240,10 +360,12 @@ class ChatBot extends Component {
             },
             () => {
               this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
-              this.userInput.focus();
-              if (this.state.currentStep.next === "0") {
-                this.nextStep("message");
-              }
+              if (
+                !this.state.currentStep.dataType ||
+                this.state.currentStep.dataType === "keyword" ||
+                this.state.currentStep.dataType === "signer"
+              )
+                this.userInput.focus();
             }
           );
         }, 1000);
@@ -251,7 +373,80 @@ class ChatBot extends Component {
     );
   }
 
+  onChatBotFinishedSet = () => {
+    this.setState(
+      {
+        dataList: this.state.dataList.concat([
+          {
+            type: "botLoading"
+          }
+        ])
+      },
+      () => {
+        this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+        console.log(this.state.dataList);
+        setTimeout(() => {
+          this.setState(
+            {
+              dataList: this.state.dataList.map(data => {
+                if (data.type === "botLoading") {
+                  return Object.assign({}, data, {
+                    type: "botRestartOption"
+                  });
+                } else {
+                  return data;
+                }
+              })
+            },
+            () => {
+              this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            }
+          );
+        }, 1000);
+      }
+    );
+  };
+
+  onResetBtnClick = () => {
+    this.setState(
+      {
+        dataList: [],
+        userInput: "",
+        disableInput: true,
+        userLoadingExist: false,
+        surveyClickedOnce: false,
+        searchData: {
+          keyword: null,
+          pageIndex: 1,
+          itemPerPage: 10,
+          lawClass: null,
+          agency: null,
+          status: null,
+          signer: null
+        }
+      },
+      () => {
+        this.setState(
+          {
+            dataList: this.state.dataList.concat([
+              {
+                type: "botLoading"
+              }
+            ])
+          },
+          () => {
+            this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            setTimeout(() => {
+              this.props.onResetChatBot();
+            }, 1000);
+          }
+        );
+      }
+    );
+  };
+
   handleButtonClick() {
+    console.log("handle button click");
     console.log(this.state.userInput);
     if (this.state.userInput.trim() !== "") {
       this.setState(
@@ -259,7 +454,7 @@ class ChatBot extends Component {
           dataList: this.state.dataList.map(data => {
             if (data.type === "userLoading") {
               return Object.assign({}, data, {
-                message: this.state.userInput.trim(),
+                message: this.getDropDownItemNameFromId(),
                 type: "userMessage"
               });
             } else {
@@ -277,6 +472,12 @@ class ChatBot extends Component {
           userInput: ""
         },
         () => {
+          if (
+            !this.state.currentStep.dataType ||
+            this.state.currentStep.dataType === "keyword" ||
+            this.state.currentStep.dataType === "signer"
+          )
+            console.log("userInput focus");
           this.userInput.focus();
         }
       );
@@ -297,6 +498,49 @@ class ChatBot extends Component {
     }
   }
 
+  onDropDownChange = (e, data) => {
+    console.log(data.value);
+    this.setState(
+      {
+        userInput: data.value
+      },
+      () => {
+        if (
+          !this.state.userLoadingExist &&
+          this.state.userInput.trim() !== ""
+        ) {
+          this.setState(
+            {
+              dataList: this.state.dataList.concat([
+                {
+                  message: "",
+                  type: "userLoading"
+                }
+              ]),
+              userLoadingExist: true
+            },
+            () => {
+              this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            }
+          );
+        }
+        if (this.state.userLoadingExist && this.state.userInput.trim() === "") {
+          this.setState(
+            {
+              dataList: this.state.dataList.filter(
+                data => data.type !== "userLoading"
+              ),
+              userLoadingExist: false
+            },
+            () => {
+              this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            }
+          );
+        }
+      }
+    );
+  };
+
   handleOnInputChange(e) {
     this.setState(
       {
@@ -307,15 +551,20 @@ class ChatBot extends Component {
           !this.state.userLoadingExist &&
           this.state.userInput.trim() !== ""
         ) {
-          this.setState({
-            dataList: this.state.dataList.concat([
-              {
-                message: "",
-                type: "userLoading"
-              }
-            ]),
-            userLoadingExist: true
-          });
+          this.setState(
+            {
+              dataList: this.state.dataList.concat([
+                {
+                  message: "",
+                  type: "userLoading"
+                }
+              ]),
+              userLoadingExist: true
+            },
+            () => {
+              this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            }
+          );
         }
         if (this.state.userLoadingExist && this.state.userInput.trim() === "") {
           this.setState({
@@ -329,52 +578,239 @@ class ChatBot extends Component {
     );
   }
 
+  renderUserInputByDataType = (dataType = this.state.currentStep.dataType) => {
+    switch (dataType) {
+      case "lawClass":
+        return (
+          <div>
+            <Dropdown
+              upward
+              placeholder="Chọn loại văn bản"
+              selection
+              value={this.state.userInput}
+              onChange={this.onDropDownChange}
+              options={this.lawClassOptions}
+              disabled={this.state.disableInput}
+              className="ChatBotDropDown"
+            />
+            <Button
+              attached="right"
+              icon
+              onClick={this.handleButtonClick.bind(this)}
+              loading={this.state.disableInput}
+              disabled={this.state.disableInput}
+            >
+              <Icon name="chevron right" />
+            </Button>
+          </div>
+        );
+        break;
+      case "agency":
+        return (
+          <div>
+            <Dropdown
+              upward
+              placeholder="Chọn cơ quan ban hành"
+              noResultsMessage="Không có kết quả"
+              selection
+              search
+              value={this.state.userInput}
+              onChange={this.onDropDownChange}
+              options={this.agencyOptions}
+              disabled={this.state.disableInput}
+              className="ChatBotDropDownSearch"
+            />
+            <Button
+              attached="right"
+              icon
+              onClick={this.handleButtonClick.bind(this)}
+              loading={this.state.disableInput}
+              disabled={this.state.disableInput}
+            >
+              <Icon name="chevron right" />
+            </Button>
+          </div>
+        );
+        break;
+      case "status":
+        return (
+          <div>
+            <Dropdown
+              upward
+              placeholder="Chọn tình trạng hiệu lực"
+              selection
+              value={this.state.userInput}
+              onChange={this.onDropDownChange}
+              options={this.statusOptions}
+              disabled={this.state.disableInput}
+              className="ChatBotDropDown"
+            />
+            <Button
+              attached="right"
+              icon
+              onClick={this.handleButtonClick.bind(this)}
+              loading={this.state.disableInput}
+              disabled={this.state.disableInput}
+            >
+              <Icon name="chevron right" />
+            </Button>
+          </div>
+        );
+        break;
+      default:
+        return (
+          <Input
+            disabled={this.state.disableInput}
+            fluid={true}
+            action={{
+              icon: "chevron right",
+              onClick: this.handleButtonClick.bind(this),
+              loading: this.state.disableInput
+            }}
+            value={this.state.userInput}
+            placeholder="Gõ và nhấn Enter để gửi"
+            onKeyDown={this.handleOnKeyDown.bind(this)}
+            onChange={this.handleOnInputChange.bind(this)}
+            ref={this.handleInputRef.bind(this)}
+          />
+        );
+        break;
+    }
+  };
+
+  onSurveyClick = data => {
+    console.log(data);
+    console.log("survey clicked");
+    this.setState(
+      {
+        dataList: [],
+        userInput: "",
+        disableInput: true,
+        userLoadingExist: false,
+        surveyClickedOnce: true,
+        searchData: {
+          keyword: null,
+          pageIndex: 1,
+          itemPerPage: 10,
+          lawClass: null,
+          agency: null,
+          status: null,
+          signer: null
+        }
+      },
+      () => {
+        this.setState(
+          {
+            dataList: this.state.dataList.concat([
+              {
+                type: "botLoading"
+              }
+            ])
+          },
+          () => {
+            this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+            this.props.onUpdateSetFeatureByIdAndInput(
+              data._id,
+              this.state.userSetInput
+            );
+          }
+        );
+      }
+    );
+  };
+
   render() {
     return (
       <div className="ChatBotContainer">
-        <Card className="ChatBot">
-          <Card.Content className="ChatBotHeaderContainer">
-            <Card.Header className="ChatBotHeader" textAlign="left">
-              Chat Bot
-              <Popup
-                trigger={
-                  <Image floated="right">
-                    <Icon
-                      link={true}
-                      name="close"
-                      onClick={this.props.handleExitButtonClick}
-                    />
-                  </Image>
-                }
-                content="Đóng cửa sổ trò chuyện"
-              />
-            </Card.Header>
-          </Card.Content>
-          <Ref innerRef={this.handleMessageContainerRef.bind(this)}>
-            <Card.Content className="ChatBotMessageContainer">
-              <MessageList dataList={this.state.dataList} />
+        {!this.props.isStepsLoading && (
+          <Card className="ChatBot">
+            <Card.Content className="ChatBotHeaderContainer">
+              <Card.Header className="ChatBotHeader" textAlign="left">
+                Chat Bot
+                <Popup
+                  trigger={
+                    <Image floated="right">
+                      <Icon
+                        link={true}
+                        name="close"
+                        onClick={this.props.handleExitButtonClick}
+                      />
+                    </Image>
+                  }
+                  content="Đóng cửa sổ trò chuyện"
+                />
+              </Card.Header>
             </Card.Content>
-          </Ref>
-          <Card.Content>
-            <Input
-              disabled={this.state.disableInput}
-              fluid={true}
-              action={{
-                icon: "chevron right",
-                onClick: this.handleButtonClick.bind(this),
-                loading: this.state.disableInput
-              }}
-              value={this.state.userInput}
-              placeholder="Gõ và nhấn Enter để gửi"
-              onKeyDown={this.handleOnKeyDown.bind(this)}
-              onChange={this.handleOnInputChange.bind(this)}
-              ref={this.handleInputRef.bind(this)}
-            />
-          </Card.Content>
-        </Card>
+            <Ref innerRef={this.handleMessageContainerRef.bind(this)}>
+              <Card.Content className="ChatBotMessageContainer">
+                <MessageList
+                  onExitBtnClick={this.props.handleExitButtonClick}
+                  onResetBtnClick={this.onResetBtnClick}
+                  onSurveyClick={this.onSurveyClick}
+                  dataList={this.state.dataList}
+                />
+              </Card.Content>
+            </Ref>
+            <Card.Content>{this.renderUserInputByDataType()}</Card.Content>
+          </Card>
+        )}
+        <Loader active={this.props.isStepsLoading} />
       </div>
     );
   }
 }
 
-export default ChatBot;
+const mapStateToProps = state => {
+  return {
+    steps: state.chatbot.steps,
+    isStepsLoading: state.chatbot.isStepsLoading,
+    setName: state.chatbot.setName,
+    survey: state.chatbot.survey,
+    searchResult: state.laws.searchResult,
+    searchLoading: state.laws.searchLoading,
+    totalResult: state.laws.totalResult,
+    lawClassList: state.laws.lawClassList,
+    lawClassLoading: state.laws.lawClassLoading,
+    agencyList: state.laws.agencyList,
+    agencyListLoading: state.laws.agencyListLoading,
+    validityStatusList: state.laws.validityStatusList,
+    statusListLoading: state.laws.statusListLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onResetChatBot: () => dispatch(actions.resetChatBot()),
+    onGetStepSetByInput: input => dispatch(actions.getStepSetByInput(input)),
+    onGetLawClassList: () => dispatch(actions.getLawClassList()),
+    onGetAgencyList: () => dispatch(actions.getListAgency()),
+    onGetStatusList: () => dispatch(actions.getValidityStatusList()),
+    onUpdateSetFeatureByIdAndInput: (id, input) => {
+      dispatch(actions.updateSetFeatureByIdAndInput(id, input));
+    },
+    searchLaw: (
+      keyword,
+      searchType,
+      pageIndex,
+      itemPerPage,
+      lawClass,
+      agency,
+      validityStatus,
+      signer
+    ) =>
+      dispatch(
+        actions.search(
+          keyword,
+          searchType,
+          pageIndex,
+          itemPerPage,
+          lawClass,
+          agency,
+          validityStatus,
+          signer
+        )
+      )
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatBot);

@@ -168,8 +168,6 @@ class MenuLayout extends Component {
   }
 
   render() {
-    const { activeItem } = this.state;
-
     const panes = [
       {
         menuItem: 'Nhật - Việt',
