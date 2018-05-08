@@ -13,11 +13,11 @@ class Entry extends Component {
     return (
       <Table.Row id={lawItem.id}>
         <Table.Cell width={13} textAlign="left">
-        <a href={`/laws/${lawItem._id}`}>
+        <a href={`/search/${lawItem._id}`}>
           <b style={{ paddingBottom: '20px' }}>{lawItem.description}</b>
         </a>
           <p>
-            <a href={`/laws/${lawItem._id}`}>
+            <a href={`/search/${lawItem._id}`}>
               <Popup
                 trigger={<Icon name="file text outline" />}
                 content="Xem chi tiết"

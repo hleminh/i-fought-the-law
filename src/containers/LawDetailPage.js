@@ -247,7 +247,7 @@ class LawDetailPage extends Component {
                           <Grid.Column width={14}>
                             <Popup
                               trigger={
-                                <a href={`/laws/${lawDoc._id}`}>
+                                <a href={`/search/${lawDoc._id}`}>
                                   <Dotdotdot
                                     buttons={false}
                                     lines="2"
@@ -281,7 +281,7 @@ class LawDetailPage extends Component {
                           <Grid.Column width={14}>
                             <Popup
                               trigger={
-                                <a href={`/laws/${lawDoc._id}`}>
+                                <a href={`/search/${lawDoc._id}`}>
                                   <Dotdotdot
                                     buttons={false}
                                     lines="2"

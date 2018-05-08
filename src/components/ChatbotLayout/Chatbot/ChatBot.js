@@ -184,7 +184,7 @@ class ChatBot extends Component {
               message:
                 nextProps.searchResult[0] == null
                   ? "Không tìm thấy kết quả nào"
-                  : "Đã tìm thấy kết quả",
+                  : `Đã tìm thấy ${this.props.totalResult} kết quả`,
               type: "botMessage"
             });
           } else {
@@ -195,6 +195,7 @@ class ChatBot extends Component {
       },
       () => {
         this.chatBotMessageContainer.scrollTop = this.chatBotMessageContainer.scrollHeight;
+        this.props.handleUrlChange("/search");
         if (
           !this.state.currentStep.dataType ||
           this.state.currentStep.dataType === "keyword" ||
