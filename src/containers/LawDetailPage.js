@@ -240,7 +240,7 @@ class LawDetailPage extends Component {
                   <Grid style={{ padding: '10px' }}>
                     {newestLaw.length > 0 &&
                       newestLaw.map(lawDoc => (
-                        <Grid.Row style={{ padding: '10px' }} columns={2}>
+                        <Grid.Row key={lawDoc._id} style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
                             <Icon color="blue" name="file text outline" />
                           </Grid.Column>
@@ -274,7 +274,7 @@ class LawDetailPage extends Component {
                   <Grid style={{ padding: '10px' }}>
                     {mostViewedLaw.length > 0 &&
                       mostViewedLaw.map(lawDoc => (
-                        <Grid.Row style={{ padding: '10px' }} columns={2}>
+                        <Grid.Row key={lawDoc._id} style={{ padding: '10px' }} columns={2}>
                           <Grid.Column width={2}>
                             <Icon color="blue" name="file text outline" />
                           </Grid.Column>

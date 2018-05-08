@@ -14,7 +14,7 @@ import {
 
 const popupContentStyle = {
   height: '400px',
-  'overflow-y': 'auto'
+  overflowY: 'auto'
 };
 
 class RadioCardLayout extends Component {
@@ -22,6 +22,7 @@ class RadioCardLayout extends Component {
     checkedValue: '',
     value: 'all'
   };
+
 
   handleChange = (e, { value }) => {
     this.setState({ value });

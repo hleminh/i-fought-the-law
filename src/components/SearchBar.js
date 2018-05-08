@@ -52,7 +52,7 @@ class SearchBar extends Component {
         };
       });
       this.lawClassOption = [
-        { key: 'first', value: 'first', text: 'Loại văn bản' }
+        { key: 'first', value: 'first', text: 'Tất cả các loại văn bản' }
       ].concat(lawClassOptionNew);
     }
 
@@ -65,7 +65,7 @@ class SearchBar extends Component {
         };
       });
       this.agencyOptions = [
-        { key: 'first', value: 'first', text: 'Cơ quan ban hành' }
+        { key: 'first', value: 'first', text: 'Tất cả cơ quan ban hành' }
       ].concat(agencyListNew);
     }
 
@@ -78,7 +78,7 @@ class SearchBar extends Component {
         };
       });
       this.statusOptions = [
-        { key: 'first', value: 'first', text: 'Tình trạng hiệu lực' }
+        { key: 'first', value: 'first', text: 'Tất cả tình trạng hiệu lực' }
       ].concat(statusOptionNew);
     }
   }

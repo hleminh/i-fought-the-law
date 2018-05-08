@@ -1,6 +1,6 @@
-import { all, takeLatest } from "redux-saga/effects";
+import { all, takeLatest } from 'redux-saga/effects';
 
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from '../actions/actionTypes';
 import {
   getAllLaw,
   getAgencyList,
@@ -10,9 +10,24 @@ import {
   getLawDetail,
   getNewestLaw,
   getMostViewedLaw
-} from "./law";
-import { getAllNews, getNewsById } from "./news";
-import { getStepSetByInput, updateSetFeatureByIdAndInput } from "./chatbot";
+} from './law';
+import { getAllNews, getNewsById, getMostViewdNews } from './news';
+import { getStepSetByInput, updateSetFeatureByIdAndInput } from './chatbot';
+import {
+  logoutSaga,
+  checkAuthTimeOutSaga,
+  authUserSaga,
+  authCheckStateSaga
+} from './auth';
+
+export function* watchAuth() {
+  yield all([
+    takeLatest(actionTypes.AUTH_INITIATE_LOGOUT, logoutSaga),
+    takeLatest(actionTypes.AUTH_CHECK_TIMEOUT, checkAuthTimeOutSaga),
+    takeLatest(actionTypes.AUTH_USER, authUserSaga),
+    takeLatest(actionTypes.AUTH_CHECK_STATE, authCheckStateSaga)
+  ]);
+}
 
 export function* watchGetLaws() {
   yield all([
@@ -30,7 +45,8 @@ export function* watchGetLaws() {
 export function* watchNews() {
   yield all([
     takeLatest(actionTypes.GET_ALL_NEWS, getAllNews),
-    takeLatest(actionTypes.GET_NEWS_BY_ID, getNewsById)
+    takeLatest(actionTypes.GET_NEWS_BY_ID, getNewsById),
+    takeLatest(actionTypes.GET_MOST_VIEWED_NEW, getMostViewdNews)
   ]);
 }
 

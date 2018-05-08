@@ -92,9 +92,12 @@ class ChatBot extends Component {
   }
 
   componentWillMount() {
-    this.props.onGetLawClassList();
-    this.props.onGetAgencyList();
-    this.props.onGetStatusList();
+    if  (this.props.lawClassList.length === 0)
+      this.props.onGetLawClassList(); 
+    if  (this.props.agencyList.length === 0)
+      this.props.onGetAgencyList();
+    if  (this.props.validityStatusList.length === 0)
+      this.props.onGetStatusList();
   }
 
   componentDidMount() {
@@ -130,7 +133,7 @@ class ChatBot extends Component {
     if (nextProps.steps !== this.props.steps) {
       this.changeSet(nextProps);
     }
-    if (nextProps.lawClassList != this.props.lawClassList) {
+    if (nextProps.lawClassList != this.props.lawClassList || this.props.lawClassList.length !== 0) {
       let lawClassOptionNew = nextProps.lawClassList.map(lawClass => {
         return {
           key: lawClass._id,
@@ -141,7 +144,7 @@ class ChatBot extends Component {
       this.lawClassOptions = lawClassOptionNew;
     }
 
-    if (nextProps.agencyList != this.props.agencyList) {
+    if (nextProps.agencyList != this.props.agencyList || this.props.agencyList.length !== 0) {
       let agencyListNew = nextProps.agencyList.map(agency => {
         return {
           key: agency._id,
@@ -152,7 +155,7 @@ class ChatBot extends Component {
       this.agencyOptions = agencyListNew;
     }
 
-    if (nextProps.validityStatusList != this.props.validityStatusList) {
+    if (nextProps.validityStatusList != this.props.validityStatusList || this.props.validityStatusList.length !== 0) {
       let statusOptionNew = nextProps.validityStatusList.map(status => {
         return {
           key: status._id,
@@ -720,43 +723,25 @@ class ChatBot extends Component {
   };
 
   render() {
-    return (
-      <div className="ChatBotContainer">
-        {!this.props.isStepsLoading && (
-          <Card className="ChatBot">
+    return <div className="ChatBotContainer">
+        {!this.props.isStepsLoading && <Card className="ChatBot">
             <Card.Content className="ChatBotHeaderContainer">
               <Card.Header className="ChatBotHeader" textAlign="left">
                 Chat Bot
-                <Popup
-                  trigger={
-                    <Image floated="right">
-                      <Icon
-                        link={true}
-                        name="close"
-                        onClick={this.props.handleExitButtonClick}
-                      />
-                    </Image>
-                  }
-                  content="Đóng cửa sổ trò chuyện"
-                />
+                <Popup trigger={<Image floated="right">
+                      <Icon link={true} name="close" onClick={this.props.handleExitButtonClick} />
+                    </Image>} content="Đóng cửa sổ trò chuyện" />
               </Card.Header>
             </Card.Content>
             <Ref innerRef={this.handleMessageContainerRef.bind(this)}>
               <Card.Content className="ChatBotMessageContainer">
-                <MessageList
-                  onExitBtnClick={this.props.handleExitButtonClick}
-                  onResetBtnClick={this.onResetBtnClick}
-                  onSurveyClick={this.onSurveyClick}
-                  dataList={this.state.dataList}
-                />
+                <MessageList onExitBtnClick={this.props.handleExitButtonClick} onResetBtnClick={this.onResetBtnClick} onSurveyClick={this.onSurveyClick} dataList={this.state.dataList} />
               </Card.Content>
             </Ref>
             <Card.Content>{this.renderUserInputByDataType()}</Card.Content>
-          </Card>
-        )}
+          </Card>}
         <Loader active={this.props.isStepsLoading} />
-      </div>
-    );
+      </div>;
   }
 }
 

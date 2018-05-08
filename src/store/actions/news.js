@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/actionTypes";
+import * as actionTypes from '../actions/actionTypes';
 
 export const getAllNews = (pageIndex, itemPerPage) => {
   return {
@@ -27,7 +27,7 @@ export const getAllNewsFail = () => {
   };
 };
 
-export const getNewsById = (newsId) => {
+export const getNewsById = newsId => {
   return {
     type: actionTypes.GET_NEWS_BY_ID,
     newsId: newsId
@@ -35,10 +35,10 @@ export const getNewsById = (newsId) => {
 };
 
 export const getNewsByIdStart = () => {
-  return{
-    type: actionTypes.GET_NEWS_BY_ID_START,
-  }
-}
+  return {
+    type: actionTypes.GET_NEWS_BY_ID_START
+  };
+};
 
 export const getNewsByIdSuccess = results => {
   return {
@@ -50,5 +50,32 @@ export const getNewsByIdSuccess = results => {
 export const getNewsByIdFail = () => {
   return {
     type: actionTypes.GET_NEWS_BY_ID_FAIL
+  };
+};
+
+export const getMostViewedNews = itemNumber => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_NEW,
+    itemNumber: itemNumber
+  };
+};
+
+export const getMostViewedNewStart = () => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_NEW_START
+  };
+};
+
+export const getMostViewedNewSuccess = result => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_NEW_SUCCESS,
+    data: result
+  };
+};
+
+export const getMostViewedNewFail = errorMsg => {
+  return {
+    type: actionTypes.GET_MOST_VIEWED_NEW_FAIL,
+    errorMsg: errorMsg
   };
 };

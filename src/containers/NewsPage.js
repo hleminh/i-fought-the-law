@@ -239,48 +239,6 @@ class NewsPage extends Component {
                       </Card>
                     </Grid.Column>
                   </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
                 </Grid>
               </Grid.Column>
             </Grid.Row>

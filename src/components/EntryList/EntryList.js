@@ -83,14 +83,14 @@ class EntryList extends Component {
     let mainContent = (
       <Aux>
         {titleResult}
+        {this.props.totalResult > 0 && this.props.isSearch ? (
+          <b>KẾT QUẢ TÌM KIẾM</b>
+        ) : null}
         <Table style={{ border: '0' }} celled column={2} striped>
-          <Table.Header>
-            {this.props.totalResult > 0 && this.props.isSearch ? (
-              <b>KẾT QUẢ TÌM KIẾM</b>
-            ) : null}
-          </Table.Header>
           <Table.Body>
-            {this.props.searchResult.map(law => <Entry key={law._id} lawItem={law} />)}
+            {this.props.searchResult.map(law => (
+              <Entry key={law._id} lawItem={law} />
+            ))}
           </Table.Body>
         </Table>
       </Aux>
@@ -99,14 +99,14 @@ class EntryList extends Component {
       <Segment loading={this.props.searchLoading}>{mainContent}</Segment>
     ) : (
       <Aux>
-         <Dimmer inverted active={this.props.searchLoading}>
-            <Loader inverted>Đang tải</Loader>
-          </Dimmer>
+        <Dimmer inverted active={this.props.searchLoading}>
+          <Loader inverted>Đang tải</Loader>
+        </Dimmer>
         {mainContent}
       </Aux>
     );
     return (
-      <div style={{ padding: '20px' }}>
+      <div style={!this.props.useSegment ? { padding: '20px' } : null}>
         {wrapContent}
         {this.props.totalResult > 0 ? paginationElement : null}
       </div>

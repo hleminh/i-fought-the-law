@@ -77,9 +77,9 @@ class MessageList extends Component {
               >
                 {data.message.split("\n").map((item, key) => {
                   return (
-                    <span>
+                    <span key={key}>
                       {item}
-                      <br />
+                      <br />  
                     </span>
                   );
                 })}

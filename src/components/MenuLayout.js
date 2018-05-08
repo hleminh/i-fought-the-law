@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -10,10 +11,10 @@ import {
   Image,
   Menu,
   Message,
-  Modal,
-  Tab
+  Modal
 } from 'semantic-ui-react';
 import BannerIMG from '../assets/images/banner.png';
+import * as actions from '../store/actions/index';
 
 class MenuLayout extends Component {
   constructor(props) {
@@ -33,108 +34,40 @@ class MenuLayout extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isAuthenticated) {
+      this.setState({ signInModalOpen: false, signUpModalOpen: false });
+    }
+  }
+
   handleItemClick = (e, { name }) => {
     this.props.handleMenuItemClick(name);
   };
 
-  handleNewCancelButton(e) {
-    e.preventDefault();
-    this.setState({ newModalOpen: false });
-  }
-
   handleSignUpCancelButton(e) {
     e.preventDefault();
     this.setState({ signUpModalOpen: false });
+    this.props.onAuthReset();
   }
 
   handleSignInCancelButton(e) {
     e.preventDefault();
     this.setState({ signInModalOpen: false });
-  }
-
-  handleNewSubmitButton(e) {
-    e.preventDefault();
-    this.setState({
-      newModalOpen: false
-    });
-    var newData = {
-      origin: this.state.origin,
-      kana: this.state.kana,
-      definition: JSON.parse(this.state.definition)
-    };
-    var category = this.state.tab === '0' ? 'jpn_vie' : 'vie_jpn';
-    this.props.handleNewSubmit(newData, category, (success, oldData) => {
-      if (success) {
-        this.setState({
-          origin: '',
-          kana: '',
-          definition: '',
-          tab: '0'
-        });
-      } else {
-        this.setState({
-          origin: oldData.origin,
-          kana: oldData.kana,
-          definition: oldData.definition
-        });
-        this.setState({ newModalOpen: true });
-      }
-    });
+    this.props.onAuthReset();
   }
 
   handleSignUpSubmitButton(e) {
     e.preventDefault();
-    this.setState({
-      signUpModalOpen: false
-    });
-    var newData = {
-      username: this.refs.signUpUsername.value,
-      password: this.refs.signUpPassword.value
-    };
-    this.props.handleSignUpSubmit(newData, (success, oldData) => {
-      if (success) {
-        this.setState({
-          signUpPassword: '',
-          signUpUsername: ''
-        });
-      } else {
-        this.setState({
-          signUpPassword: oldData.password,
-          signUpUsername: oldData.username
-        });
-        this.setState({ signUpModalOpen: true });
-      }
-    });
+    const email = this.refs.signUpUsername.value;
+    const password = this.refs.signUpPassword.value;
+    this.props.onAuth(email, password, true);
   }
 
   handleSignInSubmitButton(e) {
     e.preventDefault();
-    this.setState({
-      signInModalOpen: false
-    });
-    var newData = {
-      username: this.refs.signInUsername.value,
-      password: this.refs.signInPassword.value
-    };
-    this.props.handleSignInSubmit(newData, (success, oldData) => {
-      if (success) {
-        this.setState({
-          signInPassword: '',
-          signInUsername: ''
-        });
-      } else {
-        this.setState({
-          signInPassword: oldData.password,
-          signInUsername: oldData.username
-        });
-        this.setState({ signInModalOpen: true });
-      }
-    });
-  }
-
-  handleNewModalOpen(e) {
-    e.preventDefault();
-    this.setState({ newModalOpen: true });
+    const email = this.refs.signInUsername.value;
+    const password = this.refs.signInPassword.value;
+    this.props.onAuth(email, password, false);
   }
 
   handleSignUpModalOpen(e) {
@@ -147,114 +80,13 @@ class MenuLayout extends Component {
     this.setState({ signInModalOpen: true });
   }
 
-  handleOriginChange(e) {
-    console.log(e.target.value);
-    this.setState({ origin: e.target.value });
-  }
-
-  handleKanaChange(e) {
-    console.log(e.target.value);
-    this.setState({ kana: e.target.value });
-  }
-
-  handleDefinitionChange(e) {
-    console.log(e.target.value);
-    this.setState({ definition: e.target.value });
-  }
-
-  handleTabChange(e, data) {
-    console.log(data.activeIndex);
-    this.setState({ tab: data.activeIndex });
-  }
-
   render() {
-    const panes = [
-      {
-        menuItem: 'Nhật - Việt',
-        render: () => (
-          <Tab.Pane attached={false}>
-            <Form.Field required>
-              <label>Origin</label>
-              <input
-                required
-                ref="origin"
-                placeholder="Nhập chữ"
-                defaultValue={this.state.origin}
-                onChange={this.handleOriginChange.bind(this)}
-              />
-            </Form.Field>
-            <Form.Field required>
-              <label>Kana</label>
-              <input
-                required
-                ref="kana"
-                placeholder="Nhập kana"
-                defaultValue={this.state.kana}
-                onChange={this.handleKanaChange.bind(this)}
-              />
-            </Form.Field>
-            <Form.Field required>
-              <label>Definition</label>
-              <input
-                required
-                ref="definition"
-                placeholder="Nhập nghĩa"
-                defaultValue={JSON.stringify(this.state.definition)}
-                onChange={this.handleDefinitionChange.bind(this)}
-              />
-            </Form.Field>
-          </Tab.Pane>
-        )
-      },
-      {
-        menuItem: 'Việt - Nhật',
-        render: () => (
-          <Tab.Pane attached={false}>
-            <Form.Field required>
-              <label>Origin</label>
-              <input
-                required
-                ref="origin"
-                placeholder="Nhập chữ"
-                defaultValue={this.state.origin}
-                onChange={this.handleOriginChange.bind(this)}
-              />
-            </Form.Field>
-            <Form.Field required>
-              <label>Kana</label>
-              <input
-                required
-                ref="kana"
-                placeholder="Nhập chữ không dấu"
-                defaultValue={this.state.kana}
-                onChange={this.handleKanaChange.bind(this)}
-              />
-            </Form.Field>
-            <Form.Field required>
-              <label>Definition</label>
-              <input
-                required
-                ref="definition"
-                placeholder="Nhập nghĩa"
-                defaultValue={JSON.stringify(this.state.definition)}
-                onChange={this.handleDefinitionChange.bind(this)}
-              />
-            </Form.Field>
-          </Tab.Pane>
-        )
-      }
-    ];
-
     return (
       <div className="MenuLayout">
         {this.props.isMenuVisible && (
           <Container className="MenuContainer">
             <Grid>
-              <Grid.Row
-                style={{
-                  paddingBottom: '0'
-                }}
-              >
+              <Grid.Row style={{ paddingBottom: '0' }}>
                 <Grid.Column verticalAlign="middle" width={4} style={{}}>
                   <Image src={BannerIMG} verticalAlign="middle" size="tiny" />
                 </Grid.Column>
@@ -262,62 +94,7 @@ class MenuLayout extends Component {
                   <Grid.Row>
                     <Menu secondary>
                       <Container>
-                        {this.props.userAccount &&
-                          this.props.userAccount.user.admin && (
-                            <Modal
-                              size="mini"
-                              trigger={
-                                <Menu.Item
-                                  className="MenuItemUpper"
-                                  as="a"
-                                  name="sign_up"
-                                  onClick={this.handleNewModalOpen.bind(this)}
-                                >
-                                  Tạo bản ghi mới
-                                </Menu.Item>
-                              }
-                              open={this.state.newModalOpen}
-                            >
-                              <Modal.Header>Tạo bản ghi mới</Modal.Header>
-                              <Modal.Content>
-                                <Form
-                                  onSubmit={this.handleNewSubmitButton.bind(
-                                    this
-                                  )}
-                                >
-                                  <Message
-                                    error
-                                    header="Không thể tạo bản ghi"
-                                    content="Đã xảy ra lỗi khi gửi yêu cầu đến server. Xin hãy thử lại."
-                                  />
-                                  <Tab
-                                    defaultActiveIndex={this.state.tab}
-                                    menu={{ secondary: true, pointing: true }}
-                                    panes={panes}
-                                    onTabChange={this.handleTabChange.bind(
-                                      this
-                                    )}
-                                  />
-                                  <br />
-                                  <Button.Group fluid>
-                                    <Button
-                                      type="submit"
-                                      onClick={this.handleNewCancelButton.bind(
-                                        this
-                                      )}
-                                    >
-                                      Cancel
-                                    </Button>
-                                    <Button.Or />
-                                    <Button type="submit" color="blue">
-                                      Submit
-                                    </Button>
-                                  </Button.Group>
-                                </Form>
-                              </Modal.Content>
-                            </Modal>
-                          )}
-                        {!this.props.userAccount && (
+                        {!this.props.isAuthenticated && (
                           <Modal
                             trigger={
                               <Menu.Item
@@ -337,6 +114,7 @@ class MenuLayout extends Component {
                             <Modal.Header>Đăng nhập</Modal.Header>
                             <Modal.Content>
                               <Form
+                                error={this.props.error != null}
                                 onSubmit={this.handleSignInSubmitButton.bind(
                                   this
                                 )}
@@ -347,11 +125,11 @@ class MenuLayout extends Component {
                                   content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
                                 />
                                 <Form.Field required>
-                                  <label>Username</label>
+                                  <label>Email</label>
                                   <input
                                     required
                                     ref="signInUsername"
-                                    placeholder="Nhập username"
+                                    placeholder="Nhập email"
                                   />
                                 </Form.Field>
                                 <Form.Field required>
@@ -381,7 +159,7 @@ class MenuLayout extends Component {
                             </Modal.Content>
                           </Modal>
                         )}
-                        {!this.props.userAccount && (
+                        {!this.props.isAuthenticated && (
                           <Modal
                             trigger={
                               <Menu.Item
@@ -400,6 +178,7 @@ class MenuLayout extends Component {
                             <Modal.Header>Tạo tài khoản mới</Modal.Header>
                             <Modal.Content>
                               <Form
+                                error={this.props.error != null}
                                 onSubmit={this.handleSignUpSubmitButton.bind(
                                   this
                                 )}
@@ -410,12 +189,12 @@ class MenuLayout extends Component {
                                   content="Đã xảy ra lỗi khi gửi gửi yêu cầu đến server. Xin hãy thử lại."
                                 />
                                 <Form.Field required>
-                                  <label>Username</label>
+                                  <label>Email</label>
                                   <input
                                     required
                                     ref="signUpUsername"
                                     defaultValue={this.state.signUpUsername}
-                                    placeholder="Nhập username"
+                                    placeholder="Nhập email"
                                   />
                                 </Form.Field>
                                 <Form.Field required>
@@ -446,25 +225,24 @@ class MenuLayout extends Component {
                             </Modal.Content>
                           </Modal>
                         )}
-                        {this.props.userAccount && (
-                          <Dropdown
-                            item
-                            simple
-                            trigger={
-                              <span>
-                                Xin chào, {this.props.userAccount.user.username}
-                              </span>
-                            }
-                          >
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                as="a"
-                                onClick={this.props.handleSignOutSubmit}
-                              >
-                                <Icon name="signout" />Đăng xuất
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                        {this.props.isAuthenticated && (
+                          <Menu.Item position="right">
+                            <Dropdown
+                              item
+                              trigger={
+                                <span>Xin chào, {this.props.email}</span>
+                              }
+                            >
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  as="a"
+                                  onClick={this.props.onLogout}
+                                >
+                                  <Icon name="log out" />Đăng xuất
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </Menu.Item>
                         )}
                       </Container>
                     </Menu>
@@ -473,9 +251,7 @@ class MenuLayout extends Component {
                     <Menu
                       pointing
                       secondary
-                      style={{
-                        borderBottom: '2px solid white'
-                      }}
+                      style={{ borderBottom: '2px solid white' }}
                     >
                       <Container>
                         <Menu.Item
@@ -552,4 +328,21 @@ class MenuLayout extends Component {
   }
 }
 
-export default MenuLayout;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token != null,
+    email: state.auth.email,
+    error: state.auth.error
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuth: (email, password, isSignup) =>
+      dispatch(actions.auth(email, password, isSignup)),
+    onLogout: () => dispatch(actions.logout()),
+    onAuthReset: () => dispatch(actions.authReset())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuLayout);

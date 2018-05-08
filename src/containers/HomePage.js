@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Container, Grid, Image, Label, Menu } from 'semantic-ui-react';
-
+import { Card, Container, Grid, Image, Label } from 'semantic-ui-react';
 import ParagraphPNG from '../assets/images/paragraph.png';
 import EntryList from '../components/EntryList/EntryList';
 import FooterLayout from '../components/FooterLayout';
 import News from '../components/News';
+import RadioCardLayout from '../components/RadioCardLayout';
 import SearchBar from '../components/SearchBar';
 import * as actions from '../store/actions/index';
-import RadioCardLayout from '../components/RadioCardLayout';
+
 
 class HomePage extends Component {
   state = {

@@ -1,5 +1,5 @@
-import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../../shared/utilities";
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../../shared/utilities';
 
 const initialState = {
   news: [],
@@ -7,6 +7,9 @@ const initialState = {
   newsCount: 0,
   currentNews: null,
   currentNewsLoading: true,
+  mostViewedNews: [],
+  mostViewedLoading: false,
+  mostViewedError: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,9 +26,33 @@ const reducer = (state = initialState, action) => {
       return getNewsByIdSuccess(state, action);
     case actionTypes.GET_NEWS_BY_ID_FAIL:
       return getNewsByIdFail(state, action);
+    case actionTypes.GET_MOST_VIEWED_NEW_START:
+      return getMostViewedNewStart(state, action);
+    case actionTypes.GET_MOST_VIEWED_NEW_SUCCESS:
+      return getMostViewedNewSuccess(state, action);
+    case actionTypes.GET_MOST_VIEWED_NEW_FAIL:
+      return getMostViewedNewFail(state, action);
     default:
       return state;
   }
+};
+
+const getMostViewedNewStart = (state, action) => {
+  return updateObject(state, { mostViewedLoading: true });
+};
+
+const getMostViewedNewSuccess = (state, action) => {
+  return updateObject(state, {
+    mostViewedLoading: false,
+    mostViewedNews: action.data
+  });
+};
+
+const getMostViewedNewFail = (state, action) => {
+  return updateObject(state, {
+    mostViewedLoading: false,
+    mostViewedError: action.errorMsg
+  });
 };
 
 const getAllNewsStart = (state, action) => {
@@ -35,7 +62,9 @@ const getAllNewsStart = (state, action) => {
 const getAllNewsSuccess = (state, action) => {
   for (let news in action.results.data.data) {
     let date = new Date(action.results.data.data[news].publishedDate);
-    action.results.data.data[news].publishedDate = date.toISOString().substring(0, 10);
+    action.results.data.data[news].publishedDate = date
+      .toISOString()
+      .substring(0, 10);
   }
   return updateObject(state, {
     news: action.results.data,
@@ -49,13 +78,16 @@ const getAllNewsFail = (state, action) => {
 };
 
 const getNewsByIdStart = (state, action) => {
-  return updateObject(state, {currentNewsLoading: true});
+  return updateObject(state, { currentNewsLoading: true });
 };
 
 const getNewsByIdSuccess = (state, action) => {
   let date = new Date(action.results.data.data[0].publishedDate);
   action.results.data.data[0].publishedDate = date.toString().substring(0, 15);
-  return updateObject(state, {currentNews: action.results.data, currentNewsLoading: false});
+  return updateObject(state, {
+    currentNews: action.results.data,
+    currentNewsLoading: false
+  });
 };
 
 const getNewsByIdFail = (state, action) => {

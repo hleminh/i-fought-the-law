@@ -41,10 +41,14 @@ export {
   getNewsById,
   getNewsByIdStart,
   getNewsByIdSuccess,
-  getNewsByIdFail
+  getNewsByIdFail,
+  getMostViewedNews,
+  getMostViewedNewStart,
+  getMostViewedNewSuccess,
+  getMostViewedNewFail
 } from './news';
 
-export{
+export {
   getStepSetByInput,
   getStepSetByInputStart,
   getStepSetByInputSuccess,
@@ -54,4 +58,16 @@ export{
   updateSetFeatureByIdAndInputSuccess,
   updateSetFeatureByIdAndInputFail,
   resetChatBot
-} from './chatbot'
+} from './chatbot';
+
+export {
+  auth,
+  logout,
+  authCheckState,
+  logoutSucceed,
+  authStart,
+  authSuccess,
+  authFail,
+  authReset,
+  checkAuthTimeout
+} from './auth';

@@ -175,7 +175,6 @@ export const getLawDetailStart = () => {
 };
 
 export const getLawDetailSuccess = data => {
-  console.log(data);
   return {
     type: actionTypes.GET_LAW_DETAIL_SUCCESS,
     data: data

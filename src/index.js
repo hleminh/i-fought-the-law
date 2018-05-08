@@ -1,22 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { Provider } from "react-redux";
-import createSagaMiddleware from "redux-saga";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
 
-import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
-import "./dist/semantic.min.css";
-import "./index.css";
-import lawReducer from "./store/reducers/law";
-import searchReducer from "./store/reducers/search";
-import newsReducer from "./store/reducers/news";
-import chatbotReducer from "./store/reducers/chatbot";
-import { watchGetLaws, watchNews, watchChatBot } from "./store/sagas/index";
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+import './dist/semantic.min.css';
+import './index.css';
+import lawReducer from './store/reducers/law';
+import searchReducer from './store/reducers/search';
+import newsReducer from './store/reducers/news';
+import chatbotReducer from './store/reducers/chatbot';
+import authReducer from './store/reducers/auth';
+import {
+  watchGetLaws,
+  watchNews,
+  watchChatBot,
+  watchAuth
+} from './store/sagas/index';
 
 const composeEnhancers =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === 'development'
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : null || compose;
 
@@ -24,7 +30,8 @@ const rootReducer = combineReducers({
   laws: lawReducer,
   search: searchReducer,
   news: newsReducer,
-  chatbot: chatbotReducer
+  chatbot: chatbotReducer,
+  auth: authReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -37,7 +44,7 @@ const store = createStore(
 sagaMiddleware.run(watchGetLaws);
 sagaMiddleware.run(watchNews);
 sagaMiddleware.run(watchChatBot);
-
+sagaMiddleware.run(watchAuth);
 
 const app = (
   <Provider store={store}>
@@ -47,5 +54,5 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(app, document.getElementById("root"));
+ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();

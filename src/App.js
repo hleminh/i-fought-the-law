@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Switch } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import './App.css';
+import * as actions from './store/actions/index';
 import ChatBotLayout from './components/ChatbotLayout/ChatBotLayout';
 import MenuLayout from './components/MenuLayout';
 import RedirectToHome from './components/RedirectToHome';
@@ -13,6 +14,7 @@ import NewsPage from './containers/NewsPage';
 import NotFoundPage from './containers/NotFoundPage';
 import SavedPage from './containers/SavedPage';
 import SearchPage from './containers/SearchPage';
+import { connect } from 'react-redux';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +34,7 @@ class App extends Component {
       activeMenuItem: currentURL[3]
     });
     // this.props.onGetAllSteps();
+    this.props.onTryAutoSignIn();
   }
 
   handleMenuVisibility(isMenuVisible) {
@@ -78,4 +81,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignIn: () => dispatch(actions.authCheckState())
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(App));
