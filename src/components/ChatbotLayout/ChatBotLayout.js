@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Button, Icon, Popup } from "semantic-ui-react";
 import ChatBot from "./Chatbot/ChatBot";
-import * as actions from "../../store/actions/index";
-import { connect } from "react-redux";
 
 class ChatBotLayout extends Component {
   constructor(props) {
@@ -36,6 +34,7 @@ class ChatBotLayout extends Component {
         {this.state.chatBoxOpen && (
           <ChatBot
             handleExitButtonClick={this.handleChatBoxOpenButtonClick.bind(this)}
+            handleUrlChange={this.props.handleUrlChange}
           />
         )}
         {!this.state.chatBoxOpen && (
@@ -63,15 +62,4 @@ class ChatBotLayout extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    steps: state.chatbot.steps,
-    isStepsLoading: state.chatbot.isStepsLoading
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatBotLayout);
+export default ChatBotLayout;

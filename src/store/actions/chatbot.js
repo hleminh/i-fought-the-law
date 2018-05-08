@@ -1,15 +1,15 @@
 import * as actionTypes from "../actions/actionTypes";
 
-export const getStepSetByInput = () => {
+export const getStepSetByInput = input => {
   return {
-    type: actionTypes.GET_STEP_SET_BY_INPUT
+    type: actionTypes.GET_STEP_SET_BY_INPUT,
+    input: input
   };
 };
 
-export const getStepSetByInputStart = input => {
+export const getStepSetByInputStart = () => {
   return {
-    type: actionTypes.GET_STEP_SET_BY_INPUT_START,
-    input: input
+    type: actionTypes.GET_STEP_SET_BY_INPUT_START
   };
 };
 
