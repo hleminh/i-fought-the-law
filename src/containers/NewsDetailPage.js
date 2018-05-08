@@ -16,6 +16,7 @@ import {
 import ParagraphPNG from '../assets/images/paragraph.png';
 import FooterLayout from '../components/FooterLayout';
 import * as actions from '../store/actions/index';
+import MostViewedNews from '../components/MostViewedNews';
 
 class NewsDetailPage extends Component {
   componentWillMount() {
@@ -136,62 +137,7 @@ class NewsDetailPage extends Component {
               <Grid.Column width={1} />
               <Grid.Column width={4}>
                 <Grid>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
+                  <MostViewedNews excludeId={this.props.match.params.id} />
                 </Grid>
               </Grid.Column>
             </Grid.Row>

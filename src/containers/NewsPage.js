@@ -18,7 +18,9 @@ import {
 } from 'semantic-ui-react';
 import ParagraphPNG from '../assets/images/paragraph.png';
 import FooterLayout from '../components/FooterLayout';
+import MostViewedNews from '../components/MostViewedNews';
 import * as actions from '../store/actions/index';
+
 
 class NewsPage extends Component {
   constructor(props) {
@@ -227,16 +229,7 @@ class NewsPage extends Component {
                 <Grid>
                   <Grid.Row>
                     <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
+                      <MostViewedNews/>
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
