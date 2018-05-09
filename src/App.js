@@ -1,35 +1,34 @@
-import React, { Component } from "react";
-import { Switch } from "react-router";
-import { Route, withRouter } from "react-router-dom";
-import "./App.css";
-import * as actions from "./store/actions/index";
-import ChatBotLayout from "./components/ChatbotLayout/ChatBotLayout";
-import MenuLayout from "./components/MenuLayout";
-import RedirectToHome from "./components/RedirectToHome";
-import AboutPage from "./containers/AboutPage";
-import HomePage from "./containers/HomePage";
-import LawDetailPage from "./containers/LawDetailPage";
-import NewsDetailPage from "./containers/NewsDetailPage";
-import NewsPage from "./containers/NewsPage";
-import NotFoundPage from "./containers/NotFoundPage";
-import SavedPage from "./containers/SavedPage";
-import SearchPage from "./containers/SearchPage";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Switch } from 'react-router';
+import { Route, withRouter } from 'react-router-dom';
+import './App.css';
+import ChatBotLayout from './components/ChatbotLayout/ChatBotLayout';
+import MenuLayout from './components/MenuLayout';
+import RedirectToHome from './components/RedirectToHome';
+import AboutPage from './containers/AboutPage';
+import HomePage from './containers/HomePage';
+import LawDetailPage from './containers/LawDetailPage';
+import NewsDetailPage from './containers/NewsDetailPage';
+import NewsPage from './containers/NewsPage';
+import NotFoundPage from './containers/NotFoundPage';
+import SavedPage from './containers/SavedPage';
+import SearchPage from './containers/SearchPage';
+import * as actions from './store/actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userAccount: null,
-      activeMenuItem: "",
+      activeMenuItem: '',
       isMenuVisible: true
     };
-    console.log(this.props);
   }
 
   componentWillMount() {
     // console.log(window.location.href);
-    var currentURL = window.location.href.split("/");
+    var currentURL = window.location.href.split('/');
     // console.log(currentURL);
     this.setState({
       activeMenuItem: currentURL[3]
@@ -39,7 +38,7 @@ class App extends Component {
   }
 
   componentWillUpdate() {
-    var currentURL = window.location.href.split("/");
+    var currentURL = window.location.href.split('/');
     if (currentURL[3] != this.state.activeMenuItem) {
       this.setState({
         activeMenuItem: currentURL[3]
@@ -50,7 +49,7 @@ class App extends Component {
   handleMenuVisibility(isMenuVisible) {
     this.setState({
       isMenuVisible: isMenuVisible,
-      activeMenuItem: ""
+      activeMenuItem: ''
     });
   }
 

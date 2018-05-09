@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Container, Grid, Image, Label } from 'semantic-ui-react';
+import {
+  Card,
+  Container,
+  Grid,
+  Image,
+  Label,
+  Input,
+  Icon
+} from 'semantic-ui-react';
 import ParagraphPNG from '../assets/images/paragraph.png';
 import EntryList from '../components/EntryList/EntryList';
 import FooterLayout from '../components/FooterLayout';
 import News from '../components/News';
 import RadioCardLayout from '../components/RadioCardLayout';
 import SearchBar from '../components/SearchBar';
+import CurrencyCard from '../components/CurrencyCard';
 import * as actions from '../store/actions/index';
-
+import { withRouter } from 'react-router-dom';
 
 class HomePage extends Component {
   state = {
@@ -17,7 +26,8 @@ class HomePage extends Component {
     lawClass: null,
     agency: null,
     validityStatus: null,
-    promulgateYear: null
+    promulgateYear: null,
+    keyword: ''
   };
 
   componentWillMount() {
@@ -26,6 +36,16 @@ class HomePage extends Component {
     this.props.onGetAgencyList();
     this.props.onGetStatusList();
   }
+
+  inputSearchChange = (e, ref) => {
+    e.preventDefault();
+    this.setState({ keyword: ref.value });
+  };
+
+  handleSubmitForm = e => {
+    e.preventDefault();
+    this.props.history.push('/search?keyword=' + this.state.keyword);
+  };
 
   onLawClassChange = classId =>
     this.setState({ lawClass: classId, pageIndex: 1 }, () => this.getAllLaws());
@@ -78,12 +98,27 @@ class HomePage extends Component {
                 <Grid>
                   <Grid.Row>
                     <Grid.Column width={16}>
-                      <SearchBar
-                        keyword={this.props.keyword}
-                        handleSearchSubmit={this.props.handleSearchSubmit}
-                        onCategoryChange={this.props.onCategoryChange}
-                        category={this.props.category}
-                      />
+                      <form onSubmit={this.handleSubmitForm}>
+                        <Input
+                          fluid
+                          size="large"
+                          className="SearchInput"
+                          ref="searchInput"
+                          onChange={this.inputSearchChange}
+                          icon={
+                            <Icon
+                              color="blue"
+                              className="SearchIcon"
+                              name="search"
+                              onClick={this.handleSubmitForm}
+                              inverted
+                              circular
+                              link
+                            />
+                          }
+                          placeholder="Nhập nội dung văn bản cần tìm..."
+                        />
+                      </form>
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row columns={2}>
@@ -94,34 +129,7 @@ class HomePage extends Component {
               <Grid.Column width={1} />
               <Grid.Column width={4}>
                 <Grid>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Card fluid>
-                        <Card.Header textAlign="center" className="BlockHeader">
-                          <Label color="blue" size="big">
-                            TEST
-                          </Label>
-                        </Card.Header>
-                        <Card.Content>
-                          <Image src={ParagraphPNG} />
-                        </Card.Content>
-                      </Card>
-                    </Grid.Column>
-                  </Grid.Row>
+                  <CurrencyCard />
                 </Grid>
               </Grid.Column>
             </Grid.Row>
@@ -227,4 +235,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

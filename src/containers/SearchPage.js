@@ -21,6 +21,21 @@ class SearchPage extends Component {
       firsTime: true
     };
   }
+  componentWillMount() {
+    let keyword = this.getUrlParameter('keyword');
+    if (keyword) {
+      this.setState({ keyword: keyword }, () => this.searchLaw());
+    }
+  }
+
+  getUrlParameter = name => {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    let results = regex.exec(window.location.search);
+    return results === null
+      ? ''
+      : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
 
   submitSearch = (
     keyword,

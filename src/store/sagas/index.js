@@ -19,6 +19,7 @@ import {
   authUserSaga,
   authCheckStateSaga
 } from './auth';
+import { getCurrencyExchange } from './currency';
 
 export function* watchAuth() {
   yield all([
@@ -58,4 +59,8 @@ export function* watchChatBot() {
       updateSetFeatureByIdAndInput
     )
   ]);
+}
+
+export function* watchCurrency() {
+  yield all([takeLatest(actionTypes.GET_CURRENCY, getCurrencyExchange)]);
 }

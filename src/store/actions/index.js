@@ -71,3 +71,10 @@ export {
   authReset,
   checkAuthTimeout
 } from './auth';
+
+export {
+  getCurrency,
+  getCurrencyStart,
+  getCurrencySuccess,
+  getCurrencyFail
+} from './currency';

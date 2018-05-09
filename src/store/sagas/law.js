@@ -103,7 +103,7 @@ export function* getAllLaw(action) {
     }
     if (action.agency) {
       url += `&agencyId=${action.agency}`;
-    }
+    } 
     if (action.status) {
       url += `&status=${action.validityStatus}`;
     }

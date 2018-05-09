@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Grid,
   Segment,
@@ -7,14 +7,15 @@ import {
   Image,
   Icon,
   Container
-} from "semantic-ui-react";
+} from 'semantic-ui-react';
 
-import * as actions from "../store/actions/index";
-import MediaParagraphPNG from "../assets/images/media-paragraph.png";
-import ParagraphPNG from "../assets/images/paragraph.png";
-import Aux from "../hoc/Aux";
+import * as actions from '../store/actions/index';
+import MediaParagraphPNG from '../assets/images/media-paragraph.png';
+import ParagraphPNG from '../assets/images/paragraph.png';
+import Aux from '../hoc/Aux';
 
 class News extends Component {
+  
   componentWillMount() {
     this.props.onGetAllNews(1, 6);
   }
@@ -32,22 +33,21 @@ class News extends Component {
                   floated="left"
                   size="small"
                   as="a"
-                  href={"/news/" + this.props.news.data[0]._id}
+                  href={'/news/' + this.props.news.data[0]._id}
                   src={this.props.news.data[0].image}
                 />
                 <Header
                   className="NewsHeadline"
                   size="tiny"
                   as="a"
-                  href={"/news/" + this.props.news.data[0]._id}
+                  href={'/news/' + this.props.news.data[0]._id}
                 >
                   {this.props.news.data[0].headLines}
                 </Header>
                 <div>{this.props.news.data[0].brief}</div>
               </div>
             )}
-            {(this.props.isNewsLoading === true ||
-              this.props.news.data.length == 0) && <Image src={ParagraphPNG} />}
+            {this.props.isNewsLoading === true && <Image src={ParagraphPNG} />}
           </Segment>
           <Segment className="NewsSegment" basic>
             {this.props.isNewsLoading === false && (
@@ -58,7 +58,7 @@ class News extends Component {
                     className="NewsHeadline"
                     size="tiny"
                     as="a"
-                    href={"/news/" + this.props.news.data[1]._id}
+                    href={'/news/' + this.props.news.data[1]._id}
                   >
                     {this.props.news.data[1].headLines}
                   </Header>
@@ -70,15 +70,14 @@ class News extends Component {
                     className="NewsHeadline"
                     size="tiny"
                     as="a"
-                    href={"/news/" + this.props.news.data[2]._id}
+                    href={'/news/' + this.props.news.data[2]._id}
                   >
                     {this.props.news.data[2].headLines}
                   </Header>
                 </div>
               </div>
             )}
-            {(this.props.isNewsLoading === true ||
-              this.props.news.data.length == 0) && <Image src={ParagraphPNG} />}
+            {this.props.isNewsLoading === true && <Image src={ParagraphPNG} />}
           </Segment>
         </Grid.Column>
         <Grid.Column className="NewsColumn">
@@ -86,27 +85,26 @@ class News extends Component {
             <Segment className="NewsSegment" basic>
               <Header as="h3">&nbsp;</Header>
               {this.props.isNewsLoading === false && (
-                <div style={{ display: "table" }}>
+                <div style={{ display: 'table' }}>
                   <Image
                     as="a"
                     verticalAlign="middle"
                     floated="left"
                     size="tiny"
                     src={this.props.news.data[3].image}
-                    href={"/news/" + this.props.news.data[3]._id}
+                    href={'/news/' + this.props.news.data[3]._id}
                   />
                   <Header
                     as="a"
                     className="NewsHeadline"
                     size="tiny"
-                    href={"/news/" + this.props.news.data[3]._id}
+                    href={'/news/' + this.props.news.data[3]._id}
                   >
                     {this.props.news.data[3].headLines}
                   </Header>
                 </div>
               )}
-              {(this.props.isNewsLoading === true ||
-                this.props.news.data.length == 0) && (
+              {this.props.isNewsLoading === true && (
                 <Image size="medium" src={MediaParagraphPNG} />
               )}
             </Segment>
@@ -114,27 +112,26 @@ class News extends Component {
           <Grid.Row>
             <Segment className="NewsSegment" basic>
               {this.props.isNewsLoading === false && (
-                <div style={{ display: "table" }}>
+                <div style={{ display: 'table' }}>
                   <Image
                     as="a"
                     verticalAlign="middle"
                     floated="left"
                     size="tiny"
-                    href={"/news/" + this.props.news.data[4]._id}
+                    href={'/news/' + this.props.news.data[4]._id}
                     src={this.props.news.data[4].image}
                   />
                   <Header
                     as="a"
                     className="NewsHeadline"
                     size="tiny"
-                    href={"/news/" + this.props.news.data[4]._id}
+                    href={'/news/' + this.props.news.data[4]._id}
                   >
                     {this.props.news.data[4].headLines}
                   </Header>
                 </div>
               )}
-              {(this.props.isNewsLoading === true ||
-                this.props.news.data.length == 0) && (
+              {this.props.isNewsLoading === true && (
                 <Image size="medium" src={MediaParagraphPNG} />
               )}
             </Segment>
@@ -142,27 +139,26 @@ class News extends Component {
           <Grid.Row>
             <Segment className="NewsSegment" basic>
               {this.props.isNewsLoading === false && (
-                <div style={{ display: "table" }}>
+                <div style={{ display: 'table' }}>
                   <Image
                     as="a"
                     verticalAlign="middle"
                     floated="left"
                     size="tiny"
                     src={this.props.news.data[5].image}
-                    href={"/news/" + this.props.news.data[5]._id}
+                    href={'/news/' + this.props.news.data[5]._id}
                   />
                   <Header
                     as="a"
                     className="NewsHeadline"
                     size="tiny"
-                    href={"/news/" + this.props.news.data[5]._id}
+                    href={'/news/' + this.props.news.data[5]._id}
                   >
                     {this.props.news.data[5].headLines}
                   </Header>
                 </div>
               )}
-              {(this.props.isNewsLoading === true ||
-                this.props.news.data.length == 0) && (
+              {this.props.isNewsLoading === true && (
                 <Image size="medium" src={MediaParagraphPNG} />
               )}
             </Segment>

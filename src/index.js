@@ -14,11 +14,13 @@ import searchReducer from './store/reducers/search';
 import newsReducer from './store/reducers/news';
 import chatbotReducer from './store/reducers/chatbot';
 import authReducer from './store/reducers/auth';
+import currencyReducer from './store/reducers/currency';
 import {
   watchGetLaws,
   watchNews,
   watchChatBot,
-  watchAuth
+  watchAuth,
+  watchCurrency
 } from './store/sagas/index';
 
 const composeEnhancers =
@@ -31,7 +33,8 @@ const rootReducer = combineReducers({
   search: searchReducer,
   news: newsReducer,
   chatbot: chatbotReducer,
-  auth: authReducer
+  auth: authReducer,
+  currency: currencyReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -45,6 +48,7 @@ sagaMiddleware.run(watchGetLaws);
 sagaMiddleware.run(watchNews);
 sagaMiddleware.run(watchChatBot);
 sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchCurrency);
 
 const app = (
   <Provider store={store}>
